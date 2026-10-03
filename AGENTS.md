@@ -1,5 +1,11 @@
 # Repère du projet Darija
 
+## Projet actif indépendant — décision utilisateur du 3 octobre 2026
+
+L’utilisateur demande maintenant un nouveau site indépendant, sans lien technique avec le site précédent. Le projet actif est `darija-site/`, fondé sur la version autonome créée dans le cloud. Il peut avoir son propre hébergement et sa propre adresse ; aucune récupération de l’ancien projet ou validation par un enseignant n’est requise pour avancer. Préserver `darija-enrichment/` comme état antérieur. Les repères Windows ci-dessous concernent uniquement l’ancien site et ne doivent pas bloquer le nouveau projet.
+
+## Ancien site — repères historiques
+
 Le 3 octobre 2026, l’utilisateur a confirmé que la version souhaitée est celle avec les 12 illustrations générées par IA, la nouvelle interface et les 27 situations du quotidien.
 
 - Dossier de cette version : `C:\Users\azizt\.codex\worktrees\fc0a\DArija`.

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explorer les lettres arabes, décortiquer les mots et pratiquer des situations du quotidien en darija marocain.">
+  <title>Darija — pas à pas</title>
+  <meta name="theme-color" content="#174c42">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#content">Aller au contenu</a>
+  <header class="header">
+    <a class="brand" href="./index.html" aria-label="Darija, accueil"><span class="brand-mark" aria-hidden="true">D</span><span>darija<span class="brand-sub">PAS À PAS</span></span></a>
+    <nav aria-label="Les ateliers">
+      <button type="button" data-view="paths">Parcours</button>
+      <button type="button" data-view="scenes" aria-current="page">Situations</button>
+      <button type="button" data-view="alphabet">Alphabet</button>
+      <button type="button" data-view="dictionary">Lexique</button>
+      <button type="button" data-view="conjugation">Conjugaison</button>
+      <button type="button" data-view="reviews">Mes mots <span id="review-count">0</span></button>
+    </nav>
+    <span class="header-tag">Un petit pas, chaque jour.</span>
+  </header>
+  <main id="content" tabindex="-1"><p class="loading" role="status">Préparation des ateliers…</p></main>
+  <p id="notice" class="notice" role="status" hidden></p>
+  <footer>Du darija pour la vraie vie. <span>Mots et phrases : transcription et découpage écrits. Alphabet : écoute facultative du nom des lettres avec une voix arabe de synthèse, selon le navigateur.<br>Repères lexicaux consultés : <a href="https://github.com/darija-open-dataset/dataset">Darija Open Dataset</a> · <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>. Sens français, graphies adaptées et découpages pédagogiques proposés ici ; les variantes sont documentées.<br>Drapeaux : <a href="https://github.com/lipis/flag-icons">flag-icons</a> (MIT).</span></footer>
+  <dialog id="detail" aria-labelledby="dialog-title">
+    <button class="dialog-close" type="button" aria-label="Fermer la fiche">✕</button>
+    <div id="dialog-body"></div>
+  </dialog>
+  <script type="module" src="app.mjs"></script>
+</body>
+</html>

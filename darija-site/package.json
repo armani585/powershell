@@ -1,0 +1,14 @@
+{
+  "name": "darija-pas-a-pas",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site indépendant d’apprentissage du darija en français",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {
+    "build": "node scripts/build-site.mjs",
+    "build:download": "node scripts/build-standalone.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "preview": "python3 -m http.server 4180 --bind 127.0.0.1 --directory dist/site"
+  }
+}

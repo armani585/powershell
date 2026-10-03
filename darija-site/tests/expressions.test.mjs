@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {validateData,phraseText,matchesSearch} from '../learning.mjs';
+const data=JSON.parse(await readFile(new URL('../content/learning.json',import.meta.url),'utf8'));
+const words=new Map(data.words.map(w=>[w.id,w]));
+test('twenty complete expressions retain context and honest recording status',()=>{assert.equal(data.expressions.length,20);assert.equal(new Set(data.expressions.map(x=>x.id)).size,20);assert.equal(new Set(data.expressions.map(x=>x.category)).size,6);for(const p of data.expressions){assert.ok(p.usage);assert.equal(p.audio,null);assert.equal(p.nativeReviewed,false);}assert.deepEqual(validateData(data),[]);});
+test('negation and apology are composed from the intended individual words',()=>{assert.equal(phraseText(data.expressions.find(p=>p.id==='pas-compris'),words),'ما فهمتش');assert.equal(phraseText(data.expressions.find(p=>p.id==='pardon'),words),'سمح ليا');});
+test('invalid expression references and false audio claims fail validation',()=>{const d=structuredClone(data);d.expressions[0].words.push('missing');d.expressions[1].audio='invented.mp3';assert.ok(validateData(d).includes('Unknown expression word missing'));assert.ok(validateData(d).includes('Unverified expression ca-va'));});
+test('context search can retrieve expressions beyond literal translation',()=>{const p=data.expressions.find(p=>p.id==='profite');assert.ok(matchesSearch('douche',[p.usage]));assert.match(p.response,/llah y3tik/);});

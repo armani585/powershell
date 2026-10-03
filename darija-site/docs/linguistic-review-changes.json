@@ -1,0 +1,637 @@
+{
+  "date": "2026-10-03",
+  "type": "AI editorial review, not native validation",
+  "beforeVersion": 26,
+  "afterVersion": 27,
+  "wordChanges": [
+    {
+      "id": "3awd-horse",
+      "fields": {
+        "arabic": {
+          "before": "عاود",
+          "after": "عود"
+        },
+        "parts": {
+          "before": [
+            {
+              "text": "عا",
+              "sound": "3a"
+            },
+            {
+              "text": "و",
+              "sound": "w"
+            },
+            {
+              "text": "د",
+              "sound": "d"
+            }
+          ],
+          "after": [
+            {
+              "text": "ع",
+              "sound": "3a"
+            },
+            {
+              "text": "و",
+              "sound": "w"
+            },
+            {
+              "text": "د",
+              "sound": "d"
+            }
+          ]
+        },
+        "note": {
+          "before": "3 représente ع. À distinguer de 3awed, « répète », dont la graphie courante peut être identique.",
+          "after": "Graphie retenue : عود, attestée dans DODa nouns, entrée 770. Le fichier animals, entrée 17, donne aussi عاود. Ne pas confondre le nom 3awd avec l’impératif 3awed, « répète »."
+        }
+      }
+    },
+    {
+      "id": "sabbat",
+      "fields": {
+        "latin": {
+          "before": "sbeat",
+          "after": "sbat"
+        },
+        "parts": {
+          "before": [
+            {
+              "text": "صب",
+              "sound": "sbe"
+            },
+            {
+              "text": "ا",
+              "sound": "a"
+            },
+            {
+              "text": "ط",
+              "sound": "t"
+            }
+          ],
+          "after": [
+            {
+              "text": "ص",
+              "sound": "s"
+            },
+            {
+              "text": "با",
+              "sound": "ba"
+            },
+            {
+              "text": "ط",
+              "sound": "t"
+            }
+          ]
+        },
+        "note": {
+          "before": "Le terme sbat / sbbat et ses graphies varient selon la région.",
+          "after": "Repère retenu : sbat. On rencontre aussi sbbat selon la transcription et la prononciation ; les consonnes ص et ط sont emphatiques."
+        }
+      }
+    },
+    {
+      "id": "jellaba",
+      "fields": {
+        "arabic": {
+          "before": "جللابة",
+          "after": "جلّابة"
+        },
+        "parts": {
+          "before": [
+            {
+              "text": "جل",
+              "sound": "je"
+            },
+            {
+              "text": "لا",
+              "sound": "lla"
+            },
+            {
+              "text": "بة",
+              "sound": "ba"
+            }
+          ],
+          "after": [
+            {
+              "text": "ج",
+              "sound": "je"
+            },
+            {
+              "text": "لّا",
+              "sound": "lla"
+            },
+            {
+              "text": "بة",
+              "sound": "ba"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "shop",
+      "fields": {
+        "arabic": {
+          "before": "محلل",
+          "after": "محلّ"
+        },
+        "parts": {
+          "before": [
+            {
+              "text": "مح",
+              "sound": "me"
+            },
+            {
+              "text": "ل",
+              "sound": "7e"
+            },
+            {
+              "text": "ل",
+              "sound": "ll"
+            }
+          ],
+          "after": [
+            {
+              "text": "م",
+              "sound": "me"
+            },
+            {
+              "text": "ح",
+              "sound": "7e"
+            },
+            {
+              "text": "لّ",
+              "sound": "ll"
+            }
+          ]
+        },
+        "note": {
+          "before": "Sens général ; 7anout désigne souvent une petite boutique.",
+          "after": "Sens général ; 7anout désigne souvent une petite boutique. La shadda sur ل indique une consonne tenue : elle ne s’écrit pas avec deux lettres ل séparées."
+        }
+      }
+    },
+    {
+      "id": "dirhem",
+      "fields": {
+        "note": {
+          "before": "Monnaie marocaine ; au pluriel drahem.",
+          "after": "Monnaie marocaine ; pluriel drahem. Dans le modèle enseigné ici, le nom reste au singulier après 20 : 3eshrin derhem (vingt dirhams)."
+        }
+      }
+    },
+    {
+      "id": "ticket",
+      "fields": {
+        "arabic": {
+          "before": "بيية",
+          "after": "بيّي"
+        },
+        "latin": {
+          "before": "biyeya",
+          "after": "biyyi"
+        },
+        "parts": {
+          "before": [
+            {
+              "text": "بي",
+              "sound": "bi"
+            },
+            {
+              "text": "ي",
+              "sound": "ye"
+            },
+            {
+              "text": "ة",
+              "sound": "ya"
+            }
+          ],
+          "after": [
+            {
+              "text": "ب",
+              "sound": "bi"
+            },
+            {
+              "text": "يّي",
+              "sound": "yyi"
+            }
+          ]
+        },
+        "note": {
+          "before": "Emprunt à billet ; le contexte précise entrée ou transport.",
+          "after": "Emprunt à « billet ». Biyyi est le repère retenu d’après Quitout, p. 82 ; on rencontre aussi werqa, littéralement « feuille ». La graphie arabe est un choix éditorial, le manuel donnant ici une transcription latine."
+        }
+      }
+    },
+    {
+      "id": "stop",
+      "fields": {
+        "latin": {
+          "before": "me7tta",
+          "after": "m7etta"
+        },
+        "parts": {
+          "before": [
+            {
+              "text": "مح",
+              "sound": "me"
+            },
+            {
+              "text": "طة",
+              "sound": "7tta"
+            }
+          ],
+          "after": [
+            {
+              "text": "م",
+              "sound": "m"
+            },
+            {
+              "text": "ح",
+              "sound": "7e"
+            },
+            {
+              "text": "ط",
+              "sound": "tt"
+            },
+            {
+              "text": "ة",
+              "sound": "a"
+            }
+          ]
+        },
+        "note": {
+          "before": "Mahata dans le lexique existant inclut déjà l’article ; cette fiche est la forme sans article.",
+          "after": "Forme sans article de l-m7etta (« la station / la gare »). Le groupe m7 se prononce sans ajouter une syllabe après chaque consonne. Quitout, p. 82, transcrit el-mahetta avec ses signes diacritiques."
+        }
+      }
+    },
+    {
+      "id": "pearl",
+      "fields": {
+        "meaning": {
+          "before": "une perle",
+          "after": "des perles / la perle (matière)"
+        },
+        "note": {
+          "before": "Emprunt / appellation courante ; le contexte précise perle naturelle ou imitation.",
+          "after": "Lulu est employé comme nom collectif de matière. Cette fiche ne sert pas à compter une perle isolée ; l’appellation commerciale et le singulier restent à vérifier."
+        }
+      }
+    },
+    {
+      "id": "interpreter",
+      "fields": {
+        "latin": {
+          "before": "murjim",
+          "after": "mutarjim"
+        },
+        "parts": {
+          "before": [
+            {
+              "text": "مت",
+              "sound": "mu"
+            },
+            {
+              "text": "ر",
+              "sound": "r"
+            },
+            {
+              "text": "جم",
+              "sound": "jim"
+            }
+          ],
+          "after": [
+            {
+              "text": "م",
+              "sound": "mu"
+            },
+            {
+              "text": "ت",
+              "sound": "ta"
+            },
+            {
+              "text": "ر",
+              "sound": "r"
+            },
+            {
+              "text": "جم",
+              "sound": "jim"
+            }
+          ]
+        },
+        "note": {
+          "before": "Terme général ; demander la disponibilité ne garantit pas l’accès à un interprète.",
+          "after": "Terme de registre formel : mutarjim. Le ت se prononce ; les voyelles peuvent se réduire en usage courant. Demander un interprète ne garantit pas sa disponibilité."
+        }
+      }
+    },
+    {
+      "id": "happened",
+      "fields": {
+        "note": {
+          "before": "Pour décrire un événement ; les faits précis doivent être expliqués séparément.",
+          "after": "Forme masculine. Avec les noms féminins ksida (« accident ») et shfera (« vol »), employer weq3at. Le genre grammatical peut différer du français."
+        }
+      }
+    },
+    {
+      "id": "num-two-compound",
+      "fields": {
+        "note": {
+          "before": "Dans tnayin w 3esh rin (22), avec une convention de transcription ici tnayin w 3eshrin. Jooj reste la forme usuelle de deux isolé.",
+          "after": "Dans tnayin w 3eshrin (22), « deux » prend une forme propre aux nombres composés. Juj reste la forme proposée pour deux isolé. Quitout, p. 98–99, emploie une autre convention de transcription."
+        }
+      }
+    },
+    {
+      "id": "year",
+      "fields": {
+        "note": {
+          "before": "",
+          "after": "3am est masculin en darija, même si « année » est féminin en français : 3am wa7ed."
+        }
+      }
+    },
+    {
+      "id": "happened-f",
+      "fields": {
+        "id": {
+          "before": null,
+          "after": "happened-f"
+        },
+        "meaning": {
+          "before": null,
+          "after": "a eu lieu (sujet féminin)"
+        },
+        "arabic": {
+          "before": null,
+          "after": "وقعات"
+        },
+        "latin": {
+          "before": null,
+          "after": "weq3at"
+        },
+        "parts": {
+          "before": null,
+          "after": [
+            {
+              "text": "و",
+              "sound": "we"
+            },
+            {
+              "text": "قع",
+              "sound": "q3"
+            },
+            {
+              "text": "ات",
+              "sound": "at"
+            }
+          ]
+        },
+        "note": {
+          "before": null,
+          "after": "Accord au féminin avec ksida (« accident ») ou shfera (« vol »), deux noms féminins en darija. Le genre du mot français ne détermine pas l’accord arabe."
+        },
+        "image": {
+          "before": null,
+          "after": null
+        },
+        "audio": {
+          "before": null,
+          "after": null
+        },
+        "nativeReviewed": {
+          "before": null,
+          "after": false
+        }
+      }
+    }
+  ],
+  "phraseChanges": [
+    {
+      "id": "shopping-3",
+      "before": {
+        "id": "shopping-3",
+        "words": [
+          "wash",
+          "kayn",
+          "size"
+        ],
+        "meaning": "Est-ce que la taille est disponible ?"
+      },
+      "after": {
+        "id": "shopping-3",
+        "words": [
+          "wash",
+          "kayn",
+          "size"
+        ],
+        "meaning": "Y a-t-il une taille disponible ?"
+      }
+    },
+    {
+      "id": "vetements-3",
+      "before": {
+        "id": "vetements-3",
+        "words": [
+          "hada",
+          "serwal",
+          "k7el"
+        ],
+        "meaning": "Ce pantalon est noir."
+      },
+      "after": {
+        "id": "vetements-3",
+        "words": [
+          "hada",
+          "serwal",
+          "k7el"
+        ],
+        "meaning": "C’est un pantalon noir."
+      }
+    },
+    {
+      "id": "vetements-4",
+      "before": {
+        "id": "vetements-4",
+        "words": [
+          "hadi",
+          "qemija",
+          "bida-color"
+        ],
+        "meaning": "Cette chemise est blanche."
+      },
+      "after": {
+        "id": "vetements-4",
+        "words": [
+          "hadi",
+          "qemija",
+          "bida-color"
+        ],
+        "meaning": "C’est une chemise blanche."
+      }
+    },
+    {
+      "id": "mall-fitting-3",
+      "before": {
+        "id": "mall-fitting-3",
+        "words": [
+          "wash",
+          "kayn",
+          "size"
+        ],
+        "meaning": "Est-ce que la taille est disponible ?"
+      },
+      "after": {
+        "id": "mall-fitting-3",
+        "words": [
+          "wash",
+          "kayn",
+          "size"
+        ],
+        "meaning": "Y a-t-il une taille disponible ?"
+      }
+    },
+    {
+      "id": "repas-livraison-2",
+      "before": {
+        "id": "repas-livraison-2",
+        "words": [
+          "hada",
+          "address"
+        ],
+        "meaning": "Voici l’adresse."
+      },
+      "after": {
+        "id": "repas-livraison-2",
+        "words": [
+          "hada",
+          "address"
+        ],
+        "meaning": "Voici une adresse."
+      }
+    },
+    {
+      "id": "garage-3",
+      "before": {
+        "id": "garage-3",
+        "words": [
+          "hadi",
+          "car",
+          "broken"
+        ],
+        "meaning": "Cette voiture est en panne."
+      },
+      "after": {
+        "id": "garage-3",
+        "words": [
+          "hadi",
+          "car",
+          "broken"
+        ],
+        "meaning": "C’est une voiture en panne."
+      }
+    },
+    {
+      "id": "police-vol-perte-3",
+      "before": {
+        "id": "police-vol-perte-3",
+        "words": [
+          "theft",
+          "happened",
+          "hna"
+        ],
+        "meaning": "Le vol a eu lieu ici."
+      },
+      "after": {
+        "id": "police-vol-perte-3",
+        "words": [
+          "happened-f",
+          "theft",
+          "hna"
+        ],
+        "meaning": "Un vol a eu lieu ici."
+      }
+    },
+    {
+      "id": "police-expliquer-1",
+      "before": {
+        "id": "police-expliquer-1",
+        "words": [
+          "accident",
+          "happened",
+          "hna"
+        ],
+        "meaning": "Un accident a eu lieu ici."
+      },
+      "after": {
+        "id": "police-expliquer-1",
+        "words": [
+          "happened-f",
+          "accident",
+          "hna"
+        ],
+        "meaning": "Un accident a eu lieu ici."
+      }
+    },
+    {
+      "id": "police-expliquer-2",
+      "before": {
+        "id": "police-expliquer-2",
+        "words": [
+          "hada",
+          "address"
+        ],
+        "meaning": "Voici l’adresse."
+      },
+      "after": {
+        "id": "police-expliquer-2",
+        "words": [
+          "hada",
+          "address"
+        ],
+        "meaning": "Voici une adresse."
+      }
+    },
+    {
+      "id": "mois-4",
+      "before": {
+        "id": "mois-4",
+        "words": [
+          "year",
+          "whda"
+        ],
+        "meaning": "Une année."
+      },
+      "after": {
+        "id": "mois-4",
+        "words": [
+          "year",
+          "num-1"
+        ],
+        "meaning": "Une année."
+      }
+    },
+    {
+      "id": "compter-4",
+      "before": {
+        "id": "compter-4",
+        "words": [
+          "num-20",
+          "drahem"
+        ],
+        "meaning": "Vingt dirhams."
+      },
+      "after": {
+        "id": "compter-4",
+        "words": [
+          "num-20",
+          "dirhem"
+        ],
+        "meaning": "Vingt dirhams."
+      }
+    }
+  ]
+}

@@ -1,0 +1,4052 @@
+{
+  "checked_on": "2026-10-03",
+  "scope": "Recherche de références, sans validation native ni intégration de fichiers audio.",
+  "sources": [
+    {
+      "id": "doda",
+      "name": "Darija Open Dataset",
+      "url": "https://github.com/darija-open-dataset/dataset",
+      "status": "repository_and_license_read",
+      "commit": "feb88ff23153283c47d83dd677b432fe0cbac15a",
+      "kind": "collaborative_text_dataset",
+      "license_declared": "CC BY-NC 4.0",
+      "license_url": "https://github.com/darija-open-dataset/dataset/blob/feb88ff23153283c47d83dd677b432fe0cbac15a/LICENSE",
+      "commercial_reuse": "requires_appropriate_permission",
+      "audio_files_identified": false,
+      "limits": [
+        "Les statuts humain/synthétique sont déclarés par le projet, pas validés individuellement ici.",
+        "Les entrées lexicales ne valident pas les transcriptions du site ni la prononciation.",
+        "Le README indique que certaines parties restent en révision, notamment des phrases ; humain ne signifie pas relu et validé individuellement."
+      ]
+    },
+    {
+      "id": "peace-corps",
+      "name": "Peace Corps — organisme source à consulter",
+      "url": "https://www.peacecorps.gov/",
+      "status": "proxy_403",
+      "kind": "institutional_candidate",
+      "license_verified": false
+    },
+    {
+      "id": "live-lingua",
+      "name": "Live Lingua — manuel Peace Corps référencé par le projet",
+      "url": "https://www.livelingua.com/course/peace-corps/darija-textbook---2011",
+      "status": "proxy_403",
+      "kind": "course_mirror_candidate",
+      "license_verified": false
+    },
+    {
+      "id": "fsi-mirror",
+      "name": "FSI Language Courses — miroir du cours Peace Corps marocain",
+      "url": "https://www.fsi-language-courses.org/arabic/courses/peace-corps-arabic-moroccan-language-course/",
+      "status": "proxy_403",
+      "kind": "course_and_audio_mirror_candidate",
+      "license_verified": false
+    },
+    {
+      "id": "utalk",
+      "name": "uTalk — cours de darija marocaine",
+      "url": "https://utalk.com/fr/store/arabic-moroccan",
+      "status": "proxy_403",
+      "kind": "commercial_course_candidate",
+      "license_verified": false
+    },
+    {
+      "id": "loecsen",
+      "name": "Loecsen — cours arabe marocain",
+      "url": "https://www.loecsen.com/fr/cours-arabe-marocain",
+      "status": "proxy_403",
+      "kind": "course_candidate",
+      "license_verified": false
+    },
+    {
+      "id": "wikimedia",
+      "name": "Wikimedia Commons — recherche de prononciations marocaines",
+      "url": "https://commons.wikimedia.org/wiki/Category:Moroccan_Arabic_pronunciation",
+      "status": "proxy_403",
+      "kind": "file_level_audio_search_candidate",
+      "license_verified": false
+    }
+  ],
+  "word_cross_checks": [
+    {
+      "word_id": "tomatoes",
+      "source_id": "doda",
+      "source_url": "https://github.com/darija-open-dataset/dataset/blob/feb88ff23153283c47d83dd677b432fe0cbac15a/semantic%20categories/food.csv",
+      "csv_record": 4,
+      "assessment": "Maticha / matecha : le sens et la graphie مطيشة sont attestés, mais pas le repère mtisha de notre fiche. Relecture de la voyelle requise.",
+      "native_audio_verified": false,
+      "full_phrase_verified": false
+    },
+    {
+      "word_id": "atay",
+      "source_id": "doda",
+      "source_url": "https://github.com/darija-open-dataset/dataset/blob/feb88ff23153283c47d83dd677b432fe0cbac15a/semantic%20categories/food.csv",
+      "csv_record": 92,
+      "assessment": "La graphie أتاي et la transcription atay concordent ; cela ne valide pas un audio.",
+      "native_audio_verified": false,
+      "full_phrase_verified": false
+    },
+    {
+      "word_id": "sokkar",
+      "source_id": "doda",
+      "source_url": "https://github.com/darija-open-dataset/dataset/blob/feb88ff23153283c47d83dd677b432fe0cbac15a/semantic%20categories/food.csv",
+      "csv_record": 66,
+      "assessment": "Plusieurs variantes sont données ; elles ne valident pas automatiquement notre segmentation sukkar.",
+      "native_audio_verified": false,
+      "full_phrase_verified": false
+    },
+    {
+      "word_id": "limen",
+      "source_id": "doda",
+      "source_url": "https://github.com/darija-open-dataset/dataset/blob/feb88ff23153283c47d83dd677b432fe0cbac15a/semantic%20categories/places.csv",
+      "csv_record": 140,
+      "assessment": "ليمن et limen apparaissent parmi les variantes, pour right.",
+      "native_audio_verified": false,
+      "full_phrase_verified": false
+    },
+    {
+      "word_id": "liser",
+      "source_id": "doda",
+      "source_url": "https://github.com/darija-open-dataset/dataset/blob/feb88ff23153283c47d83dd677b432fe0cbac15a/semantic%20categories/places.csv",
+      "csv_record": 141,
+      "assessment": "ليسر est attesté ; les variantes latines listées sont lisr/lisser/lissar, ce qui nécessite de revoir liser avec un locuteur.",
+      "native_audio_verified": false,
+      "full_phrase_verified": false
+    },
+    {
+      "word_id": "bit",
+      "source_id": "doda",
+      "source_url": "https://github.com/darija-open-dataset/dataset/blob/feb88ff23153283c47d83dd677b432fe0cbac15a/syntactic%20categories/nouns.csv",
+      "csv_record": 10,
+      "assessment": "بيت / bit / room concorde lexicalement ; aucune validation de la phrase d’hôtel entière.",
+      "native_audio_verified": false,
+      "full_phrase_verified": false
+    },
+    {
+      "word_id": "bab",
+      "source_id": "doda",
+      "source_url": "https://github.com/darija-open-dataset/dataset/blob/feb88ff23153283c47d83dd677b432fe0cbac15a/syntactic%20categories/nouns.csv",
+      "csv_record": 215,
+      "assessment": "باب / bab / door concorde lexicalement.",
+      "native_audio_verified": false,
+      "full_phrase_verified": false
+    },
+    {
+      "word_id": "ktab",
+      "source_id": "doda",
+      "source_url": "https://github.com/darija-open-dataset/dataset/blob/feb88ff23153283c47d83dd677b432fe0cbac15a/syntactic%20categories/nouns.csv",
+      "csv_record": 443,
+      "assessment": "كتاب / ktab / book concorde lexicalement.",
+      "native_audio_verified": false,
+      "full_phrase_verified": false
+    },
+    {
+      "word_id": "water",
+      "source_id": "doda",
+      "source_url": "https://github.com/darija-open-dataset/dataset/blob/feb88ff23153283c47d83dd677b432fe0cbac15a/syntactic%20categories/nouns.csv",
+      "csv_record": 6,
+      "assessment": "ma est attesté, mais la graphie source est ماء, tandis que notre fiche emploie ما. Variante orthographique à expliquer ou réviser.",
+      "native_audio_verified": false,
+      "full_phrase_verified": false
+    },
+    {
+      "word_id": "rain",
+      "source_id": "doda",
+      "source_url": "https://github.com/darija-open-dataset/dataset/blob/feb88ff23153283c47d83dd677b432fe0cbac15a/semantic%20categories/environment.csv",
+      "csv_record": 23,
+      "assessment": "شتا / chta / rain atteste le nom nu ; la source utilise ch pour notre convention sh, sans vérifier la phrase complète ni l’article.",
+      "native_audio_verified": false,
+      "full_phrase_verified": false
+    },
+    {
+      "word_id": "taxi",
+      "source_id": "doda",
+      "source_url": "https://github.com/darija-open-dataset/dataset/blob/feb88ff23153283c47d83dd677b432fe0cbac15a/x-tra/shorts.csv",
+      "csv_record": 471,
+      "assessment": "La source donne تاكسي / taxi, tandis que notre fiche emploie الطاكسي. La graphie et l’article requièrent relecture ; ne pas en déduire une erreur certaine.",
+      "native_audio_verified": false,
+      "full_phrase_verified": false
+    }
+  ],
+  "unresolved": [
+    "Manuel et index audio Peace Corps : accès et droits non vérifiés.",
+    "Aucun audio natif par mot ou par phrase n’a été obtenu.",
+    "Relecture par un locuteur marocain des 124 fiches et 64 expressions de situations, ainsi que les quatre exemples de localisation encore nécessaire.",
+    "Licence de chaque futur audio à documenter avant redistribution.",
+    "Les sources complètes du site Windows restent à transférer indépendamment de cette recherche."
+  ],
+  "csv_record_numbering": "Numéro d’enregistrement CSV avec en-tête compté comme 1 ; la première entrée de données est 2. Ce n’est pas une garantie de numéro de ligne physique pour les CSV multilignes.",
+  "independent_review": {
+    "verdict": "partially-confirmed",
+    "verified": [
+      "Empreintes des neuf fichiers source inspectés concordantes avec Git.",
+      "Existence exacte des onze entrées lexicales sélectionnées.",
+      "Licence déclarée CC BY-NC 4.0 et absence des extensions audio recherchées dans l’arbre inspecté."
+    ],
+    "limits": [
+      "Pas de validation linguistique native.",
+      "Pages pédagogiques et audio refusées par le proxy.",
+      "Sans état initial horodaté de l’application, seule la présence actuelle de zéro audio et zéro validation native est indépendante, pas l’historique des modifications."
+    ]
+  },
+  "topic_extension": {
+    "checked_on": "2026-10-03",
+    "content_version": 3,
+    "total_words": 124,
+    "total_scene_expressions": 64,
+    "map_examples": 4,
+    "source_commit": "feb88ff23153283c47d83dd677b432fe0cbac15a",
+    "changes": "Sens français, notes et segmentation pédagogiques rédigés pour le module ; graphies et transcriptions adaptées. Les phrases et les itinéraires sont des propositions originales, non validées par DODa.",
+    "checks": [
+      {
+        "word_id": "ras",
+        "source_id": "doda",
+        "source_file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 411,
+        "source_english_gloss": "head",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "wjeh",
+        "source_id": "doda",
+        "source_file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 429,
+        "source_english_gloss": "face",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "3in",
+        "source_id": "doda",
+        "source_file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 676,
+        "source_english_gloss": "eye",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "nif",
+        "source_id": "doda",
+        "source_file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 1127,
+        "source_english_gloss": "nose",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "femm",
+        "source_id": "doda",
+        "source_file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 697,
+        "source_english_gloss": "mouth",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "sh3er",
+        "source_id": "doda",
+        "source_file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 559,
+        "source_english_gloss": "hair",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "dra3",
+        "source_id": "doda",
+        "source_file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 710,
+        "source_english_gloss": "arm",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "rjel",
+        "source_id": "doda",
+        "source_file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 794,
+        "source_english_gloss": "foot",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "kouzina",
+        "source_id": "doda",
+        "source_file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 87,
+        "source_english_gloss": "kitchen",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "sherjem",
+        "source_id": "doda",
+        "source_file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 75,
+        "source_english_gloss": "window",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "tabla",
+        "source_id": "doda",
+        "source_file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 4,
+        "source_english_gloss": "table",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "korsi",
+        "source_id": "doda",
+        "source_file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 3,
+        "source_english_gloss": "chair",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "namousiya",
+        "source_id": "doda",
+        "source_file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 37,
+        "source_english_gloss": "bed",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "7anout",
+        "source_id": "doda",
+        "source_file": "semantic categories/places.csv",
+        "csv_record_header_is_1": 126,
+        "source_english_gloss": "shop",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "mkhbaza",
+        "source_id": "doda",
+        "source_file": "semantic categories/places.csv",
+        "csv_record_header_is_1": 115,
+        "source_english_gloss": "bakery",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "banka",
+        "source_id": "doda",
+        "source_file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 502,
+        "source_english_gloss": "bank",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "sbitar",
+        "source_id": "doda",
+        "source_file": "semantic categories/places.csv",
+        "csv_record_header_is_1": 104,
+        "source_english_gloss": "hospital",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "mdrasa",
+        "source_id": "doda",
+        "source_file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 11,
+        "source_english_gloss": "school",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "khobz",
+        "source_id": "doda",
+        "source_file": "semantic categories/food.csv",
+        "csv_record_header_is_1": 64,
+        "source_english_gloss": "bread",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "7lib",
+        "source_id": "doda",
+        "source_file": "semantic categories/food.csv",
+        "csv_record_header_is_1": 93,
+        "source_english_gloss": "milk",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "bid",
+        "source_id": "doda",
+        "source_file": "semantic categories/food.csv",
+        "csv_record_header_is_1": 61,
+        "source_english_gloss": "eggs",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "l7em",
+        "source_id": "doda",
+        "source_file": "semantic categories/food.csv",
+        "csv_record_header_is_1": 72,
+        "source_english_gloss": "meat",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "btata",
+        "source_id": "doda",
+        "source_file": "semantic categories/food.csv",
+        "csv_record_header_is_1": 9,
+        "source_english_gloss": "potato",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "tffa7",
+        "source_id": "doda",
+        "source_file": "semantic categories/food.csv",
+        "csv_record_header_is_1": 31,
+        "source_english_gloss": "apple",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "banan",
+        "source_id": "doda",
+        "source_file": "semantic categories/food.csv",
+        "csv_record_header_is_1": 47,
+        "source_english_gloss": "banana",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "limoun",
+        "source_id": "doda",
+        "source_file": "semantic categories/food.csv",
+        "csv_record_header_is_1": 37,
+        "source_english_gloss": "orange",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "mel7a",
+        "source_id": "doda",
+        "source_file": "semantic categories/food.csv",
+        "csv_record_header_is_1": 67,
+        "source_english_gloss": "salt",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "zit",
+        "source_id": "doda",
+        "source_file": "semantic categories/food.csv",
+        "csv_record_header_is_1": 68,
+        "source_english_gloss": "oil",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "zenqa",
+        "source_id": "doda",
+        "source_file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 484,
+        "source_english_gloss": "street",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "triq",
+        "source_id": "doda",
+        "source_file": "semantic categories/places.csv",
+        "csv_record_header_is_1": 128,
+        "source_english_gloss": "road",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "qoddam",
+        "source_id": "doda",
+        "source_file": "semantic categories/places.csv",
+        "csv_record_header_is_1": 114,
+        "source_english_gloss": "front",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      },
+      {
+        "word_id": "yedd",
+        "source_id": "doda",
+        "source_file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 412,
+        "source_english_gloss": "hand",
+        "status": "lexical_comparison_only",
+        "native_review": false
+      }
+    ],
+    "limits": "Ces rapprochements ne couvrent pas tous les mots ajoutés et ne certifient ni la prononciation ni les phrases. Aucune validation native."
+  },
+  "animals_extension": {
+    "checked_on": "2026-10-03",
+    "source_id": "doda",
+    "source_commit": "feb88ff23153283c47d83dd677b432fe0cbac15a",
+    "source_file": "semantic categories/animals.csv",
+    "source_file_sha256": "b6aaed0c3b7eba457c339507d89b44d780664338b36b9fd6535d68cfd181681d",
+    "changes": "Traductions françaises, transcription et groupes écrits adaptés ; notes et phrases éditoriales. Graphies begra, qniya et ferrouj différentes des entrées sélectionnées.",
+    "native_review": false,
+    "checks": [
+      {
+        "word_id": "mesh",
+        "csv_record_header_is_1": 3,
+        "source_english_gloss": "cat",
+        "source_arabic": "مش",
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "kelb",
+        "csv_record_header_is_1": 2,
+        "source_english_gloss": "dog",
+        "source_arabic": "كلب",
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "3awd-horse",
+        "csv_record_header_is_1": 17,
+        "source_english_gloss": "horse",
+        "source_arabic": "عاود",
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "7awli",
+        "csv_record_header_is_1": 19,
+        "source_english_gloss": "sheep",
+        "source_arabic": "حاولي",
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "begra",
+        "csv_record_header_is_1": 33,
+        "source_english_gloss": "cow",
+        "source_arabic": "بڭرة",
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "jmel",
+        "csv_record_header_is_1": 29,
+        "source_english_gloss": "camel",
+        "source_arabic": "جمل",
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "7mar",
+        "csv_record_header_is_1": 4,
+        "source_english_gloss": "donkey",
+        "source_arabic": "حمار",
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "me3za",
+        "csv_record_header_is_1": 21,
+        "source_english_gloss": "goat",
+        "source_arabic": "معزة",
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "qniya",
+        "csv_record_header_is_1": 35,
+        "source_english_gloss": "rabbit",
+        "source_arabic": "قنيونة",
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "djaja-hen",
+        "csv_record_header_is_1": 7,
+        "source_english_gloss": "chicken",
+        "source_arabic": "دجاجة",
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "ferrouj",
+        "csv_record_header_is_1": 8,
+        "source_english_gloss": "cock",
+        "source_arabic": "فروج",
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "betta",
+        "csv_record_header_is_1": 40,
+        "source_english_gloss": "duck",
+        "source_arabic": "بطّة",
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "twer",
+        "csv_record_header_is_1": 36,
+        "source_english_gloss": "bird",
+        "source_arabic": "طويير",
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "sbe3",
+        "csv_record_header_is_1": 6,
+        "source_english_gloss": "lion",
+        "source_arabic": "سبع",
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "qerd",
+        "csv_record_header_is_1": 27,
+        "source_english_gloss": "monkey",
+        "source_arabic": "قرد",
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "fekroun",
+        "csv_record_header_is_1": 14,
+        "source_english_gloss": "turtle",
+        "source_arabic": "فكرون",
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "7nesh",
+        "csv_record_header_is_1": 52,
+        "source_english_gloss": "snake",
+        "source_arabic": "حنش",
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "ne7la",
+        "csv_record_header_is_1": 43,
+        "source_english_gloss": "bee",
+        "source_arabic": "نحلة",
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "farasha",
+        "csv_record_header_is_1": 57,
+        "source_english_gloss": "butterfly",
+        "source_arabic": "فراشة",
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "ne3ja",
+        "csv_record_header_is_1": 20,
+        "source_english_gloss": "sheep",
+        "source_arabic": "نعجة",
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "7out",
+        "csv_record_header_is_1": 12,
+        "source_english_gloss": "fish",
+        "source_arabic": "حوت",
+        "status": "lexical_comparison_only"
+      }
+    ]
+  },
+  "conjugation_extension": {
+    "checked_on": "2026-10-03",
+    "source_id": "doda",
+    "commit": "feb88ff23153283c47d83dd677b432fe0cbac15a",
+    "files": [
+      {
+        "path": "syntactic categories/conjug_present.csv",
+        "sha256": "e2c0e029c458e0d6a93270f8b0538d73ae4177276db4a1b224005d20e2c0c9d4"
+      },
+      {
+        "path": "syntactic categories/conjug_past.csv",
+        "sha256": "6d0c6d6ba200db5e2bdd368dcd1f8409f2d0cb9066ddda676e7d55caa81c3c92"
+      },
+      {
+        "path": "syntactic categories/imperatives.csv",
+        "sha256": "273b32deed4587f6799626486879e8f40858d070bdd4e9c3f3e30b161f59c8ae"
+      },
+      {
+        "path": "syntactic categories/pronouns.csv",
+        "sha256": "8af5411e253fa6e2306b274e6852628ca27b3ac35601e8a992f9f0976a7e6c35"
+      }
+    ],
+    "records": [
+      {
+        "verb_id": "khdem",
+        "file": "syntactic categories/conjug_present.csv",
+        "csv_record_header_is_1": 330,
+        "cells": {
+          "root": "khdem",
+          "ana": "kankhdem",
+          "nta": "katkhdem",
+          "nti": "katkhdmi",
+          "howa": "kaykhdem",
+          "hia": "katkhdem",
+          "7na": "kankhdmo",
+          "ntoma": "katkhdmo",
+          "homa": "kaykhdmo"
+        }
+      },
+      {
+        "verb_id": "shreb",
+        "file": "syntactic categories/conjug_present.csv",
+        "csv_record_header_is_1": 3,
+        "cells": {
+          "root": "chrb",
+          "ana": "kanchrb",
+          "nta": "katchrb",
+          "nti": "katchrbi",
+          "howa": "kaychrb",
+          "hia": "katchrb",
+          "7na": "kanchrbo",
+          "ntoma": "katchrbo",
+          "homa": "kaychrbo"
+        }
+      },
+      {
+        "verb_id": "kla",
+        "file": "syntactic categories/conjug_present.csv",
+        "csv_record_header_is_1": 2,
+        "cells": {
+          "root": "kla",
+          "ana": "kanakl",
+          "nta": "katakl",
+          "nti": "katakli",
+          "howa": "kayakol",
+          "hia": "katakol",
+          "7na": "kanaklo",
+          "ntoma": "kataklo",
+          "homa": "kayaklo"
+        }
+      },
+      {
+        "verb_id": "msha",
+        "file": "syntactic categories/conjug_present.csv",
+        "csv_record_header_is_1": 15,
+        "cells": {
+          "root": "mcha",
+          "ana": "kanmchi",
+          "nta": "katmchi",
+          "nti": "katmchi",
+          "howa": "kaymchi",
+          "hia": "katmchi",
+          "7na": "kanmchiw",
+          "ntoma": "katmchiw",
+          "homa": "kaymchiw"
+        }
+      },
+      {
+        "verb_id": "qra",
+        "file": "syntactic categories/conjug_present.csv",
+        "csv_record_header_is_1": 8,
+        "cells": {
+          "root": "9ra",
+          "ana": "kan9ra",
+          "nta": "kat9ra",
+          "nti": "kat9ray",
+          "howa": "kay9ra",
+          "hia": "kat9ra",
+          "7na": "kan9raw",
+          "ntoma": "kat9raw",
+          "homa": "kay9raw"
+        }
+      },
+      {
+        "verb_id": "dar",
+        "file": "syntactic categories/conjug_present.csv",
+        "csv_record_header_is_1": 36,
+        "cells": {
+          "root": "dar",
+          "ana": "kandir",
+          "nta": "katdir",
+          "nti": "katdiri",
+          "howa": "kaydir",
+          "hia": "katdir",
+          "7na": "kandiro",
+          "ntoma": "katdiro",
+          "homa": "kaydiro"
+        }
+      },
+      {
+        "verb_id": "khdem",
+        "file": "syntactic categories/conjug_past.csv",
+        "csv_record_header_is_1": 363,
+        "cells": {
+          "ana": "khdemt",
+          "nta": "khdemti",
+          "nti": "khdemti",
+          "howa": "khdem",
+          "hia": "khdmat",
+          "7na": "khdmna",
+          "ntoma": "khdmto",
+          "homa": "khdmo"
+        }
+      },
+      {
+        "verb_id": "shreb",
+        "file": "syntactic categories/conjug_past.csv",
+        "csv_record_header_is_1": 3,
+        "cells": {
+          "ana": "chrbt",
+          "nta": "chrebti",
+          "nti": "chrebti",
+          "howa": "chreb",
+          "hia": "cherbat",
+          "7na": "chrebna",
+          "ntoma": "chrebto",
+          "homa": "cherbo"
+        }
+      },
+      {
+        "verb_id": "kla",
+        "file": "syntactic categories/conjug_past.csv",
+        "csv_record_header_is_1": 2,
+        "cells": {
+          "ana": "klit",
+          "nta": "kliti",
+          "nti": "kliti",
+          "howa": "kla",
+          "hia": "klat",
+          "7na": "klina",
+          "ntoma": "klito",
+          "homa": "klaw"
+        }
+      },
+      {
+        "verb_id": "msha",
+        "file": "syntactic categories/conjug_past.csv",
+        "csv_record_header_is_1": 15,
+        "cells": {
+          "ana": "mchit",
+          "nta": "mchiti",
+          "nti": "mchiti",
+          "howa": "mcha",
+          "hia": "mchat",
+          "7na": "mchina",
+          "ntoma": "mchito",
+          "homa": "mchaw"
+        }
+      },
+      {
+        "verb_id": "qra",
+        "file": "syntactic categories/conjug_past.csv",
+        "csv_record_header_is_1": 8,
+        "cells": {
+          "ana": "9rit",
+          "nta": "9riti",
+          "nti": "9riti",
+          "howa": "9ra",
+          "hia": "9rat",
+          "7na": "9rina",
+          "ntoma": "9rito",
+          "homa": "9raw"
+        }
+      },
+      {
+        "verb_id": "dar",
+        "file": "syntactic categories/conjug_past.csv",
+        "csv_record_header_is_1": 36,
+        "cells": {
+          "ana": "drt",
+          "nta": "drti",
+          "nti": "drti",
+          "howa": "dar",
+          "hia": "dart",
+          "7na": "drna",
+          "ntoma": "drto",
+          "homa": "daro"
+        }
+      },
+      {
+        "verb_id": "khdem",
+        "file": "syntactic categories/imperatives.csv",
+        "csv_record_header_is_1": 360,
+        "cells": {
+          "root_darija": "khdem",
+          "nta": "khdem",
+          "nti": "khdmi",
+          "ntoma": "khdmo"
+        }
+      },
+      {
+        "verb_id": "shreb",
+        "file": "syntactic categories/imperatives.csv",
+        "csv_record_header_is_1": 3,
+        "cells": {
+          "root_darija": "chreb",
+          "nta": "chreb",
+          "nti": "cherbi",
+          "ntoma": "cherbou"
+        }
+      },
+      {
+        "verb_id": "kla",
+        "file": "syntactic categories/imperatives.csv",
+        "csv_record_header_is_1": 2,
+        "cells": {
+          "root_darija": "kla",
+          "nta": "koul",
+          "nti": "kouli",
+          "ntoma": "koulou"
+        }
+      },
+      {
+        "verb_id": "msha",
+        "file": "syntactic categories/imperatives.csv",
+        "csv_record_header_is_1": 15,
+        "cells": {
+          "root_darija": "mcha",
+          "nta": "sir",
+          "nti": "siri",
+          "ntoma": "siro"
+        }
+      },
+      {
+        "verb_id": "qra",
+        "file": "syntactic categories/imperatives.csv",
+        "csv_record_header_is_1": 8,
+        "cells": {
+          "root_darija": "9ra",
+          "nta": "9ra",
+          "nti": "9ray",
+          "ntoma": "9raw"
+        }
+      },
+      {
+        "verb_id": "dar",
+        "file": "syntactic categories/imperatives.csv",
+        "csv_record_header_is_1": 36,
+        "cells": {
+          "root_darija": "dar",
+          "nta": "dir",
+          "nti": "diri",
+          "ntoma": "diro"
+        }
+      },
+      {
+        "file": "syntactic categories/pronouns.csv",
+        "csv_record_header_is_1": 3,
+        "cells": {
+          "n1": "ana",
+          "n2": "",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "أنا",
+          "eng": "I"
+        }
+      },
+      {
+        "file": "syntactic categories/pronouns.csv",
+        "csv_record_header_is_1": 4,
+        "cells": {
+          "n1": "nta",
+          "n2": "",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "نتا",
+          "eng": "you"
+        }
+      },
+      {
+        "file": "syntactic categories/pronouns.csv",
+        "csv_record_header_is_1": 5,
+        "cells": {
+          "n1": "nti",
+          "n2": "",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "نتي",
+          "eng": "you"
+        }
+      },
+      {
+        "file": "syntactic categories/pronouns.csv",
+        "csv_record_header_is_1": 6,
+        "cells": {
+          "n1": "hoa",
+          "n2": "howa",
+          "n3": "8owa",
+          "n4": "8oa",
+          "darija_ar": "هو",
+          "eng": "him"
+        }
+      },
+      {
+        "file": "syntactic categories/pronouns.csv",
+        "csv_record_header_is_1": 7,
+        "cells": {
+          "n1": "hia",
+          "n2": "hya",
+          "n3": "8ya",
+          "n4": "8ia",
+          "darija_ar": "هيا",
+          "eng": "her"
+        }
+      },
+      {
+        "file": "syntactic categories/pronouns.csv",
+        "csv_record_header_is_1": 9,
+        "cells": {
+          "n1": "7na",
+          "n2": "",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "حنا",
+          "eng": "we"
+        }
+      },
+      {
+        "file": "syntactic categories/pronouns.csv",
+        "csv_record_header_is_1": 10,
+        "cells": {
+          "n1": "ntoma",
+          "n2": "ntouma",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "نتوما",
+          "eng": "you"
+        }
+      },
+      {
+        "file": "syntactic categories/pronouns.csv",
+        "csv_record_header_is_1": 11,
+        "cells": {
+          "n1": "homa",
+          "n2": "houma",
+          "n3": "8ouma",
+          "n4": "8oma",
+          "darija_ar": "هوما",
+          "eng": "them"
+        }
+      }
+    ],
+    "native_review": false,
+    "changes": "Transcriptions adaptées (sh, q, voyelles réduites, u/w), graphies arabes et segmentation morphologique éditoriales ; traductions françaises originales. Futur et négation construits pédagogiquement et non attestés par ces cellules. Les lignes de fichiers distincts sont sélectionnées individuellement, sans présumer un alignement par indice.",
+    "limits": [
+      "Les tableaux sources sont en transcription latine, sans audio.",
+      "Aucune validation des formes arabes, des traductions françaises ou de la prononciation par cette consultation.",
+      "Le passé accompli ne couvre pas tous les emplois des temps passés français."
+    ]
+  },
+  "countries_colors_extension": {
+    "checked_on": "2026-10-03",
+    "content_version": 6,
+    "source_id": "doda",
+    "commit": "feb88ff23153283c47d83dd677b432fe0cbac15a",
+    "checks": [
+      {
+        "word_id": "country-ma",
+        "file": "semantic categories/places.csv",
+        "csv_record_header_is_1": 8,
+        "source_cells": {
+          "n1": "mghrib",
+          "n2": "maghrib",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "المغرب",
+          "eng": "morocco"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "country-dz",
+        "file": "semantic categories/places.csv",
+        "csv_record_header_is_1": 13,
+        "source_cells": {
+          "n1": "jaza2ir",
+          "n2": "ljaza2ir",
+          "n3": "ljazayr",
+          "n4": "",
+          "darija_ar": "الجزائر",
+          "eng": "algeria"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "country-tn",
+        "file": "semantic categories/places.csv",
+        "csv_record_header_is_1": 26,
+        "source_cells": {
+          "n1": "touns",
+          "n2": "",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "تونس",
+          "eng": "tunisia"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "country-eg",
+        "file": "semantic categories/places.csv",
+        "csv_record_header_is_1": 25,
+        "source_cells": {
+          "n1": "misr",
+          "n2": "misra",
+          "n3": "mesr",
+          "n4": "maSr",
+          "darija_ar": "مصر",
+          "eng": "egypt"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "country-fr",
+        "file": "semantic categories/places.csv",
+        "csv_record_header_is_1": 14,
+        "source_cells": {
+          "n1": "fransa",
+          "n2": "",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "فرنسا",
+          "eng": "france"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "country-es",
+        "file": "semantic categories/places.csv",
+        "csv_record_header_is_1": 15,
+        "source_cells": {
+          "n1": "Sbania",
+          "n2": "",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "صبانيا",
+          "eng": "spain"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "country-pt",
+        "file": "semantic categories/places.csv",
+        "csv_record_header_is_1": 17,
+        "source_cells": {
+          "n1": "bortoghal",
+          "n2": "lbortoghal",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "برتغال",
+          "eng": "portugal"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "country-it",
+        "file": "semantic categories/places.csv",
+        "csv_record_header_is_1": 24,
+        "source_cells": {
+          "n1": "talyan",
+          "n2": "talian",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "طاليان",
+          "eng": "italy"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "country-de",
+        "file": "semantic categories/places.csv",
+        "csv_record_header_is_1": 18,
+        "source_cells": {
+          "n1": "almania",
+          "n2": "almanya",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "ألمانيا",
+          "eng": "germany"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "country-be",
+        "file": "semantic categories/places.csv",
+        "csv_record_header_is_1": 23,
+        "source_cells": {
+          "n1": "bljika",
+          "n2": "beljika",
+          "n3": "baljika",
+          "n4": "",
+          "darija_ar": "بلجيكا",
+          "eng": "belgium"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "country-us",
+        "file": "semantic categories/places.csv",
+        "csv_record_header_is_1": 21,
+        "source_cells": {
+          "n1": "mirikan",
+          "n2": "lmirikan",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "ميريكان",
+          "eng": "united states"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "country-cn",
+        "file": "semantic categories/places.csv",
+        "csv_record_header_is_1": 30,
+        "source_cells": {
+          "n1": "SSin",
+          "n2": "",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "الصين",
+          "eng": "china"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "country-sa",
+        "file": "semantic categories/places.csv",
+        "csv_record_header_is_1": 9,
+        "source_cells": {
+          "n1": "ssa3oudia",
+          "n2": "",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "السعودية",
+          "eng": "saudi arabia"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "7mer",
+        "file": "semantic categories/colors.csv",
+        "csv_record_header_is_1": 3,
+        "source_cells": {
+          "n1": "7mr",
+          "n2": "7mer",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "حمر",
+          "eng": "red"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "zreq",
+        "file": "semantic categories/colors.csv",
+        "csv_record_header_is_1": 5,
+        "source_cells": {
+          "n1": "zr9",
+          "n2": "zra9",
+          "n3": "zre9",
+          "n4": "zraq",
+          "darija_ar": "زرق",
+          "eng": "blue"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "khder",
+        "file": "semantic categories/colors.csv",
+        "csv_record_header_is_1": 4,
+        "source_cells": {
+          "n1": "khdr",
+          "n2": "5dr",
+          "n3": "khdar",
+          "n4": "khder",
+          "darija_ar": "خضر",
+          "eng": "green"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "sfer",
+        "file": "semantic categories/colors.csv",
+        "csv_record_header_is_1": 16,
+        "source_cells": {
+          "n1": "Sfr",
+          "n2": "Sfar",
+          "n3": "Sfer",
+          "n4": "",
+          "darija_ar": "صفر",
+          "eng": "yellow"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "k7el",
+        "file": "semantic categories/colors.csv",
+        "csv_record_header_is_1": 7,
+        "source_cells": {
+          "n1": "k7l",
+          "n2": "k7al",
+          "n3": "k7el",
+          "n4": "",
+          "darija_ar": "كحل",
+          "eng": "black"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "byed-color",
+        "file": "semantic categories/colors.csv",
+        "csv_record_header_is_1": 6,
+        "source_cells": {
+          "n1": "byed",
+          "n2": "byad",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "بيض",
+          "eng": "white"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "limouni-color",
+        "file": "semantic categories/colors.csv",
+        "csv_record_header_is_1": 8,
+        "source_cells": {
+          "n1": "limouni",
+          "n2": "",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "ليموني",
+          "eng": "orange"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "qouqi",
+        "file": "semantic categories/colors.csv",
+        "csv_record_header_is_1": 15,
+        "source_cells": {
+          "n1": "9ou9i",
+          "n2": "9o9i",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "قوقي",
+          "eng": "purple"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "werdi",
+        "file": "semantic categories/colors.csv",
+        "csv_record_header_is_1": 13,
+        "source_cells": {
+          "n1": "wardi",
+          "n2": "werdi",
+          "n3": "ouardi",
+          "n4": "",
+          "darija_ar": "وردي",
+          "eng": "pink"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "qehwi",
+        "file": "semantic categories/colors.csv",
+        "csv_record_header_is_1": 10,
+        "source_cells": {
+          "n1": "9hwi",
+          "n2": "9ahwi",
+          "n3": "qahwi",
+          "n4": "9ehwi",
+          "darija_ar": "قهوي",
+          "eng": "brown"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "gri-color",
+        "file": "semantic categories/colors.csv",
+        "csv_record_header_is_1": 9,
+        "source_cells": {
+          "n1": "gri",
+          "n2": "",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "ڭري",
+          "eng": "grey"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "bij-color",
+        "file": "semantic categories/colors.csv",
+        "csv_record_header_is_1": 18,
+        "source_cells": {
+          "n1": "bij",
+          "n2": "beige",
+          "n3": "baaj",
+          "n4": "",
+          "darija_ar": "بيج",
+          "eng": "beige"
+        },
+        "status": "lexical_comparison_only"
+      }
+    ],
+    "color_file_sha256": "7f613d0fee7329ca40757f46d8e2e06a3221cd89a1e16b8a02cfd59a0d9774b3",
+    "native_review": false,
+    "limits": [
+      "Ces rapprochements ne couvrent pas tous les pays, les formes féminines ni les phrases.",
+      "Nuanciers éditoriaux approximatifs : les noms de couleurs ne désignent pas un code hexadécimal normatif.",
+      "Graphies, transcriptions, français et segmentation adaptés. Les pays et gentilés ne sont pas confondus."
+    ]
+  },
+  "flag_assets": {
+    "name": "flag-icons",
+    "author": "Panayiotis Lipiridis et contributeurs",
+    "url": "https://github.com/lipis/flag-icons",
+    "commit": "086f7e97d657358203916dbe84f61c2bccaa81eb",
+    "license": "MIT",
+    "license_file": "docs/FLAGS-LICENSE.txt",
+    "files": [
+      {
+        "code": "ma",
+        "path": "illustrations/flags/ma.svg",
+        "sha256": "28cfcdecf9675b0a14fbfae176324aea03711edab1a13592cfb7d58e6772b25c"
+      },
+      {
+        "code": "dz",
+        "path": "illustrations/flags/dz.svg",
+        "sha256": "9ea0cf93222ab7b5e7b77b9576afcad80dad1eff33827e8e58dbfbb42aeb8213"
+      },
+      {
+        "code": "tn",
+        "path": "illustrations/flags/tn.svg",
+        "sha256": "8e0274e5762a4d5f783e64f1206dd69008454f750de21d3ba61439d0af3c577c"
+      },
+      {
+        "code": "eg",
+        "path": "illustrations/flags/eg.svg",
+        "sha256": "3f85d1d2bdb03692ad68f84efff36be2f5b1b5b7438b7b7be50def3837bf532f"
+      },
+      {
+        "code": "fr",
+        "path": "illustrations/flags/fr.svg",
+        "sha256": "a526851c372e3372b1596be71af355ea72b1650bbc4c06e6e2c226900d3de6cc"
+      },
+      {
+        "code": "es",
+        "path": "illustrations/flags/es.svg",
+        "sha256": "f9cfaff858e95f830733ade9591037b5322dfb5827a53b70956a3d190bb49b9a"
+      },
+      {
+        "code": "pt",
+        "path": "illustrations/flags/pt.svg",
+        "sha256": "a7a2cf0b44aaaaf4f3bdc0ee0fa308ec7085bdfedd3f72da1473d43fd2a569fb"
+      },
+      {
+        "code": "it",
+        "path": "illustrations/flags/it.svg",
+        "sha256": "9fa88118818d9b64838f578e2babcca3d0630aed21b5c33b34aff7ac5ce506bc"
+      },
+      {
+        "code": "de",
+        "path": "illustrations/flags/de.svg",
+        "sha256": "efd480af5a154a7651f29da23ee0d09dbc892410fb4041898ddf8face336c575"
+      },
+      {
+        "code": "be",
+        "path": "illustrations/flags/be.svg",
+        "sha256": "d6aff6fa4c913404eafd53f91c0a9b240fcecaddc8f0ac2160d362e38469342c"
+      },
+      {
+        "code": "nl",
+        "path": "illustrations/flags/nl.svg",
+        "sha256": "8f691f17fe70894537af8e92f2ca47761d353639b0defc15cbe561eb503ab010"
+      },
+      {
+        "code": "gb",
+        "path": "illustrations/flags/gb.svg",
+        "sha256": "c8be1e7208798a4ae692ee1e937065d498bb29e741943f6172b29118b8ed8066"
+      },
+      {
+        "code": "us",
+        "path": "illustrations/flags/us.svg",
+        "sha256": "e7be4240cf57987926673708f09233be1ab6bdf35acc7b86bd32a263f197a2a7"
+      },
+      {
+        "code": "ca",
+        "path": "illustrations/flags/ca.svg",
+        "sha256": "345ec9dac057e203f1331b2d3f9f473789864edaee1182a26bc261356bcf72f1"
+      },
+      {
+        "code": "tr",
+        "path": "illustrations/flags/tr.svg",
+        "sha256": "256a1d6afbedb9f731566982331a1cd1ad14aba211b8a61d338855879505e74f"
+      },
+      {
+        "code": "jp",
+        "path": "illustrations/flags/jp.svg",
+        "sha256": "bfea80baf9989383dc4bf7ca594ed95be0df0ff125bfc88d0bfa878eb0198022"
+      },
+      {
+        "code": "cn",
+        "path": "illustrations/flags/cn.svg",
+        "sha256": "981da9bdf82d48e31691f20578cefcb26cf7d0bd95e4ebd5c0df00bdfe988c1a"
+      },
+      {
+        "code": "br",
+        "path": "illustrations/flags/br.svg",
+        "sha256": "b0a912826c3ffd7287435ebed66e18fe058e992309c00dc10b430dd41a29ba91"
+      },
+      {
+        "code": "sn",
+        "path": "illustrations/flags/sn.svg",
+        "sha256": "6437db13c13fa5cc1b121e6b59739902c6583be6db361260873ce2664f666478"
+      },
+      {
+        "code": "sa",
+        "path": "illustrations/flags/sa.svg",
+        "sha256": "5738c8cfca5fea63587cbcf69237996c8ce6283f8016853150686f37311b620e"
+      }
+    ],
+    "changes": "SVG 4×3 originaux copiés sans modification ; affichage en cartes de vocabulaire."
+  },
+  "furniture_extension": {
+    "checked_on": "2026-10-03",
+    "content_version": 7,
+    "source_id": "doda",
+    "commit": "feb88ff23153283c47d83dd677b432fe0cbac15a",
+    "checks": [
+      {
+        "word_id": "korsi",
+        "file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 3,
+        "source_cells": {
+          "n1": "korsi",
+          "n2": "krsi",
+          "n3": "",
+          "darija_ar": "كرسي",
+          "eng": "chair"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "tabla",
+        "file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 4,
+        "source_cells": {
+          "n1": "tabla",
+          "n2": "tbla",
+          "n3": "",
+          "darija_ar": "طبلة",
+          "eng": "table"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "namousiya",
+        "file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 37,
+        "source_cells": {
+          "n1": "namousia",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "ناموسية",
+          "eng": "bed"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "biro",
+        "file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 74,
+        "source_cells": {
+          "n1": "biro",
+          "n2": "lbiro",
+          "n3": "",
+          "darija_ar": "بيرو",
+          "eng": "desk"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "mjerr",
+        "file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 1296,
+        "source_cells": {
+          "n1": "mjerr",
+          "n2": "mjrr",
+          "n3": "mjarr",
+          "darija_ar": "مجرّ",
+          "eng": "drawer"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "frash",
+        "file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 221,
+        "source_cells": {
+          "n1": "frach",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "فراش",
+          "eng": "furniture"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "zerbiya",
+        "file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 227,
+        "source_cells": {
+          "n1": "zrbia",
+          "n2": "zerbia",
+          "n3": "zarbia",
+          "darija_ar": "زربية",
+          "eng": "carpet"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "mkhedda",
+        "file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 230,
+        "source_cells": {
+          "n1": "mkhdda",
+          "n2": "mkhadda",
+          "n3": "mkhedda",
+          "darija_ar": "مخدة",
+          "eng": "pillow"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "mraya",
+        "file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 231,
+        "source_cells": {
+          "n1": "mraya",
+          "n2": "meraya",
+          "n3": "maraya",
+          "darija_ar": "مراية",
+          "eng": "mirror"
+        },
+        "status": "lexical_comparison_only"
+      },
+      {
+        "word_id": "manta",
+        "file": "syntactic categories/nouns.csv",
+        "csv_record_header_is_1": 148,
+        "source_cells": {
+          "n1": "manTa",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "مانطة",
+          "eng": "blanket"
+        },
+        "status": "lexical_comparison_only"
+      }
+    ],
+    "native_review": false,
+    "changes": "Quinze fiches nouvelles, trois fiches existantes réutilisées. Graphies, transcription, explications et français adaptés ; distinction des meubles, accessoires et des sens en contexte.",
+    "limits": [
+      "Tous les mots ne sont pas attestés par ces rapprochements.",
+      "Le sens source furniture pour frash est traité avec prudence ; le module privilégie literie/couchage, sans prétendre à une équivalence universelle.",
+      "Les emprunts comportent des variantes de consonnes et de graphies (p/b).",
+      "Les quatre phrases et les nouveaux repères de prononciation ne sont pas validés nativement."
+    ]
+  },
+  "family_extension": {
+    "version": 9,
+    "source": "DODa semantic categories/family.csv",
+    "commit": "feb88ff23153283c47d83dd677b432fe0cbac15a",
+    "sha256": "23f8b691303bd0e1b86e1528a22b9f6049c8fd39f9c33e5e3a4104545f119916",
+    "nativeReviewed": false,
+    "record_numbering": "CSV records including header as record 1",
+    "comparisons": [
+      {
+        "record": 2,
+        "source": {
+          "n1": "3a2ila",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "عائلة",
+          "eng": "family"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 3,
+        "source": {
+          "n1": "bnti",
+          "n2": "benti",
+          "n3": "banti",
+          "darija_ar": "بنتي",
+          "eng": "my daughter"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 4,
+        "source": {
+          "n1": "wldi",
+          "n2": "waldi",
+          "n3": "weldi",
+          "darija_ar": "ولدي",
+          "eng": "my son"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 5,
+        "source": {
+          "n1": "lwalid",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "لواليد",
+          "eng": "father"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 6,
+        "source": {
+          "n1": "lwalida",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "لواليدة",
+          "eng": "mother"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 7,
+        "source": {
+          "n1": "baba",
+          "n2": "bba",
+          "n3": "",
+          "darija_ar": "بابا",
+          "eng": "dad"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 8,
+        "source": {
+          "n1": "mama",
+          "n2": "mmi",
+          "n3": "mma",
+          "darija_ar": "ماما",
+          "eng": "mom"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 9,
+        "source": {
+          "n1": "khouya",
+          "n2": "5ouya",
+          "n3": "khoya",
+          "darija_ar": "خويا",
+          "eng": "my brother"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 10,
+        "source": {
+          "n1": "khti",
+          "n2": "5ti",
+          "n3": "",
+          "darija_ar": "ختي",
+          "eng": "my sister"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 11,
+        "source": {
+          "n1": "3mi",
+          "n2": "aami",
+          "n3": "3mmi",
+          "darija_ar": "عمي",
+          "eng": "my uncle"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 12,
+        "source": {
+          "n1": "3mti",
+          "n2": "aamti",
+          "n3": "3mmti",
+          "darija_ar": "عمتي",
+          "eng": "my aunt"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 13,
+        "source": {
+          "n1": "khali",
+          "n2": "5ali",
+          "n3": "",
+          "darija_ar": "خالي",
+          "eng": "my uncle"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 14,
+        "source": {
+          "n1": "khalti",
+          "n2": "5alti",
+          "n3": "",
+          "darija_ar": "خالتي",
+          "eng": "my aunt"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 15,
+        "source": {
+          "n1": "kouzan",
+          "n2": "kozan",
+          "n3": "",
+          "darija_ar": "كوزان",
+          "eng": "my cousin"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 16,
+        "source": {
+          "n1": "wld 3mi",
+          "n2": "wld aami",
+          "n3": "wld 3mmi",
+          "darija_ar": "ولد عمي",
+          "eng": "my cousin"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 17,
+        "source": {
+          "n1": "wld 3mti",
+          "n2": "wld aamti",
+          "n3": "wld 3mmti",
+          "darija_ar": "ولد عمتي",
+          "eng": "my cousin"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 18,
+        "source": {
+          "n1": "wld khali",
+          "n2": "wld 5ali",
+          "n3": "",
+          "darija_ar": "ولد خالي",
+          "eng": "my cousin"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 19,
+        "source": {
+          "n1": "wld khalti",
+          "n2": "wld 5alti",
+          "n3": "",
+          "darija_ar": "ولد خالتي",
+          "eng": "my cousin"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 20,
+        "source": {
+          "n1": "bnt 3mi",
+          "n2": "bnt aami",
+          "n3": "bnt 3mmi",
+          "darija_ar": "بنت عمي",
+          "eng": "my cousin"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 21,
+        "source": {
+          "n1": "bnt 3mti",
+          "n2": "bnt aamti",
+          "n3": "bnt 3mmti",
+          "darija_ar": "بنت عمتي",
+          "eng": "my cousin"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 22,
+        "source": {
+          "n1": "bnt khali",
+          "n2": "bnt 5ali",
+          "n3": "",
+          "darija_ar": "بنت خالي",
+          "eng": "my cousin"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 23,
+        "source": {
+          "n1": "bnt khalti",
+          "n2": "bnt 5alti",
+          "n3": "",
+          "darija_ar": "بنت خالتي",
+          "eng": "my cousin"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 26,
+        "source": {
+          "n1": "zawjati",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "زوجتي",
+          "eng": "my wife"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 27,
+        "source": {
+          "n1": "merti",
+          "n2": "mrati",
+          "n3": "",
+          "darija_ar": "مرتي",
+          "eng": "my wife"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 28,
+        "source": {
+          "n1": "madam",
+          "n2": "madamti",
+          "n3": "",
+          "darija_ar": "مادام",
+          "eng": "my wife"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 36,
+        "source": {
+          "n1": "ddrari",
+          "n2": "drari",
+          "n3": "",
+          "darija_ar": "الدراري",
+          "eng": "children"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 37,
+        "source": {
+          "n1": "khout",
+          "n2": "5out",
+          "n3": "",
+          "darija_ar": "خوت",
+          "eng": "brothers"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 38,
+        "source": {
+          "n1": "khwatat",
+          "n2": "5watat",
+          "n3": "",
+          "darija_ar": "خواتات",
+          "eng": "sisters"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 39,
+        "source": {
+          "n1": "walidin",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "واليدين",
+          "eng": "parents"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 42,
+        "source": {
+          "n1": "7fid",
+          "n2": "hfid",
+          "n3": "7afid",
+          "darija_ar": "حفيد",
+          "eng": "grandchild"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 43,
+        "source": {
+          "n1": "jdd",
+          "n2": "jedd",
+          "n3": "jadd",
+          "darija_ar": "جدّ",
+          "eng": "grandfather"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 44,
+        "source": {
+          "n1": "jdda",
+          "n2": "jedda",
+          "n3": "jadda",
+          "darija_ar": "جدّة",
+          "eng": "grandmother"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      },
+      {
+        "record": 45,
+        "source": {
+          "n1": "7enna",
+          "n2": "3ziza",
+          "n3": "",
+          "darija_ar": "حنّة",
+          "eng": "grandmother"
+        },
+        "assessment": "Lexical reference; French meanings, possession notes and family relationships adapted editorially. No native pronunciation validation."
+      }
+    ],
+    "unattested_in_this_file": [
+      "rajli",
+      "7fida"
+    ],
+    "license": "CC BY-NC 4.0"
+  },
+  "daily_topics_extension": {
+    "version": 10,
+    "source": "DODa syntactic categories/nouns.csv",
+    "commit": "feb88ff23153283c47d83dd677b432fe0cbac15a",
+    "sha256": "3d04756da80107c4693ad832338b7c6a4f6be42768c1d08a5e4953d7fd25a001",
+    "license": "CC BY-NC 4.0",
+    "nativeReviewed": false,
+    "comparisons": [
+      {
+        "record": 5,
+        "source": {
+          "n1": "kas",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "كاس",
+          "eng": "glass"
+        }
+      },
+      {
+        "record": 71,
+        "source": {
+          "n1": "m3il9a",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "معيلقة",
+          "eng": "spoon"
+        }
+      },
+      {
+        "record": 72,
+        "source": {
+          "n1": "3ach9a",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "عاشقة",
+          "eng": "spoon"
+        }
+      },
+      {
+        "record": 90,
+        "source": {
+          "n1": "nDadr",
+          "n2": "nDader",
+          "n3": "",
+          "darija_ar": "نضاضر",
+          "eng": "glasses"
+        }
+      },
+      {
+        "record": 118,
+        "source": {
+          "n1": "Tbsil",
+          "n2": "Tabsil",
+          "n3": "Tebsil",
+          "darija_ar": "طبسيل",
+          "eng": "plate"
+        }
+      },
+      {
+        "record": 251,
+        "source": {
+          "n1": "chifor",
+          "n2": "chifour",
+          "n3": "",
+          "darija_ar": "شيفور",
+          "eng": "driver"
+        }
+      },
+      {
+        "record": 562,
+        "source": {
+          "n1": "9elb",
+          "n2": "9alb",
+          "n3": "",
+          "darija_ar": "قلب",
+          "eng": "heart"
+        }
+      },
+      {
+        "record": 641,
+        "source": {
+          "n1": "Tbib",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "طبيب",
+          "eng": "doctor"
+        }
+      },
+      {
+        "record": 705,
+        "source": {
+          "n1": "ostad",
+          "n2": "stad",
+          "n3": "",
+          "darija_ar": "أُستاد",
+          "eng": "teacher"
+        }
+      },
+      {
+        "record": 706,
+        "source": {
+          "n1": "mo3llim",
+          "n2": "mo3allim",
+          "n3": "",
+          "darija_ar": "معلّم",
+          "eng": "teacher"
+        }
+      },
+      {
+        "record": 825,
+        "source": {
+          "n1": "jld",
+          "n2": "jeld",
+          "n3": "jald",
+          "darija_ar": "جلد",
+          "eng": "skin"
+        }
+      },
+      {
+        "record": 843,
+        "source": {
+          "n1": "tilifoun",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "تيليفون",
+          "eng": "telephone"
+        }
+      },
+      {
+        "record": 857,
+        "source": {
+          "n1": "tilifoun",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "تيليفون",
+          "eng": "phone"
+        }
+      },
+      {
+        "record": 956,
+        "source": {
+          "n1": "3n9",
+          "n2": "3on9",
+          "n3": "",
+          "darija_ar": "عنق",
+          "eng": "neck"
+        }
+      },
+      {
+        "record": 957,
+        "source": {
+          "n1": "3ng",
+          "n2": "3ong",
+          "n3": "",
+          "darija_ar": "عنڭ",
+          "eng": "neck"
+        }
+      },
+      {
+        "record": 974,
+        "source": {
+          "n1": "chkara",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "شكارة",
+          "eng": "bag"
+        }
+      },
+      {
+        "record": 975,
+        "source": {
+          "n1": "mi7faDa",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "محفظة",
+          "eng": "bag"
+        }
+      },
+      {
+        "record": 1083,
+        "source": {
+          "n1": "ktef",
+          "n2": "ktf",
+          "n3": "",
+          "darija_ar": "كتف",
+          "eng": "shoulder"
+        }
+      },
+      {
+        "record": 1170,
+        "source": {
+          "n1": "keswa",
+          "n2": "kswa",
+          "n3": "",
+          "darija_ar": "كسوة",
+          "eng": "dress"
+        }
+      },
+      {
+        "record": 1306,
+        "source": {
+          "n1": "tilifon",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "تليفون",
+          "eng": "phone"
+        }
+      }
+    ],
+    "limits": "Only listed CSV records are attested by this consulted source. Other entries, French meanings, written segmentation and examples are editorial drafts awaiting native review; kswa is deliberately translated more broadly than the dataset dress."
+  },
+  "produce_extension": {
+    "version": 18,
+    "source": "DODa semantic categories/food.csv",
+    "commit": "feb88ff23153283c47d83dd677b432fe0cbac15a",
+    "sha256": "e849e4a033be2a500a6c1f61da220248749fe443aa6ddae7ed4925bf1c028624",
+    "license": "CC BY-NC 4.0",
+    "nativeReviewed": false,
+    "record_numbering": "Header is record 1",
+    "comparisons": [
+      {
+        "record": 5,
+        "source": {
+          "n1": "jelbana",
+          "n2": "jlbana",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "جلبانة",
+          "eng": "pea"
+        }
+      },
+      {
+        "record": 6,
+        "source": {
+          "n1": "dnjal",
+          "n2": "denjal",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "دنجال",
+          "eng": "eggplant"
+        }
+      },
+      {
+        "record": 18,
+        "source": {
+          "n1": "loubia",
+          "n2": "lobia",
+          "n3": "loubya",
+          "n4": "",
+          "darija_ar": "لوبيا",
+          "eng": "beans"
+        }
+      },
+      {
+        "record": 20,
+        "source": {
+          "n1": "khoss",
+          "n2": "khos",
+          "n3": "5oss",
+          "n4": "5os",
+          "darija_ar": "خص",
+          "eng": "lettuce"
+        }
+      },
+      {
+        "record": 25,
+        "source": {
+          "n1": "zitoun",
+          "n2": "zitoune",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "زيتون",
+          "eng": "olives"
+        }
+      },
+      {
+        "record": 28,
+        "source": {
+          "n1": "kourjiT",
+          "n2": "korjiT",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "كورجيط",
+          "eng": "courgette"
+        }
+      },
+      {
+        "record": 32,
+        "source": {
+          "n1": "bou3ouid",
+          "n2": "bou3wid",
+          "n3": "bouaouid",
+          "n4": "",
+          "darija_ar": "بوعويد",
+          "eng": "pear"
+        }
+      },
+      {
+        "record": 33,
+        "source": {
+          "n1": "friz",
+          "n2": "frez",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "فريز",
+          "eng": "strawberry"
+        }
+      },
+      {
+        "record": 35,
+        "source": {
+          "n1": "3nb",
+          "n2": "3anb",
+          "n3": "3enb",
+          "n4": "",
+          "darija_ar": "عنب",
+          "eng": "grape"
+        }
+      },
+      {
+        "record": 36,
+        "source": {
+          "n1": "krmous",
+          "n2": "karmous",
+          "n3": "kermous",
+          "n4": "",
+          "darija_ar": "كرموس",
+          "eng": "fig"
+        }
+      },
+      {
+        "record": 38,
+        "source": {
+          "n1": "7amd",
+          "n2": "hamd",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "حامض",
+          "eng": "lemon"
+        }
+      },
+      {
+        "record": 40,
+        "source": {
+          "n1": "dla7",
+          "n2": "dela7",
+          "n3": "dlah",
+          "n4": "delah",
+          "darija_ar": "دلاح",
+          "eng": "watermelon"
+        }
+      },
+      {
+        "record": 41,
+        "source": {
+          "n1": "khoukh",
+          "n2": "",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "خوخ",
+          "eng": "peach"
+        }
+      },
+      {
+        "record": 48,
+        "source": {
+          "n1": "mchmach",
+          "n2": "mechmach",
+          "n3": "machmach",
+          "n4": "",
+          "darija_ar": "مشماش",
+          "eng": "apricot"
+        }
+      },
+      {
+        "record": 51,
+        "source": {
+          "n1": "tmr",
+          "n2": "tmar",
+          "n3": "tmer",
+          "n4": "",
+          "darija_ar": "تمر",
+          "eng": "dates"
+        }
+      },
+      {
+        "record": 55,
+        "source": {
+          "n1": "loubia",
+          "n2": "",
+          "n3": "",
+          "n4": "",
+          "darija_ar": "لوبيا",
+          "eng": "beans"
+        }
+      },
+      {
+        "record": 69,
+        "source": {
+          "n1": "7mmS",
+          "n2": "7ammaS",
+          "n3": "7mmeS",
+          "n4": "hammeS",
+          "darija_ar": "حمّص",
+          "eng": "chickpeas"
+        }
+      }
+    ],
+    "changes": "French meanings, Arabic graphies, reading groups and examples adapted editorially; no native or audio validation."
+  },
+  "jewels_extension": {
+    "version": 19,
+    "source": "DODa syntactic categories/nouns.csv",
+    "commit": "feb88ff23153283c47d83dd677b432fe0cbac15a",
+    "sha256": "3d04756da80107c4693ad832338b7c6a4f6be42768c1d08a5e4953d7fd25a001",
+    "license": "CC BY-NC 4.0",
+    "nativeReviewed": false,
+    "comparisons": [
+      {
+        "record": 788,
+        "source": {
+          "n1": "dheb",
+          "n2": "dhb",
+          "n3": "dhab",
+          "darija_ar": "دهب",
+          "eng": "gold"
+        }
+      },
+      {
+        "record": 1025,
+        "source": {
+          "n1": "ne9ra",
+          "n2": "no9ra",
+          "n3": "n9ra",
+          "darija_ar": "نقرة",
+          "eng": "silver"
+        }
+      }
+    ],
+    "limits": "Only gold and silver were found in this consulted file. Other terms and all examples are editorial drafts awaiting native review."
+  },
+  "garage_extension": {
+    "version": 20,
+    "source": "DODa syntactic categories/nouns.csv",
+    "commit": "feb88ff23153283c47d83dd677b432fe0cbac15a",
+    "sha256": "3d04756da80107c4693ad832338b7c6a4f6be42768c1d08a5e4953d7fd25a001",
+    "license": "CC BY-NC 4.0",
+    "nativeReviewed": false,
+    "comparisons": [
+      {
+        "record": 12,
+        "source": {
+          "n1": "Tomobil",
+          "n2": "tomobil",
+          "n3": "Tomobila",
+          "darija_ar": "طوموبيل",
+          "eng": "car"
+        }
+      },
+      {
+        "record": 248,
+        "source": {
+          "n1": "rwiDa",
+          "n2": "rweDa",
+          "n3": "rouiDa",
+          "darija_ar": "رويضة",
+          "eng": "wheel"
+        }
+      },
+      {
+        "record": 249,
+        "source": {
+          "n1": "fran",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "فران",
+          "eng": "brake"
+        }
+      },
+      {
+        "record": 1004,
+        "source": {
+          "n1": "moTor",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "موطور",
+          "eng": "engine"
+        }
+      },
+      {
+        "record": 1317,
+        "source": {
+          "n1": "batri",
+          "n2": "batterie",
+          "n3": "",
+          "darija_ar": "بطارية",
+          "eng": "battery"
+        }
+      }
+    ],
+    "limits": "Only these five words were attested in the consulted file; other entries and all examples are editorial drafts."
+  },
+  "police_extension": {
+    "version": 21,
+    "source": "DODa syntactic categories/nouns.csv",
+    "commit": "feb88ff23153283c47d83dd677b432fe0cbac15a",
+    "sha256": "3d04756da80107c4693ad832338b7c6a4f6be42768c1d08a5e4953d7fd25a001",
+    "license": "CC BY-NC 4.0",
+    "nativeReviewed": false,
+    "comparisons": [
+      {
+        "record": 125,
+        "source": {
+          "n1": "ksida",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "كسيدة",
+          "eng": "accident"
+        }
+      },
+      {
+        "record": 273,
+        "source": {
+          "n1": "8owia",
+          "n2": "8owyya",
+          "n3": "8owya",
+          "darija_ar": "هوية",
+          "eng": "identity"
+        }
+      },
+      {
+        "record": 317,
+        "source": {
+          "n1": "cha8id",
+          "n2": "chaa8id",
+          "n3": "chahid",
+          "darija_ar": "شاهد",
+          "eng": "witness"
+        }
+      },
+      {
+        "record": 321,
+        "source": {
+          "n1": "chfra",
+          "n2": "chefra",
+          "n3": "chafra",
+          "darija_ar": "شفرة",
+          "eng": "theft"
+        }
+      },
+      {
+        "record": 427,
+        "source": {
+          "n1": "boliss",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "بوليس",
+          "eng": "police"
+        }
+      },
+      {
+        "record": 1295,
+        "source": {
+          "n1": "chikaya",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "شكاية",
+          "eng": "complaint"
+        }
+      }
+    ],
+    "limits": "Only these nouns were compared. Other words, verb forms, French meanings and examples are editorial drafts awaiting native review; no legal procedure or emergency contact verified."
+  },
+  "property_extension": {
+    "version": 22,
+    "source": "DODa syntactic categories/nouns.csv",
+    "commit": "feb88ff23153283c47d83dd677b432fe0cbac15a",
+    "sha256": "3d04756da80107c4693ad832338b7c6a4f6be42768c1d08a5e4953d7fd25a001",
+    "license": "CC BY-NC 4.0",
+    "nativeReviewed": false,
+    "comparisons": [
+      {
+        "record": 19,
+        "source": {
+          "n1": "partma",
+          "n2": "prtma",
+          "n3": "",
+          "darija_ar": "بارتمة",
+          "eng": "apartment"
+        }
+      },
+      {
+        "record": 220,
+        "source": {
+          "n1": "kra",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "كرا",
+          "eng": "rent"
+        }
+      },
+      {
+        "record": 477,
+        "source": {
+          "n1": "2ard",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "أرض",
+          "eng": "land"
+        }
+      },
+      {
+        "record": 604,
+        "source": {
+          "n1": "contra",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "كونطرا",
+          "eng": "contract"
+        }
+      },
+      {
+        "record": 605,
+        "source": {
+          "n1": "3a9d",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "عقد",
+          "eng": "contract"
+        }
+      },
+      {
+        "record": 984,
+        "source": {
+          "n1": "wati9a",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "وثيقة",
+          "eng": "document"
+        }
+      },
+      {
+        "record": 992,
+        "source": {
+          "n1": "moul",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "مول",
+          "eng": "owner"
+        }
+      }
+    ],
+    "limits": "Lexical comparisons only; sale rows mean retail discount and were not used for property sale. Other entries and all examples require native review. No legal authority or procedure claimed."
+  },
+  "beach_extension": {
+    "version": 23,
+    "source": "DODa syntactic categories/nouns.csv",
+    "commit": "feb88ff23153283c47d83dd677b432fe0cbac15a",
+    "sha256": "3d04756da80107c4693ad832338b7c6a4f6be42768c1d08a5e4953d7fd25a001",
+    "license": "CC BY-NC 4.0",
+    "nativeReviewed": false,
+    "comparisons": [
+      {
+        "record": 81,
+        "source": {
+          "n1": "3oman",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "عومان",
+          "eng": "swimming"
+        }
+      },
+      {
+        "record": 237,
+        "source": {
+          "n1": "foTa",
+          "n2": "fouTa",
+          "n3": "",
+          "darija_ar": "فوطة",
+          "eng": "towel"
+        }
+      },
+      {
+        "record": 580,
+        "source": {
+          "n1": "b7er",
+          "n2": "b7ar",
+          "n3": "b7r",
+          "darija_ar": "بحر",
+          "eng": "sea"
+        }
+      },
+      {
+        "record": 609,
+        "source": {
+          "n1": "chmch",
+          "n2": "chms",
+          "n3": "",
+          "darija_ar": "شمس",
+          "eng": "sun"
+        }
+      },
+      {
+        "record": 1199,
+        "source": {
+          "n1": "plage",
+          "n2": "",
+          "n3": "",
+          "darija_ar": "پلاج",
+          "eng": "beach"
+        }
+      }
+    ],
+    "limits": "Lexical references only. Other words and all phrases are editorial drafts awaiting native review; no actual beach conditions verified."
+  },
+  "calendar_numbers_extension": {
+    "version": 24,
+    "commit": "feb88ff23153283c47d83dd677b432fe0cbac15a",
+    "sources": [
+      {
+        "path": "semantic categories/numbers.csv",
+        "sha256": "d4ed57ede5162501d54d6a6cc3804be3054a1370a9434b8322677aea9113f900",
+        "records": [
+          {
+            "n1": "ra9m",
+            "n2": "raqm",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "رقم",
+            "eng": "number"
+          },
+          {
+            "n1": "3adad",
+            "n2": "",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "عدد",
+            "eng": "number"
+          },
+          {
+            "n1": "Sifr",
+            "n2": "",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "صفر",
+            "eng": "zero"
+          },
+          {
+            "n1": "ziro",
+            "n2": "zero",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "زيرو",
+            "eng": "zero"
+          },
+          {
+            "n1": "wahd",
+            "n2": "wa7d",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "واحد",
+            "eng": "one"
+          },
+          {
+            "n1": "jouj",
+            "n2": "joj",
+            "n3": "zouj",
+            "n4": "",
+            "darija_ar": "جوج",
+            "eng": "two"
+          },
+          {
+            "n1": "tlata",
+            "n2": "",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "تلاتة",
+            "eng": "three"
+          },
+          {
+            "n1": "rb3a",
+            "n2": "reb3a",
+            "n3": "rab3a",
+            "n4": "",
+            "darija_ar": "ربعة",
+            "eng": "four"
+          },
+          {
+            "n1": "khmsa",
+            "n2": "5msa",
+            "n3": "khamsa",
+            "n4": "khemsa",
+            "darija_ar": "خمسة",
+            "eng": "five"
+          },
+          {
+            "n1": "stta",
+            "n2": "seta",
+            "n3": "setta",
+            "n4": "satta",
+            "darija_ar": "ستّة",
+            "eng": "six"
+          },
+          {
+            "n1": "sb3a",
+            "n2": "sab3a",
+            "n3": "seb3a",
+            "n4": "",
+            "darija_ar": "سبعة",
+            "eng": "seven"
+          },
+          {
+            "n1": "tmnia",
+            "n2": "tmenia",
+            "n3": "tmania",
+            "n4": "",
+            "darija_ar": "تمنية",
+            "eng": "eight"
+          },
+          {
+            "n1": "ts3oud",
+            "n2": "ts3od",
+            "n3": "tas3oud",
+            "n4": "tes3oud",
+            "darija_ar": "تسعود",
+            "eng": "nine"
+          },
+          {
+            "n1": "ts3a",
+            "n2": "",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "تسعة",
+            "eng": "nine"
+          },
+          {
+            "n1": "3chra",
+            "n2": "3achra",
+            "n3": "aachra",
+            "n4": "",
+            "darija_ar": "عشرة",
+            "eng": "ten"
+          },
+          {
+            "n1": "7Dach",
+            "n2": "hdach",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "حضاش",
+            "eng": "eleven"
+          },
+          {
+            "n1": "Tnach",
+            "n2": "",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "طناش",
+            "eng": "twelve"
+          },
+          {
+            "n1": "TlTTach",
+            "n2": "telTach",
+            "n3": "tleTTach",
+            "n4": "tleTach",
+            "darija_ar": "طلطّاش",
+            "eng": "thirteen"
+          },
+          {
+            "n1": "rb3Tach",
+            "n2": "rba3Tach",
+            "n3": "rbe3Tach",
+            "n4": "",
+            "darija_ar": "ربعطاش",
+            "eng": "fourteen"
+          },
+          {
+            "n1": "khmsTach",
+            "n2": "5msTach",
+            "n3": "khamsTach",
+            "n4": "khemsTach",
+            "darija_ar": "خمسطاش",
+            "eng": "fifteen"
+          },
+          {
+            "n1": "sTTach",
+            "n2": "seTach",
+            "n3": "sTach",
+            "n4": "",
+            "darija_ar": "سطّاش",
+            "eng": "sixteen"
+          },
+          {
+            "n1": "sb3Tach",
+            "n2": "sbe3Tach",
+            "n3": "sba3Tach",
+            "n4": "",
+            "darija_ar": "سبعطاش",
+            "eng": "seventeen"
+          },
+          {
+            "n1": "tmnTach",
+            "n2": "tmenTach",
+            "n3": "tmanTach",
+            "n4": "",
+            "darija_ar": "تمنطاش",
+            "eng": "eighteen"
+          },
+          {
+            "n1": "ts3Tach",
+            "n2": "tsa3Tach",
+            "n3": "tse3Tach",
+            "n4": "",
+            "darija_ar": "تسعطاش",
+            "eng": "nineteen"
+          },
+          {
+            "n1": "3chrin",
+            "n2": "3achrin",
+            "n3": "3echrin",
+            "n4": "3ochrin",
+            "darija_ar": "عشرين",
+            "eng": "twenty"
+          },
+          {
+            "n1": "wahd o 3chrin",
+            "n2": "wahd w 3chrin",
+            "n3": "wahdo3chrin",
+            "n4": "wahdw3chrin",
+            "darija_ar": "واحد و عشرين",
+            "eng": "twenty one"
+          },
+          {
+            "n1": "tnayn o 3chrin",
+            "n2": "tnayn w 3chrin",
+            "n3": "tnayno3chrin",
+            "n4": "tnaynw3chrin",
+            "darija_ar": "تناين و عشرين",
+            "eng": "twenty two"
+          },
+          {
+            "n1": "tlata o 3chrin",
+            "n2": "tlata w 3chrin",
+            "n3": "tlatao3chrin",
+            "n4": "tlataw3chrin",
+            "darija_ar": "تلاتة و عشرين",
+            "eng": "twenty three"
+          },
+          {
+            "n1": "rb3a o 3chrin",
+            "n2": "rb3a w 3chrin",
+            "n3": "rb3ao3chrin",
+            "n4": "rb3aw3chrin",
+            "darija_ar": "ربعة و عشرين",
+            "eng": "twenty four"
+          },
+          {
+            "n1": "khmsa o 3chrin",
+            "n2": "khmsa w 3chrin",
+            "n3": "khmsao3chrin",
+            "n4": "khmsaw3chrin",
+            "darija_ar": "خمسة و عشرين",
+            "eng": "twenty five"
+          },
+          {
+            "n1": "stta o 3chrin",
+            "n2": "stta w 3chrin",
+            "n3": "sttao3chrin",
+            "n4": "sttaw3chrin",
+            "darija_ar": "ستّة و عشرين",
+            "eng": "twenty six"
+          },
+          {
+            "n1": "sb3a o 3chrin",
+            "n2": "sb3a w 3chrin",
+            "n3": "sb3ao3chrin",
+            "n4": "sb3aw3chrin",
+            "darija_ar": "سبعة و عشرين",
+            "eng": "twenty seven"
+          },
+          {
+            "n1": "tmnya o 3chrin",
+            "n2": "tmnya w 3chrin",
+            "n3": "tmnyao3chrin",
+            "n4": "tmnyaw3chrin",
+            "darija_ar": "تمنية و عشرين",
+            "eng": "twenty eight"
+          },
+          {
+            "n1": "ts3oud o 3chrin",
+            "n2": "ts3oud w 3chrin",
+            "n3": "ts3oudo3chrin",
+            "n4": "ts3oudw3chrin",
+            "darija_ar": "تسعود و عشرين",
+            "eng": "twenty nine"
+          },
+          {
+            "n1": "tlatin",
+            "n2": "",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "تلاتين",
+            "eng": "thirty"
+          },
+          {
+            "n1": "rb3in",
+            "n2": "rab3in",
+            "n3": "reb3in",
+            "n4": "",
+            "darija_ar": "ربعين",
+            "eng": "forty"
+          },
+          {
+            "n1": "khmsin",
+            "n2": "5amsin",
+            "n3": "khamsin",
+            "n4": "khemsin",
+            "darija_ar": "خمسين",
+            "eng": "fifty"
+          },
+          {
+            "n1": "stin",
+            "n2": "settin",
+            "n3": "sattin",
+            "n4": "sttin",
+            "darija_ar": "ستين",
+            "eng": "sixty"
+          },
+          {
+            "n1": "sb3in",
+            "n2": "seb3in",
+            "n3": "sab3in",
+            "n4": "",
+            "darija_ar": "سبعين",
+            "eng": "seventy"
+          },
+          {
+            "n1": "tmanin",
+            "n2": "tamanin",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "تمانين",
+            "eng": "eighty"
+          },
+          {
+            "n1": "ts3in",
+            "n2": "tes3in",
+            "n3": "tas3in",
+            "n4": "",
+            "darija_ar": "تسعين",
+            "eng": "ninety"
+          },
+          {
+            "n1": "wahd o ts3in",
+            "n2": "wahd w ts3in",
+            "n3": "wahdots3in",
+            "n4": "wahdwts3in",
+            "darija_ar": "واحد و تسعين",
+            "eng": "ninety one"
+          },
+          {
+            "n1": "tnayn o ts3in",
+            "n2": "tnayn w ts3in",
+            "n3": "tnaynots3in",
+            "n4": "tnaynwts3in",
+            "darija_ar": "تناين و تسعين",
+            "eng": "ninety two"
+          },
+          {
+            "n1": "tlata o ts3in",
+            "n2": "tlata w ts3in",
+            "n3": "tlataots3in",
+            "n4": "tlatawts3in",
+            "darija_ar": "تلاتة و تسعين",
+            "eng": "ninety three"
+          },
+          {
+            "n1": "rb3a o ts3in",
+            "n2": "rb3a w ts3in",
+            "n3": "rb3aots3in",
+            "n4": "rb3awts3in",
+            "darija_ar": "ربعة و تسعين",
+            "eng": "ninety four"
+          },
+          {
+            "n1": "khmsa o ts3in",
+            "n2": "khmsa w ts3in",
+            "n3": "khmsaots3in",
+            "n4": "khmsawts3in",
+            "darija_ar": "خمسة و تسعين",
+            "eng": "ninety five"
+          },
+          {
+            "n1": "stta o ts3in",
+            "n2": "stta w ts3in",
+            "n3": "sttaots3in",
+            "n4": "sttawts3in",
+            "darija_ar": "ستّة و تسعين",
+            "eng": "ninety six"
+          },
+          {
+            "n1": "sb3a o ts3in",
+            "n2": "sb3a w ts3in",
+            "n3": "sb3aots3in",
+            "n4": "sb3awts3in",
+            "darija_ar": "سبعة و تسعين",
+            "eng": "ninety seven"
+          },
+          {
+            "n1": "tmnya o ts3in",
+            "n2": "tmnya w ts3in",
+            "n3": "tmnyaots3in",
+            "n4": "tmnyawts3in",
+            "darija_ar": "تمنية و تسعين",
+            "eng": "ninety eight"
+          },
+          {
+            "n1": "ts3oud o ts3in",
+            "n2": "ts3oud w ts3in",
+            "n3": "ts3oudots3in",
+            "n4": "ts3oudwts3in",
+            "darija_ar": "تسعود و تسعين",
+            "eng": "ninety nine"
+          },
+          {
+            "n1": "myya",
+            "n2": "mya",
+            "n3": "mia",
+            "n4": "",
+            "darija_ar": "ميّة",
+            "eng": "hundred"
+          },
+          {
+            "n1": "alf",
+            "n2": "",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "ألف",
+            "eng": "thousand"
+          },
+          {
+            "n1": "alaf",
+            "n2": "l2alaf",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "آلاف",
+            "eng": "thousands"
+          },
+          {
+            "n1": "mlyon",
+            "n2": "melyoun",
+            "n3": "mlyoun",
+            "n4": "malyoun",
+            "darija_ar": "مليون",
+            "eng": "million"
+          },
+          {
+            "n1": "mlyar",
+            "n2": "malyar",
+            "n3": "melyar",
+            "n4": "",
+            "darija_ar": "مليار",
+            "eng": "billion"
+          },
+          {
+            "n1": "w",
+            "n2": "ou",
+            "n3": "o",
+            "n4": "",
+            "darija_ar": "و",
+            "eng": "and"
+          },
+          {
+            "n1": "lwwl",
+            "n2": "lowwl",
+            "n3": "lowel",
+            "n4": "lowwel",
+            "darija_ar": "لوّل",
+            "eng": "first"
+          },
+          {
+            "n1": "ttani",
+            "n2": "",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "التاني",
+            "eng": "second"
+          },
+          {
+            "n1": "ttalt",
+            "n2": "",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "التالت",
+            "eng": "third"
+          },
+          {
+            "n1": "rrab3",
+            "n2": "rrabe3",
+            "n3": "rraba3",
+            "n4": "",
+            "darija_ar": "الرابع",
+            "eng": "fourth"
+          },
+          {
+            "n1": "lkhams",
+            "n2": "lkhames",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "لخامس",
+            "eng": "fifth"
+          },
+          {
+            "n1": "ssads",
+            "n2": "ssades",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "السادس",
+            "eng": "sixth"
+          },
+          {
+            "n1": "ssab3",
+            "n2": "ssabe3",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "السابع",
+            "eng": "seventh"
+          },
+          {
+            "n1": "ttamn",
+            "n2": "ttamen",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "التامن",
+            "eng": "eighth"
+          },
+          {
+            "n1": "ttas3",
+            "n2": "ttase3",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "التاسع",
+            "eng": "ninth"
+          },
+          {
+            "n1": "l3achr",
+            "n2": "l3acher",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "لعاشر",
+            "eng": "tenth"
+          },
+          {
+            "n1": "llkher",
+            "n2": "llkhar",
+            "n3": "lkher",
+            "n4": "akhir",
+            "darija_ar": "اللخر",
+            "eng": "last"
+          },
+          {
+            "n1": "ttolot",
+            "n2": "ttolout",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "التلت",
+            "eng": "one-third"
+          },
+          {
+            "n1": "rrobo3",
+            "n2": "rrobou3",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "الربع",
+            "eng": "one-fourth"
+          },
+          {
+            "n1": "lkhomos",
+            "n2": "lkhomous",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "لخمس",
+            "eng": "one-fifth"
+          },
+          {
+            "n1": "ssodos",
+            "n2": "ssodous",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "السدس",
+            "eng": "one-sixth"
+          },
+          {
+            "n1": "ssobo3",
+            "n2": "ssobou3",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "السبع",
+            "eng": "one-seventh"
+          },
+          {
+            "n1": "ttomon",
+            "n2": "ttomoun",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "التمن",
+            "eng": "one-eighth"
+          },
+          {
+            "n1": "l3ochor",
+            "n2": "l3ochour",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "لعشر",
+            "eng": "one-tenth"
+          }
+        ]
+      },
+      {
+        "path": "semantic categories/time.csv",
+        "sha256": "ee1dd13df7363c28fd29587d6646b7a850132cfacd1884138eec9d209d2404d3",
+        "records": [
+          {
+            "n1": "tania",
+            "n2": "thania",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "تانية",
+            "eng": "second"
+          },
+          {
+            "n1": "d9i9a",
+            "n2": "daqiqa",
+            "n3": "da9i9a",
+            "n4": "",
+            "darija_ar": "دقيقة",
+            "eng": "minute"
+          },
+          {
+            "n1": "sa3a",
+            "n2": "",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "ساعة",
+            "eng": "hour"
+          },
+          {
+            "n1": "yawm",
+            "n2": "youm",
+            "n3": "nhar",
+            "n4": "",
+            "darija_ar": "يوم",
+            "eng": "day"
+          },
+          {
+            "n1": "lbar7",
+            "n2": "lbare7",
+            "n3": "lbareh",
+            "n4": "lbarh",
+            "darija_ar": "لبارح",
+            "eng": "yesterday"
+          },
+          {
+            "n1": "daba",
+            "n2": "drok",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "دابا",
+            "eng": "now"
+          },
+          {
+            "n1": "lyom",
+            "n2": "liom",
+            "n3": "lioma",
+            "n4": "lyoma",
+            "darija_ar": "ليوم",
+            "eng": "today"
+          },
+          {
+            "n1": "ghdda",
+            "n2": "ghedda",
+            "n3": "ghadda",
+            "n4": "",
+            "darija_ar": "غدّا",
+            "eng": "tomorrow"
+          },
+          {
+            "n1": "wellbar7",
+            "n2": "wallbare7",
+            "n3": "wllbare7",
+            "n4": "",
+            "darija_ar": "ولّبارح",
+            "eng": "the day before yesterday"
+          },
+          {
+            "n1": "b3d ghdda",
+            "n2": "ba3d ghdda",
+            "n3": "be3d ghdda",
+            "n4": "",
+            "darija_ar": "بعد غدّا",
+            "eng": "the day after tomorrow"
+          },
+          {
+            "n1": "simana",
+            "n2": "semana",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "سيمانة",
+            "eng": "week"
+          },
+          {
+            "n1": "ch8r",
+            "n2": "ch8ar",
+            "n3": "chher",
+            "n4": "chhar",
+            "darija_ar": "شهر",
+            "eng": "month"
+          },
+          {
+            "n1": "3am",
+            "n2": "",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "عام",
+            "eng": "year"
+          },
+          {
+            "n1": "9rn",
+            "n2": "9arn",
+            "n3": "9ern",
+            "n4": "qarn",
+            "darija_ar": "قرن",
+            "eng": "century"
+          },
+          {
+            "n1": "tnin",
+            "n2": "ttnin",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "تنين",
+            "eng": "monday"
+          },
+          {
+            "n1": "tlat",
+            "n2": "ttlat",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "تلات",
+            "eng": "tuesday"
+          },
+          {
+            "n1": "larb3",
+            "n2": "larba3",
+            "n3": "larbe3",
+            "n4": "",
+            "darija_ar": "لاربع",
+            "eng": "wednesday"
+          },
+          {
+            "n1": "lkhmis",
+            "n2": "l5miss",
+            "n3": "lakhmis",
+            "n4": "lekhmis",
+            "darija_ar": "لخميس",
+            "eng": "thursday"
+          },
+          {
+            "n1": "jm3a",
+            "n2": "jam3a",
+            "n3": "jem3a",
+            "n4": "jjm3a",
+            "darija_ar": "جمعة",
+            "eng": "friday"
+          },
+          {
+            "n1": "sbt",
+            "n2": "ssbt",
+            "n3": "sabt",
+            "n4": "ssebt",
+            "darija_ar": "سبت",
+            "eng": "saturday"
+          },
+          {
+            "n1": "l7d",
+            "n2": "l7ed",
+            "n3": "l7add",
+            "n4": "l7edd",
+            "darija_ar": "لحد",
+            "eng": "sunday"
+          },
+          {
+            "n1": "wikand",
+            "n2": "lwikand",
+            "n3": "weekend",
+            "n4": "lweekend",
+            "darija_ar": "ويكاند",
+            "eng": "weekend"
+          },
+          {
+            "n1": "yanayir",
+            "n2": "yanayr",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "يناير",
+            "eng": "january"
+          },
+          {
+            "n1": "fibrayr",
+            "n2": "fibrayer",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "فبراير",
+            "eng": "february"
+          },
+          {
+            "n1": "mars",
+            "n2": "",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "مارس",
+            "eng": "march"
+          },
+          {
+            "n1": "abril",
+            "n2": "avril",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "أبريل",
+            "eng": "april"
+          },
+          {
+            "n1": "may",
+            "n2": "",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "ماي",
+            "eng": "may"
+          },
+          {
+            "n1": "yonyo",
+            "n2": "",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "يونيو",
+            "eng": "june"
+          },
+          {
+            "n1": "yolyoz",
+            "n2": "youlyouz",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "يوليوز",
+            "eng": "july"
+          },
+          {
+            "n1": "ghocht",
+            "n2": "",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "غشت",
+            "eng": "august"
+          },
+          {
+            "n1": "chotanbir",
+            "n2": "",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "شتنبر",
+            "eng": "september"
+          },
+          {
+            "n1": "oktoubr",
+            "n2": "oktobr",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "أكتوبر",
+            "eng": "october"
+          },
+          {
+            "n1": "nowanbir",
+            "n2": "",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "نونبر",
+            "eng": "november"
+          },
+          {
+            "n1": "dojanbir",
+            "n2": "doujanbir",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "دجنبر",
+            "eng": "december"
+          },
+          {
+            "n1": "ch8er wahd",
+            "n2": "ch8ar wahd",
+            "n3": "ch8r wa7d",
+            "n4": "ch8er wa7d",
+            "darija_ar": "شهر واحد",
+            "eng": "january"
+          },
+          {
+            "n1": "ch8er jouj",
+            "n2": "ch8ar jouj",
+            "n3": "ch8r jouj",
+            "n4": "ch8er joj",
+            "darija_ar": "شهر جوج",
+            "eng": "february"
+          },
+          {
+            "n1": "ch8er tlata",
+            "n2": "ch8ar tlata",
+            "n3": "ch8r tlata",
+            "n4": "",
+            "darija_ar": "شهر تلاتة",
+            "eng": "march"
+          },
+          {
+            "n1": "ch8er rb3a",
+            "n2": "ch8ar rb3a",
+            "n3": "ch8r rb3a",
+            "n4": "ch8er reb3a",
+            "darija_ar": "شهر ربعة",
+            "eng": "april"
+          },
+          {
+            "n1": "ch8er khmsa",
+            "n2": "ch8ar khmsa",
+            "n3": "ch8r khmsa",
+            "n4": "ch8er khamsa",
+            "darija_ar": "شهر خمسة",
+            "eng": "may"
+          },
+          {
+            "n1": "ch8er stta",
+            "n2": "ch8ar stta",
+            "n3": "ch8r stta",
+            "n4": "ch8er setta",
+            "darija_ar": "شهر ستة",
+            "eng": "june"
+          },
+          {
+            "n1": "ch8er sb3a",
+            "n2": "ch8ar sb3a",
+            "n3": "ch8r sb3a",
+            "n4": "ch8er seb3a",
+            "darija_ar": "شهر سبعة",
+            "eng": "july"
+          },
+          {
+            "n1": "ch8er tmnia",
+            "n2": "ch8ar tmnia",
+            "n3": "ch8r tmnia",
+            "n4": "ch8er tmenia",
+            "darija_ar": "شهر تمنية",
+            "eng": "august"
+          },
+          {
+            "n1": "ch8er ts3oud",
+            "n2": "ch8ar ts3oud",
+            "n3": "ch8r ts3oud",
+            "n4": "ch8er ts3eud",
+            "darija_ar": "شهر تسعود",
+            "eng": "september"
+          },
+          {
+            "n1": "ch8er 3chra",
+            "n2": "ch8ar 3chra",
+            "n3": "ch8r 3chra",
+            "n4": "ch8er 3echra",
+            "darija_ar": "شهر عشرة",
+            "eng": "october"
+          },
+          {
+            "n1": "ch8er 7Dach",
+            "n2": "ch8ar 7Dach",
+            "n3": "ch8r 7Dach",
+            "n4": "",
+            "darija_ar": "شهر حضاش",
+            "eng": "november"
+          },
+          {
+            "n1": "ch8er Tnach",
+            "n2": "ch8ar Tnach",
+            "n3": "ch8r Tnach",
+            "n4": "",
+            "darija_ar": "شهر طناش",
+            "eng": "december"
+          },
+          {
+            "n1": "w9t",
+            "n2": "wa9t",
+            "n3": "we9t",
+            "n4": "",
+            "darija_ar": "وقت",
+            "eng": "time"
+          },
+          {
+            "n1": "7aDir",
+            "n2": "7aDer",
+            "n3": "7aDr",
+            "n4": "",
+            "darija_ar": "حاضر",
+            "eng": "present"
+          },
+          {
+            "n1": "most9bal",
+            "n2": "mosta9bal",
+            "n3": "mostaqbal",
+            "n4": "mostqbal",
+            "darija_ar": "مستقبل",
+            "eng": "future"
+          },
+          {
+            "n1": "maDi",
+            "n2": "maaDi",
+            "n3": "li fat",
+            "n4": "",
+            "darija_ar": "ماضي",
+            "eng": "past"
+          },
+          {
+            "n1": "llarob",
+            "n2": "llaroub",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "لاروب",
+            "eng": "quarter to"
+          },
+          {
+            "n1": "o 9sem",
+            "n2": "o9sem",
+            "n3": "oqsem",
+            "n4": "",
+            "darija_ar": "و قسم",
+            "eng": "five past"
+          },
+          {
+            "n1": "o 9smayn",
+            "n2": "o9smayn",
+            "n3": "oqsmayn",
+            "n4": "",
+            "darija_ar": "و قسماين",
+            "eng": "ten past"
+          },
+          {
+            "n1": "o rb3",
+            "n2": "orb3",
+            "n3": "orba3",
+            "n4": "",
+            "darija_ar": "و ربع",
+            "eng": "quarter past"
+          },
+          {
+            "n1": "o ness",
+            "n2": "oness",
+            "n3": "onss",
+            "n4": "onass",
+            "darija_ar": "و نص",
+            "eng": "half past"
+          },
+          {
+            "n1": "o sb3 9sam",
+            "n2": "osb39sam",
+            "n3": "o sbaa qsam",
+            "n4": "o sba3 9sam",
+            "darija_ar": "و سبع قسام",
+            "eng": "thirty five past"
+          },
+          {
+            "n1": "9ll toulout",
+            "n2": "9ll tolot",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "قلّ تولوت",
+            "eng": "twenty to"
+          },
+          {
+            "n1": "9ll 9smayn",
+            "n2": "9ll9smayn",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "قلّ قسماين",
+            "eng": "ten to"
+          },
+          {
+            "n1": "9ll 9sm",
+            "n2": "9ll9sm",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "قلّ قسم",
+            "eng": "five to"
+          },
+          {
+            "n1": "mn",
+            "n2": "men",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "من",
+            "eng": "since"
+          },
+          {
+            "n1": "lil",
+            "n2": "llil",
+            "n3": "lile",
+            "n4": "",
+            "darija_ar": "ليل",
+            "eng": "night"
+          },
+          {
+            "n1": "Sba7",
+            "n2": "Sbah",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "صباح",
+            "eng": "morning"
+          },
+          {
+            "n1": "3chia",
+            "n2": "aachia",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "عشية",
+            "eng": "evening"
+          },
+          {
+            "n1": "wst nhar",
+            "n2": "wstnhar",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "وسط نهار",
+            "eng": "midday"
+          },
+          {
+            "n1": "ftra",
+            "n2": "fatra",
+            "n3": "fetra",
+            "n4": "",
+            "darija_ar": "فترة",
+            "eng": "period"
+          },
+          {
+            "n1": "magana",
+            "n2": "sa3a",
+            "n3": "",
+            "n4": "",
+            "darija_ar": "ماڭانة",
+            "eng": "clock"
+          },
+          {
+            "n1": "monasaba",
+            "n2": "mounasaba",
+            "n3": "monaasaba",
+            "n4": "",
+            "darija_ar": "مناسبة",
+            "eng": "occasion"
+          },
+          {
+            "n1": "nssa3a",
+            "n2": "nss sa3a",
+            "n3": "ness sa3a",
+            "n4": "nessa3a",
+            "darija_ar": "نص ساعة",
+            "eng": "half an hour"
+          },
+          {
+            "n1": "robo3sa3a",
+            "n2": "robo3 sa3a",
+            "n3": "rba3 sa3a",
+            "n4": "",
+            "darija_ar": "ربع ساعة",
+            "eng": "quarter of an hour"
+          },
+          {
+            "n1": "tolotsa3a",
+            "n2": "tolot sa3a",
+            "n3": "tolout sa3a",
+            "n4": "toloutsa3a",
+            "darija_ar": "تولوت ساعة",
+            "eng": "twenty minutes"
+          }
+        ]
+      }
+    ],
+    "license": "CC BY-NC 4.0",
+    "nativeReviewed": false,
+    "changes": "Selected lexical forms adapted, French meanings and written groups authored; Gregorian months only. Compound numbers use units + w + tens, with tnayin for 22/32 etc. No claim of comprehensive numeral agreement."
+  },
+  "user_pdf": {
+    "title": "Parlons l’arabe dialectal marocain",
+    "author": "Michel Quitout",
+    "publisher": "L’Harmattan",
+    "year": 2001,
+    "isbn": "2-7475-1135-9",
+    "pages": 237,
+    "sha256": "f6b87fcb1f710e4c25b5ef87b8cc5a948a992de39be87527792a994d4b513109",
+    "access": "User-provided attachment",
+    "rights": "Copyright L’Harmattan 2001. No open license identified. PDF, images and OCR are not redistributed in module.",
+    "consulted_pdf_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      37,
+      38,
+      39,
+      40,
+      63,
+      70,
+      82,
+      83,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      124,
+      228,
+      229,
+      230,
+      231,
+      232,
+      233,
+      234,
+      235,
+      236,
+      237
+    ],
+    "visually_verified_pages": [
+      5,
+      8,
+      39,
+      63,
+      98,
+      99
+    ],
+    "not_read_in_full": true,
+    "nativeReviewed": false,
+    "uses": [
+      "Six original paraphrased reading lessons with page references",
+      "Hundreds 200–900 and 0–999 composition, pages 98–99"
+    ],
+    "limits": [
+      "Scan OCR contains errors; no automatic bulk lexical import.",
+      "Historical transport facts and prices excluded.",
+      "Reference does not validate Arabic graphies or all existing module entries."
+    ]
+  },
+  "product_consolidation": {
+    "version": 26,
+    "new_linguistic_validation": false,
+    "features": [
+      "Six authored learning paths",
+      "Six topic groups",
+      "Local best scores and last scene",
+      "Alphabet-only optional browser speech of letter names"
+    ],
+    "audio_scope": "No word or phrase audio; no native recording supplied; names are Arabic letter names, not isolated phonemes."
+  },
+  "linguistic_review_pass2": {
+    "version": 28,
+    "native_reviewed": false,
+    "pdf_visual_pages": [
+      43,
+      46,
+      47,
+      48,
+      65,
+      68
+    ],
+    "pdf_previously_visual_pages": [
+      39,
+      82,
+      99
+    ],
+    "doda_shorts_records": [
+      16040,
+      19033,
+      22568,
+      24918
+    ],
+    "modified_scene_phrases": 67,
+    "added_definite_forms": 49,
+    "total_lexical_cards_including_forms": 581,
+    "report": "LINGUISTIC-REVIEW-PASS2.md",
+    "academic_access_report": "ACADEMIC-REFERENCES.md",
+    "limits": [
+      "No full-text access to Caubet, Harrell or Heath",
+      "Authored examples are not quotations",
+      "Borrowed noun plurals and regional pronunciation still need review"
+    ]
+  },
+  "linguistic_review_pass3": {
+    "version": 29,
+    "external_teacher_approval_required": false,
+    "native_reviewed": false,
+    "pdf_visual_pages": [
+      60
+    ],
+    "pdf_previously_visual_pages": [
+      63
+    ],
+    "doda_imperatives_records": [
+      394
+    ],
+    "lexical_changes": [
+      "help-me",
+      "interpreter"
+    ],
+    "scene_notes_clarified": 41,
+    "report": "LINGUISTIC-REVIEW-PASS3.md"
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "date": "2026-10-03",
+  "beforeVersion": 28,
+  "afterVersion": 29,
+  "policy": "Autonomous editorial review; external teacher approval is optional, not a prerequisite.",
+  "lexicalChanges": [
+    {
+      "id": "help-me",
+      "before": {
+        "id": "help-me",
+        "meaning": "aide-moi",
+        "arabic": "عاوني",
+        "latin": "3awenni",
+        "parts": [
+          {
+            "text": "عا",
+            "sound": "3a"
+          },
+          {
+            "text": "ون",
+            "sound": "wen"
+          },
+          {
+            "text": "ي",
+            "sound": "ni"
+          }
+        ],
+        "note": "Demande adressée à un homme ; féminin 3awni, à faire relire.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false
+      },
+      "after": {
+        "id": "help-me",
+        "meaning": "aide-moi",
+        "arabic": "عاونّي",
+        "latin": "3awenni",
+        "parts": [
+          {
+            "text": "عا",
+            "sound": "3a"
+          },
+          {
+            "text": "و",
+            "sound": "we"
+          },
+          {
+            "text": "نّ",
+            "sound": "nn"
+          },
+          {
+            "text": "ي",
+            "sound": "i"
+          }
+        ],
+        "note": "À un homme : 3awen + ni (« aide » + « moi »), d’où 3awenni. La shadda indique ici les deux n réunis. À une femme : 3awni + ni, soit 3awnini / عاونيني. 3awni seul est l’impératif féminin sans le complément « moi ». Le suffixe -ni est décrit par Quitout, p. 63 ; les impératifs sont attestés dans DODa, entrée 394.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false
+      }
+    },
+    {
+      "id": "interpreter",
+      "before": {
+        "id": "interpreter",
+        "meaning": "un interprète / traducteur",
+        "arabic": "مترجم",
+        "latin": "mutarjim",
+        "parts": [
+          {
+            "text": "م",
+            "sound": "mu"
+          },
+          {
+            "text": "ت",
+            "sound": "ta"
+          },
+          {
+            "text": "ر",
+            "sound": "r"
+          },
+          {
+            "text": "جم",
+            "sound": "jim"
+          }
+        ],
+        "note": "Terme de registre formel : mutarjim. Le ت se prononce ; les voyelles peuvent se réduire en usage courant. Demander un interprète ne garantit pas sa disponibilité.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false
+      },
+      "after": {
+        "id": "interpreter",
+        "meaning": "un interprète / traducteur",
+        "arabic": "مترجم",
+        "latin": "muterjim",
+        "parts": [
+          {
+            "text": "م",
+            "sound": "mu"
+          },
+          {
+            "text": "ت",
+            "sound": "te"
+          },
+          {
+            "text": "ر",
+            "sound": "r"
+          },
+          {
+            "text": "جم",
+            "sound": "jim"
+          }
+        ],
+        "note": "Quitout, p. 60, donne muterjim, « traducteur ». Cette fiche retient ce repère ; mutarjim correspond à une autre vocalisation, notamment en arabe standard. Le contexte précise traduction écrite ou interprétation orale.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false
+      }
+    }
+  ],
+  "notesChanged": [
+    "mumerred",
+    "waiter",
+    "jeweler",
+    "when-ready",
+    "help-me",
+    "interpreter",
+    "document",
+    "shade",
+    "sun-cream"
+  ],
+  "sceneNotesChanged": [
+    "shopping",
+    "transports",
+    "marche",
+    "restaurant",
+    "hotel",
+    "meteo",
+    "famille",
+    "couleurs",
+    "famille-parents",
+    "vetements",
+    "objets",
+    "metiers",
+    "market-quantities",
+    "market-prices",
+    "commander-taxi",
+    "taxi-rendezvous",
+    "commander-repas",
+    "repas-livraison",
+    "restaurant-table",
+    "restaurant-service",
+    "restaurant-bill",
+    "transport-voyage",
+    "transport-train",
+    "transport-avion",
+    "fruits-legumes",
+    "produce-vegetables",
+    "bijoux",
+    "jewels-materials",
+    "garage",
+    "garage-repair",
+    "police-plainte",
+    "police-vol-perte",
+    "police-expliquer",
+    "immobilier-notaire",
+    "property-documents",
+    "property-clarify",
+    "plage",
+    "beach-accessories",
+    "beach-swimming",
+    "jours",
+    "mois"
+  ],
+  "nativeReviewed": false
+}

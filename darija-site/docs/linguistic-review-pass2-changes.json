@@ -1,0 +1,3347 @@
+{
+  "date": "2026-10-03",
+  "beforeVersion": 27,
+  "afterVersion": 28,
+  "nativeValidation": false,
+  "wordChanges": [
+    {
+      "id": "mahata",
+      "before": {
+        "id": "mahata",
+        "arabic": "المحطة",
+        "latin": "l-m7etta",
+        "meaning": "la station / la gare",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "م",
+            "sound": "m"
+          },
+          {
+            "text": "ح",
+            "sound": "7e"
+          },
+          {
+            "text": "ط",
+            "sound": "tt"
+          },
+          {
+            "text": "ة",
+            "sound": "a"
+          }
+        ],
+        "note": "La double consonne est souvent omise dans l’écriture non vocalisée. Le type de station dépend du contexte.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false
+      },
+      "after": {
+        "id": "mahata",
+        "arabic": "المحطة",
+        "latin": "l-m7etta",
+        "meaning": "la station / la gare",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "م",
+            "sound": "m"
+          },
+          {
+            "text": "ح",
+            "sound": "7e"
+          },
+          {
+            "text": "ط",
+            "sound": "tt"
+          },
+          {
+            "text": "ة",
+            "sound": "a"
+          }
+        ],
+        "note": "La double consonne est souvent omise dans l’écriture non vocalisée. Le type de station dépend du contexte.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "stop",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "fees",
+      "before": {
+        "id": "fees",
+        "meaning": "des frais / dépenses",
+        "arabic": "مصاريف",
+        "latin": "mesarif",
+        "parts": [
+          {
+            "text": "مص",
+            "sound": "me"
+          },
+          {
+            "text": "ار",
+            "sound": "sa"
+          },
+          {
+            "text": "يف",
+            "sound": "rif"
+          }
+        ],
+        "note": "Terme général ; ne précise pas taxes, honoraires ou autres frais.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false
+      },
+      "after": {
+        "id": "fees",
+        "meaning": "des frais / dépenses",
+        "arabic": "مصاريف",
+        "latin": "msarif",
+        "parts": [
+          {
+            "text": "م",
+            "sound": "m"
+          },
+          {
+            "text": "صا",
+            "sound": "sa"
+          },
+          {
+            "text": "ريف",
+            "sound": "rif"
+          }
+        ],
+        "note": "Terme général ; ne précise pas taxes, honoraires ou autres frais.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false
+      }
+    },
+    {
+      "id": "def-sbitar",
+      "before": null,
+      "after": {
+        "id": "def-sbitar",
+        "arabic": "السبيطار",
+        "latin": "s-sbitar",
+        "meaning": "l’hôpital",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "s-"
+          },
+          {
+            "text": "س",
+            "sound": "s"
+          },
+          {
+            "text": "بي",
+            "sound": "bi"
+          },
+          {
+            "text": "طار",
+            "sound": "tar"
+          }
+        ],
+        "note": "Forme avec l’article de sbitar. L’article ال se lit ici s, puis la consonne initiale du nom : la consonne est doublée à l’oral. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "sbitar",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-kouzina",
+      "before": null,
+      "after": {
+        "id": "def-kouzina",
+        "arabic": "الكوزينة",
+        "latin": "l-kouzina",
+        "meaning": "la cuisine",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "كو",
+            "sound": "kou"
+          },
+          {
+            "text": "زي",
+            "sound": "zi"
+          },
+          {
+            "text": "نة",
+            "sound": "na"
+          }
+        ],
+        "note": "Forme avec l’article de kouzina. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "kouzina",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-mkhbaza",
+      "before": null,
+      "after": {
+        "id": "def-mkhbaza",
+        "arabic": "المخبزة",
+        "latin": "l-mkhbaza",
+        "meaning": "la boulangerie",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "م",
+            "sound": "m"
+          },
+          {
+            "text": "خب",
+            "sound": "khba"
+          },
+          {
+            "text": "زة",
+            "sound": "za"
+          }
+        ],
+        "note": "Forme avec l’article de mkhbaza. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "mkhbaza",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-saydaliya",
+      "before": null,
+      "after": {
+        "id": "def-saydaliya",
+        "arabic": "الصيدلية",
+        "latin": "s-saydaliya",
+        "meaning": "la pharmacie",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "s-"
+          },
+          {
+            "text": "صي",
+            "sound": "say"
+          },
+          {
+            "text": "د",
+            "sound": "da"
+          },
+          {
+            "text": "لي",
+            "sound": "li"
+          },
+          {
+            "text": "ة",
+            "sound": "ya"
+          }
+        ],
+        "note": "Forme avec l’article de saydaliya. L’article ال se lit ici s, puis la consonne initiale du nom : la consonne est doublée à l’oral. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "saydaliya",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-banka",
+      "before": null,
+      "after": {
+        "id": "def-banka",
+        "arabic": "البانكة",
+        "latin": "l-banka",
+        "meaning": "la banque",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "با",
+            "sound": "ba"
+          },
+          {
+            "text": "ن",
+            "sound": "n"
+          },
+          {
+            "text": "كة",
+            "sound": "ka"
+          }
+        ],
+        "note": "Forme avec l’article de banka. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "banka",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-biro",
+      "before": null,
+      "after": {
+        "id": "def-biro",
+        "arabic": "البيرو",
+        "latin": "l-biro",
+        "meaning": "le bureau",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "بي",
+            "sound": "bi"
+          },
+          {
+            "text": "رو",
+            "sound": "ro"
+          }
+        ],
+        "note": "Forme avec l’article de biro. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "biro",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-mfta7",
+      "before": null,
+      "after": {
+        "id": "def-mfta7",
+        "arabic": "المفتاح",
+        "latin": "l-mfta7",
+        "meaning": "la clé",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "م",
+            "sound": "m"
+          },
+          {
+            "text": "ف",
+            "sound": "f"
+          },
+          {
+            "text": "تا",
+            "sound": "ta"
+          },
+          {
+            "text": "ح",
+            "sound": "7"
+          }
+        ],
+        "note": "Forme avec l’article de mfta7. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "mfta7",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-toilets",
+      "before": null,
+      "after": {
+        "id": "def-toilets",
+        "arabic": "الطواليط",
+        "latin": "t-twalit",
+        "meaning": "les toilettes",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "t-"
+          },
+          {
+            "text": "طوا",
+            "sound": "twa"
+          },
+          {
+            "text": "لي",
+            "sound": "li"
+          },
+          {
+            "text": "ط",
+            "sound": "t"
+          }
+        ],
+        "note": "Forme avec l’article de twalit. L’article ال se lit ici t, puis la consonne initiale du nom : la consonne est doublée à l’oral. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "toilets",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-lift",
+      "before": null,
+      "after": {
+        "id": "def-lift",
+        "arabic": "الأصانصور",
+        "latin": "l-asansur",
+        "meaning": "l’ascenseur",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "أ",
+            "sound": "a"
+          },
+          {
+            "text": "صا",
+            "sound": "sa"
+          },
+          {
+            "text": "ن",
+            "sound": "n"
+          },
+          {
+            "text": "صو",
+            "sound": "su"
+          },
+          {
+            "text": "ر",
+            "sound": "r"
+          }
+        ],
+        "note": "Forme avec l’article de asansur. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "lift",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-exit",
+      "before": null,
+      "after": {
+        "id": "def-exit",
+        "arabic": "المخرج",
+        "latin": "l-mekhrej",
+        "meaning": "la sortie",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "مخ",
+            "sound": "mekh"
+          },
+          {
+            "text": "رج",
+            "sound": "rej"
+          }
+        ],
+        "note": "Forme avec l’article de mekhrej. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "exit",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-shop",
+      "before": null,
+      "after": {
+        "id": "def-shop",
+        "arabic": "المحلّ",
+        "latin": "l-me7ell",
+        "meaning": "la boutique",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "م",
+            "sound": "me"
+          },
+          {
+            "text": "ح",
+            "sound": "7e"
+          },
+          {
+            "text": "لّ",
+            "sound": "ll"
+          }
+        ],
+        "note": "Forme avec l’article de me7ell. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "shop",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-fitting",
+      "before": null,
+      "after": {
+        "id": "def-fitting",
+        "arabic": "الكابينة",
+        "latin": "l-kabina",
+        "meaning": "la cabine",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "كا",
+            "sound": "ka"
+          },
+          {
+            "text": "بي",
+            "sound": "bi"
+          },
+          {
+            "text": "نة",
+            "sound": "na"
+          }
+        ],
+        "note": "Forme avec l’article de kabina. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "fitting",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-size",
+      "before": null,
+      "after": {
+        "id": "def-size",
+        "arabic": "القياس",
+        "latin": "l-qyas",
+        "meaning": "la taille / la mesure",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "قيا",
+            "sound": "qya"
+          },
+          {
+            "text": "س",
+            "sound": "s"
+          }
+        ],
+        "note": "Forme avec l’article de qyas. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "size",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-serwal",
+      "before": null,
+      "after": {
+        "id": "def-serwal",
+        "arabic": "السروال",
+        "latin": "s-serwal",
+        "meaning": "le pantalon",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "s-"
+          },
+          {
+            "text": "سر",
+            "sound": "ser"
+          },
+          {
+            "text": "وا",
+            "sound": "wa"
+          },
+          {
+            "text": "ل",
+            "sound": "l"
+          }
+        ],
+        "note": "Forme avec l’article de serwal. L’article ال se lit ici s, puis la consonne initiale du nom : la consonne est doublée à l’oral. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "serwal",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-qemija",
+      "before": null,
+      "after": {
+        "id": "def-qemija",
+        "arabic": "القميجة",
+        "latin": "l-qemija",
+        "meaning": "la chemise",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "قمي",
+            "sound": "qemi"
+          },
+          {
+            "text": "جة",
+            "sound": "ja"
+          }
+        ],
+        "note": "Forme avec l’article de qemija. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "qemija",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-bus",
+      "before": null,
+      "after": {
+        "id": "def-bus",
+        "arabic": "الطوبيس",
+        "latin": "t-tubis",
+        "meaning": "le bus",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "t-"
+          },
+          {
+            "text": "طو",
+            "sound": "tu"
+          },
+          {
+            "text": "بي",
+            "sound": "bi"
+          },
+          {
+            "text": "س",
+            "sound": "s"
+          }
+        ],
+        "note": "Forme avec l’article de tubis. L’article ال se lit ici t, puis la consonne initiale du nom : la consonne est doublée à l’oral. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "bus",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-ring",
+      "before": null,
+      "after": {
+        "id": "def-ring",
+        "arabic": "الخاتم",
+        "latin": "l-khatem",
+        "meaning": "la bague",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "خا",
+            "sound": "kha"
+          },
+          {
+            "text": "تم",
+            "sound": "tem"
+          }
+        ],
+        "note": "Forme avec l’article de khatem. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "ring",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-menu",
+      "before": null,
+      "after": {
+        "id": "def-menu",
+        "arabic": "المينو",
+        "latin": "l-minu",
+        "meaning": "le menu",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "مي",
+            "sound": "mi"
+          },
+          {
+            "text": "نو",
+            "sound": "nu"
+          }
+        ],
+        "note": "Forme avec l’article de minu. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "menu",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-bill",
+      "before": null,
+      "after": {
+        "id": "def-bill",
+        "arabic": "الحساب",
+        "latin": "l-7sab",
+        "meaning": "l’addition / le compte",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "ح",
+            "sound": "7"
+          },
+          {
+            "text": "سا",
+            "sound": "sa"
+          },
+          {
+            "text": "ب",
+            "sound": "b"
+          }
+        ],
+        "note": "Forme avec l’article de 7sab. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "bill",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-museum",
+      "before": null,
+      "after": {
+        "id": "def-museum",
+        "arabic": "المتحف",
+        "latin": "l-met7ef",
+        "meaning": "le musée",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "مت",
+            "sound": "met"
+          },
+          {
+            "text": "حف",
+            "sound": "7ef"
+          }
+        ],
+        "note": "Forme avec l’article de met7ef. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "museum",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-beach",
+      "before": null,
+      "after": {
+        "id": "def-beach",
+        "arabic": "البلاج",
+        "latin": "l-blaj",
+        "meaning": "la plage",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "بلا",
+            "sound": "bla"
+          },
+          {
+            "text": "ج",
+            "sound": "j"
+          }
+        ],
+        "note": "Forme avec l’article de blaj. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "beach",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-entry",
+      "before": null,
+      "after": {
+        "id": "def-entry",
+        "arabic": "المدخل",
+        "latin": "l-medkhel",
+        "meaning": "l’entrée",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "مد",
+            "sound": "med"
+          },
+          {
+            "text": "خل",
+            "sound": "khel"
+          }
+        ],
+        "note": "Forme avec l’article de medkhel. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "entry",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-ticket",
+      "before": null,
+      "after": {
+        "id": "def-ticket",
+        "arabic": "البيّي",
+        "latin": "l-biyyi",
+        "meaning": "le billet",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "ب",
+            "sound": "bi"
+          },
+          {
+            "text": "يّي",
+            "sound": "yyi"
+          }
+        ],
+        "note": "Forme avec l’article de biyyi. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "ticket",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-tram",
+      "before": null,
+      "after": {
+        "id": "def-tram",
+        "arabic": "الطرام",
+        "latin": "t-tram",
+        "meaning": "le tramway",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "t-"
+          },
+          {
+            "text": "طرا",
+            "sound": "tra"
+          },
+          {
+            "text": "م",
+            "sound": "m"
+          }
+        ],
+        "note": "Forme avec l’article de tram. L’article ال se lit ici t, puis la consonne initiale du nom : la consonne est doublée à l’oral. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "tram",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-platform",
+      "before": null,
+      "after": {
+        "id": "def-platform",
+        "arabic": "الرصيف",
+        "latin": "r-rsif",
+        "meaning": "le quai",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "r-"
+          },
+          {
+            "text": "رص",
+            "sound": "r"
+          },
+          {
+            "text": "يف",
+            "sound": "sif"
+          }
+        ],
+        "note": "Forme avec l’article de rsif. L’article ال se lit ici r, puis la consonne initiale du nom : la consonne est doublée à l’oral. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "platform",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-train",
+      "before": null,
+      "after": {
+        "id": "def-train",
+        "arabic": "التران",
+        "latin": "t-tran",
+        "meaning": "le train",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "t-"
+          },
+          {
+            "text": "ترا",
+            "sound": "tra"
+          },
+          {
+            "text": "ن",
+            "sound": "n"
+          }
+        ],
+        "note": "Forme avec l’article de tran. L’article ال se lit ici t, puis la consonne initiale du nom : la consonne est doublée à l’oral. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "train",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-airport",
+      "before": null,
+      "after": {
+        "id": "def-airport",
+        "arabic": "المطار",
+        "latin": "l-metar",
+        "meaning": "l’aéroport",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "مط",
+            "sound": "me"
+          },
+          {
+            "text": "ار",
+            "sound": "tar"
+          }
+        ],
+        "note": "Forme avec l’article de metar. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "airport",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-mus",
+      "before": null,
+      "after": {
+        "id": "def-mus",
+        "arabic": "الموس",
+        "latin": "l-mus",
+        "meaning": "le couteau",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "مو",
+            "sound": "mu"
+          },
+          {
+            "text": "س",
+            "sound": "s"
+          }
+        ],
+        "note": "Forme avec l’article de mus. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "mus",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-recipe",
+      "before": null,
+      "after": {
+        "id": "def-recipe",
+        "arabic": "الوصفة",
+        "latin": "l-wesfa",
+        "meaning": "la recette",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "وص",
+            "sound": "wes"
+          },
+          {
+            "text": "فة",
+            "sound": "fa"
+          }
+        ],
+        "note": "Forme avec l’article de wesfa. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "recipe",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-pan",
+      "before": null,
+      "after": {
+        "id": "def-pan",
+        "arabic": "المقلة",
+        "latin": "l-meqla",
+        "meaning": "la poêle",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "مق",
+            "sound": "meq"
+          },
+          {
+            "text": "لة",
+            "sound": "la"
+          }
+        ],
+        "note": "Forme avec l’article de meqla. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "pan",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-tomatoes",
+      "before": null,
+      "after": {
+        "id": "def-tomatoes",
+        "arabic": "المطيشة",
+        "latin": "l-mtisha",
+        "meaning": "les tomates",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "م",
+            "sound": "m"
+          },
+          {
+            "text": "طي",
+            "sound": "ti"
+          },
+          {
+            "text": "ش",
+            "sound": "sh"
+          },
+          {
+            "text": "ة",
+            "sound": "a"
+          }
+        ],
+        "note": "Forme avec l’article de mtisha. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "tomatoes",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-besla",
+      "before": null,
+      "after": {
+        "id": "def-besla",
+        "arabic": "البصلة",
+        "latin": "l-besla",
+        "meaning": "les oignons",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "بص",
+            "sound": "bes"
+          },
+          {
+            "text": "لة",
+            "sound": "la"
+          }
+        ],
+        "note": "Forme avec l’article de besla. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "besla",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-roz",
+      "before": null,
+      "after": {
+        "id": "def-roz",
+        "arabic": "الروز",
+        "latin": "r-roz",
+        "meaning": "le riz",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "r-"
+          },
+          {
+            "text": "رو",
+            "sound": "ro"
+          },
+          {
+            "text": "ز",
+            "sound": "z"
+          }
+        ],
+        "note": "Forme avec l’article de roz. L’article ال se lit ici r, puis la consonne initiale du nom : la consonne est doublée à l’oral. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "roz",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-della7",
+      "before": null,
+      "after": {
+        "id": "def-della7",
+        "arabic": "الدلاح",
+        "latin": "d-dlla7",
+        "meaning": "la pastèque",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "d-"
+          },
+          {
+            "text": "د",
+            "sound": "d"
+          },
+          {
+            "text": "لا",
+            "sound": "lla"
+          },
+          {
+            "text": "ح",
+            "sound": "7"
+          }
+        ],
+        "note": "Forme avec l’article de dlla7. L’article ال se lit ici d, puis la consonne initiale du nom : la consonne est doublée à l’oral. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "della7",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-garage",
+      "before": null,
+      "after": {
+        "id": "def-garage",
+        "arabic": "الگاراج",
+        "latin": "l-garaj",
+        "meaning": "le garage",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "گا",
+            "sound": "ga"
+          },
+          {
+            "text": "را",
+            "sound": "ra"
+          },
+          {
+            "text": "ج",
+            "sound": "j"
+          }
+        ],
+        "note": "Forme avec l’article de garaj. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "garage",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-repair",
+      "before": null,
+      "after": {
+        "id": "def-repair",
+        "arabic": "التصليح",
+        "latin": "t-tesli7",
+        "meaning": "la réparation",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "t-"
+          },
+          {
+            "text": "تص",
+            "sound": "tes"
+          },
+          {
+            "text": "لي",
+            "sound": "li"
+          },
+          {
+            "text": "ح",
+            "sound": "7"
+          }
+        ],
+        "note": "Forme avec l’article de tesli7. L’article ال se lit ici t, puis la consonne initiale du nom : la consonne est doublée à l’oral. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "repair",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-police-station",
+      "before": null,
+      "after": {
+        "id": "def-police-station",
+        "arabic": "الكوميسارية",
+        "latin": "l-kumisariya",
+        "meaning": "le commissariat",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "كو",
+            "sound": "ku"
+          },
+          {
+            "text": "مي",
+            "sound": "mi"
+          },
+          {
+            "text": "سا",
+            "sound": "sa"
+          },
+          {
+            "text": "ري",
+            "sound": "ri"
+          },
+          {
+            "text": "ة",
+            "sound": "ya"
+          }
+        ],
+        "note": "Forme avec l’article de kumisariya. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "police-station",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-rent",
+      "before": null,
+      "after": {
+        "id": "def-rent",
+        "arabic": "الكرا",
+        "latin": "l-kra",
+        "meaning": "le loyer",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "ك",
+            "sound": "k"
+          },
+          {
+            "text": "را",
+            "sound": "ra"
+          }
+        ],
+        "note": "Forme avec l’article de kra. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "rent",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-apartment",
+      "before": null,
+      "after": {
+        "id": "def-apartment",
+        "arabic": "البارتمة",
+        "latin": "l-partma",
+        "meaning": "l’appartement",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "بار",
+            "sound": "par"
+          },
+          {
+            "text": "ت",
+            "sound": "t"
+          },
+          {
+            "text": "مة",
+            "sound": "ma"
+          }
+        ],
+        "note": "Forme avec l’article de partma. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "apartment",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-address",
+      "before": null,
+      "after": {
+        "id": "def-address",
+        "arabic": "العنوان",
+        "latin": "l-3enwan",
+        "meaning": "l’adresse",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "عن",
+            "sound": "3en"
+          },
+          {
+            "text": "وا",
+            "sound": "wa"
+          },
+          {
+            "text": "ن",
+            "sound": "n"
+          }
+        ],
+        "note": "Forme avec l’article de 3enwan. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "address",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-contract",
+      "before": null,
+      "after": {
+        "id": "def-contract",
+        "arabic": "العقد",
+        "latin": "l-3eqd",
+        "meaning": "le contrat",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "ع",
+            "sound": "3e"
+          },
+          {
+            "text": "قد",
+            "sound": "qd"
+          }
+        ],
+        "note": "Forme avec l’article de 3eqd. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "contract",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-fees",
+      "before": null,
+      "after": {
+        "id": "def-fees",
+        "arabic": "المصاريف",
+        "latin": "l-msarif",
+        "meaning": "les frais",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "م",
+            "sound": "m"
+          },
+          {
+            "text": "صا",
+            "sound": "sa"
+          },
+          {
+            "text": "ريف",
+            "sound": "rif"
+          }
+        ],
+        "note": "Forme avec l’article de msarif. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "fees",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-deposit-rent",
+      "before": null,
+      "after": {
+        "id": "def-deposit-rent",
+        "arabic": "الضمان",
+        "latin": "d-daman",
+        "meaning": "la garantie / le dépôt",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "d-"
+          },
+          {
+            "text": "ض",
+            "sound": "da"
+          },
+          {
+            "text": "ما",
+            "sound": "ma"
+          },
+          {
+            "text": "ن",
+            "sound": "n"
+          }
+        ],
+        "note": "Forme avec l’article de daman. L’article ال se lit ici d, puis la consonne initiale du nom : la consonne est doublée à l’oral. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "deposit-rent",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-shower",
+      "before": null,
+      "after": {
+        "id": "def-shower",
+        "arabic": "الدوش",
+        "latin": "d-dush",
+        "meaning": "la douche",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "d-"
+          },
+          {
+            "text": "دو",
+            "sound": "du"
+          },
+          {
+            "text": "ش",
+            "sound": "sh"
+          }
+        ],
+        "note": "Forme avec l’article de dush. L’article ال se lit ici d, puis la consonne initiale du nom : la consonne est doublée à l’oral. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "shower",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-shade",
+      "before": null,
+      "after": {
+        "id": "def-shade",
+        "arabic": "الضل",
+        "latin": "d-dell",
+        "meaning": "l’ombre",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "d-"
+          },
+          {
+            "text": "ض",
+            "sound": "de"
+          },
+          {
+            "text": "ل",
+            "sound": "ll"
+          }
+        ],
+        "note": "Forme avec l’article de dell. L’article ال se lit ici d, puis la consonne initiale du nom : la consonne est doublée à l’oral. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "shade",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-kilo",
+      "before": null,
+      "after": {
+        "id": "def-kilo",
+        "arabic": "الكيلو",
+        "latin": "l-kilu",
+        "meaning": "le kilo",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "كي",
+            "sound": "ki"
+          },
+          {
+            "text": "ل",
+            "sound": "l"
+          },
+          {
+            "text": "و",
+            "sound": "u"
+          }
+        ],
+        "note": "Forme avec l’article de kilu. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "kilo",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-delivery",
+      "before": null,
+      "after": {
+        "id": "def-delivery",
+        "arabic": "التوصيل",
+        "latin": "t-tawsil",
+        "meaning": "la livraison",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "t-"
+          },
+          {
+            "text": "تو",
+            "sound": "taw"
+          },
+          {
+            "text": "صيل",
+            "sound": "sil"
+          }
+        ],
+        "note": "Forme avec l’article de tawsil. L’article ال se lit ici t, puis la consonne initiale du nom : la consonne est doublée à l’oral. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "delivery",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-djaj",
+      "before": null,
+      "after": {
+        "id": "def-djaj",
+        "arabic": "الدجاج",
+        "latin": "d-djaj",
+        "meaning": "le poulet",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "d-"
+          },
+          {
+            "text": "د",
+            "sound": "d"
+          },
+          {
+            "text": "جا",
+            "sound": "ja"
+          },
+          {
+            "text": "ج",
+            "sound": "j"
+          }
+        ],
+        "note": "Forme avec l’article de djaj. L’article ال se lit ici d, puis la consonne initiale du nom : la consonne est doublée à l’oral. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "djaj",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "def-mdrasa",
+      "before": null,
+      "after": {
+        "id": "def-mdrasa",
+        "arabic": "المدرسة",
+        "latin": "l-mdrasa",
+        "meaning": "l’école",
+        "parts": [
+          {
+            "text": "ال",
+            "sound": "l-"
+          },
+          {
+            "text": "م",
+            "sound": "m"
+          },
+          {
+            "text": "د",
+            "sound": "d"
+          },
+          {
+            "text": "ر",
+            "sound": "ra"
+          },
+          {
+            "text": "سة",
+            "sound": "sa"
+          }
+        ],
+        "note": "Forme avec l’article de mdrasa. Le l de l’article est conservé dans le repère sonore. Règle de l’article : Quitout, p. 39 et 43 ; transcription de cet exemple proposée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "mdrasa",
+        "formKind": "definite",
+        "formLabel": "Avec l’article"
+      }
+    },
+    {
+      "id": "had-determiner",
+      "before": null,
+      "after": {
+        "id": "had-determiner",
+        "arabic": "هاد",
+        "latin": "had",
+        "meaning": "ce / cette / ces (devant un nom déterminé)",
+        "parts": [
+          {
+            "text": "ها",
+            "sound": "ha"
+          },
+          {
+            "text": "د",
+            "sound": "d"
+          }
+        ],
+        "note": "Had précède ici un nom avec article. Il ne varie pas selon le genre ou le nombre. À distinguer de hada / hadi employés seuls ou dans « c’est un / une… ». Quitout, p. 68.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false
+      }
+    },
+    {
+      "id": "for-two",
+      "before": null,
+      "after": {
+        "id": "for-two",
+        "arabic": "لجوج",
+        "latin": "l-juj",
+        "meaning": "pour deux",
+        "parts": [
+          {
+            "text": "ل",
+            "sound": "l-"
+          },
+          {
+            "text": "جو",
+            "sound": "ju"
+          },
+          {
+            "text": "ج",
+            "sound": "j"
+          }
+        ],
+        "note": "L- signifie ici « pour » ; juj signifie « deux ». Avec une table ou un repas, les personnes sont sous-entendues. La préposition est décrite par Quitout, p. 65 ; la formule est composée pour le module.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "jooj",
+        "formKind": "prepositional",
+        "formLabel": "Avec « pour »"
+      }
+    },
+    {
+      "id": "werqa-ticket",
+      "before": null,
+      "after": {
+        "id": "werqa-ticket",
+        "arabic": "ورقة",
+        "latin": "werqa",
+        "meaning": "un billet / une feuille (selon le contexte)",
+        "parts": [
+          {
+            "text": "ور",
+            "sound": "wer"
+          },
+          {
+            "text": "قة",
+            "sound": "qa"
+          }
+        ],
+        "note": "Werqa désigne une feuille ; dans le contexte du transport, le manuel donne aussi ce mot pour un billet (Quitout, p. 82). Le contexte doit préciser le type de billet.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false
+      }
+    },
+    {
+      "id": "wraq-tickets",
+      "before": null,
+      "after": {
+        "id": "wraq-tickets",
+        "arabic": "وراق",
+        "latin": "wraq",
+        "meaning": "des billets / des feuilles (selon le contexte)",
+        "parts": [
+          {
+            "text": "و",
+            "sound": "w"
+          },
+          {
+            "text": "را",
+            "sound": "ra"
+          },
+          {
+            "text": "ق",
+            "sound": "q"
+          }
+        ],
+        "note": "Pluriel de werqa. Wraq est attesté pour « feuilles / papiers » dans DODa shorts ; le sens « billets » s’appuie sur l’emploi de werqa chez Quitout, p. 82. Les phrases du module sont composées, pas citées.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "werqa-ticket",
+        "formKind": "plural",
+        "formLabel": "Au pluriel"
+      }
+    },
+    {
+      "id": "kisan",
+      "before": null,
+      "after": {
+        "id": "kisan",
+        "arabic": "كيسان",
+        "latin": "kisan",
+        "meaning": "des verres",
+        "parts": [
+          {
+            "text": "كي",
+            "sound": "ki"
+          },
+          {
+            "text": "سا",
+            "sound": "sa"
+          },
+          {
+            "text": "ن",
+            "sound": "n"
+          }
+        ],
+        "note": "Pluriel de kas, avec changement de la forme du mot. Attesté dans DODa shorts (« glasses », « cups »). Après trois : tlata kisan ; voir la règle de nombre chez Quitout, p. 99.",
+        "image": null,
+        "audio": null,
+        "nativeReviewed": false,
+        "formOf": "kas",
+        "formKind": "plural",
+        "formLabel": "Au pluriel"
+      }
+    }
+  ],
+  "phraseChanges": [
+    {
+      "id": "corps-4",
+      "before": {
+        "id": "corps-4",
+        "words": [
+          "fin",
+          "sbitar"
+        ],
+        "meaning": "Où est l’hôpital ?"
+      },
+      "after": {
+        "id": "corps-4",
+        "words": [
+          "fin",
+          "def-sbitar"
+        ],
+        "meaning": "Où est l’hôpital ?"
+      }
+    },
+    {
+      "id": "maison-1",
+      "before": {
+        "id": "maison-1",
+        "words": [
+          "fin",
+          "kouzina"
+        ],
+        "meaning": "Où est la cuisine ?"
+      },
+      "after": {
+        "id": "maison-1",
+        "words": [
+          "fin",
+          "def-kouzina"
+        ],
+        "meaning": "Où est la cuisine ?"
+      }
+    },
+    {
+      "id": "commerces-1",
+      "before": {
+        "id": "commerces-1",
+        "words": [
+          "fin",
+          "mkhbaza"
+        ],
+        "meaning": "Où est la boulangerie ?"
+      },
+      "after": {
+        "id": "commerces-1",
+        "words": [
+          "fin",
+          "def-mkhbaza"
+        ],
+        "meaning": "Où est la boulangerie ?"
+      }
+    },
+    {
+      "id": "commerces-2",
+      "before": {
+        "id": "commerces-2",
+        "words": [
+          "fin",
+          "saydaliya"
+        ],
+        "meaning": "Où est la pharmacie ?"
+      },
+      "after": {
+        "id": "commerces-2",
+        "words": [
+          "fin",
+          "def-saydaliya"
+        ],
+        "meaning": "Où est la pharmacie ?"
+      }
+    },
+    {
+      "id": "commerces-3",
+      "before": {
+        "id": "commerces-3",
+        "words": [
+          "fin",
+          "banka"
+        ],
+        "meaning": "Où est la banque ?"
+      },
+      "after": {
+        "id": "commerces-3",
+        "words": [
+          "fin",
+          "def-banka"
+        ],
+        "meaning": "Où est la banque ?"
+      }
+    },
+    {
+      "id": "mobilier-2",
+      "before": {
+        "id": "mobilier-2",
+        "words": [
+          "fin",
+          "biro"
+        ],
+        "meaning": "Où est le bureau ?"
+      },
+      "after": {
+        "id": "mobilier-2",
+        "words": [
+          "fin",
+          "def-biro"
+        ],
+        "meaning": "Où est le bureau ?"
+      }
+    },
+    {
+      "id": "vetements-2",
+      "before": {
+        "id": "vetements-2",
+        "words": [
+          "bshhal",
+          "hada",
+          "serwal"
+        ],
+        "meaning": "Combien coûte ce pantalon ?"
+      },
+      "after": {
+        "id": "vetements-2",
+        "words": [
+          "bshhal",
+          "had-determiner",
+          "def-serwal"
+        ],
+        "meaning": "Combien coûte ce pantalon ?"
+      }
+    },
+    {
+      "id": "objets-1",
+      "before": {
+        "id": "objets-1",
+        "words": [
+          "fin",
+          "mfta7"
+        ],
+        "meaning": "Où est la clé ?"
+      },
+      "after": {
+        "id": "objets-1",
+        "words": [
+          "fin",
+          "def-mfta7"
+        ],
+        "meaning": "Où est la clé ?"
+      }
+    },
+    {
+      "id": "mall-directions-1",
+      "before": {
+        "id": "mall-directions-1",
+        "words": [
+          "fin",
+          "toilets"
+        ],
+        "meaning": "Où sont les toilettes ?"
+      },
+      "after": {
+        "id": "mall-directions-1",
+        "words": [
+          "fin",
+          "def-toilets"
+        ],
+        "meaning": "Où sont les toilettes ?"
+      }
+    },
+    {
+      "id": "mall-directions-2",
+      "before": {
+        "id": "mall-directions-2",
+        "words": [
+          "fin",
+          "lift"
+        ],
+        "meaning": "Où est l’ascenseur ?"
+      },
+      "after": {
+        "id": "mall-directions-2",
+        "words": [
+          "fin",
+          "def-lift"
+        ],
+        "meaning": "Où est l’ascenseur ?"
+      }
+    },
+    {
+      "id": "mall-directions-3",
+      "before": {
+        "id": "mall-directions-3",
+        "words": [
+          "fin",
+          "exit"
+        ],
+        "meaning": "Où est la sortie ?"
+      },
+      "after": {
+        "id": "mall-directions-3",
+        "words": [
+          "fin",
+          "def-exit"
+        ],
+        "meaning": "Où est la sortie ?"
+      }
+    },
+    {
+      "id": "mall-directions-4",
+      "before": {
+        "id": "mall-directions-4",
+        "words": [
+          "fin",
+          "shop"
+        ],
+        "meaning": "Où est la boutique ?"
+      },
+      "after": {
+        "id": "mall-directions-4",
+        "words": [
+          "fin",
+          "def-shop"
+        ],
+        "meaning": "Où est la boutique ?"
+      }
+    },
+    {
+      "id": "mall-fitting-1",
+      "before": {
+        "id": "mall-fitting-1",
+        "words": [
+          "bghit",
+          "try",
+          "hada",
+          "serwal"
+        ],
+        "meaning": "Je voudrais essayer ce pantalon."
+      },
+      "after": {
+        "id": "mall-fitting-1",
+        "words": [
+          "bghit",
+          "try",
+          "had-determiner",
+          "def-serwal"
+        ],
+        "meaning": "Je voudrais essayer ce pantalon."
+      }
+    },
+    {
+      "id": "mall-fitting-2",
+      "before": {
+        "id": "mall-fitting-2",
+        "words": [
+          "fin",
+          "fitting",
+          "dyal",
+          "size"
+        ],
+        "meaning": "Où est la cabine d’essayage ?"
+      },
+      "after": {
+        "id": "mall-fitting-2",
+        "words": [
+          "fin",
+          "def-fitting",
+          "dyal",
+          "def-size"
+        ],
+        "meaning": "Où est la cabine d’essayage ?"
+      }
+    },
+    {
+      "id": "mall-fitting-4",
+      "before": {
+        "id": "mall-fitting-4",
+        "words": [
+          "bghit",
+          "hadi",
+          "qemija"
+        ],
+        "meaning": "Je voudrais cette chemise."
+      },
+      "after": {
+        "id": "mall-fitting-4",
+        "words": [
+          "bghit",
+          "had-determiner",
+          "def-qemija"
+        ],
+        "meaning": "Je voudrais cette chemise."
+      }
+    },
+    {
+      "id": "market-prices-1",
+      "before": {
+        "id": "market-prices-1",
+        "words": [
+          "bshhal",
+          "kilo"
+        ],
+        "meaning": "Combien coûte le kilo ?"
+      },
+      "after": {
+        "id": "market-prices-1",
+        "words": [
+          "bshhal",
+          "def-kilo"
+        ],
+        "meaning": "Combien coûte le kilo ?"
+      }
+    },
+    {
+      "id": "taxi-rendezvous-2",
+      "before": {
+        "id": "taxi-rendezvous-2",
+        "words": [
+          "ana",
+          "7da",
+          "banka"
+        ],
+        "meaning": "Je suis à côté de la banque."
+      },
+      "after": {
+        "id": "taxi-rendezvous-2",
+        "words": [
+          "ana",
+          "7da",
+          "def-banka"
+        ],
+        "meaning": "Je suis à côté de la banque."
+      }
+    },
+    {
+      "id": "commander-repas-1",
+      "before": {
+        "id": "commander-repas-1",
+        "words": [
+          "bghit",
+          "tajin",
+          "dyal",
+          "djaj"
+        ],
+        "meaning": "Je voudrais un tajine de poulet."
+      },
+      "after": {
+        "id": "commander-repas-1",
+        "words": [
+          "bghit",
+          "tajin",
+          "dyal",
+          "def-djaj"
+        ],
+        "meaning": "Je voudrais un tajine de poulet."
+      }
+    },
+    {
+      "id": "commander-repas-2",
+      "before": {
+        "id": "commander-repas-2",
+        "words": [
+          "bghit",
+          "jooj",
+          "dyal",
+          "portion"
+        ],
+        "meaning": "Je voudrais deux portions."
+      },
+      "after": {
+        "id": "commander-repas-2",
+        "words": [
+          "bghit",
+          "makla",
+          "for-two"
+        ],
+        "meaning": "Je voudrais à manger pour deux."
+      }
+    },
+    {
+      "id": "repas-livraison-4",
+      "before": {
+        "id": "repas-livraison-4",
+        "words": [
+          "bshhal",
+          "delivery"
+        ],
+        "meaning": "Combien coûte la livraison ?"
+      },
+      "after": {
+        "id": "repas-livraison-4",
+        "words": [
+          "bshhal",
+          "def-delivery"
+        ],
+        "meaning": "Combien coûte la livraison ?"
+      }
+    },
+    {
+      "id": "restaurant-table-1",
+      "before": {
+        "id": "restaurant-table-1",
+        "words": [
+          "bghit",
+          "tabla",
+          "dyal",
+          "jooj",
+          "dyal",
+          "persons"
+        ],
+        "meaning": "Je voudrais une table pour deux personnes."
+      },
+      "after": {
+        "id": "restaurant-table-1",
+        "words": [
+          "bghit",
+          "tabla",
+          "for-two"
+        ],
+        "meaning": "Je voudrais une table pour deux personnes."
+      }
+    },
+    {
+      "id": "restaurant-table-3",
+      "before": {
+        "id": "restaurant-table-3",
+        "words": [
+          "bghit",
+          "menu",
+          "afak"
+        ],
+        "meaning": "Je voudrais le menu, s’il te plaît."
+      },
+      "after": {
+        "id": "restaurant-table-3",
+        "words": [
+          "bghit",
+          "def-menu",
+          "afak"
+        ],
+        "meaning": "Je voudrais le menu, s’il te plaît."
+      }
+    },
+    {
+      "id": "restaurant-table-4",
+      "before": {
+        "id": "restaurant-table-4",
+        "words": [
+          "fin",
+          "toilets"
+        ],
+        "meaning": "Où sont les toilettes ?"
+      },
+      "after": {
+        "id": "restaurant-table-4",
+        "words": [
+          "fin",
+          "def-toilets"
+        ],
+        "meaning": "Où sont les toilettes ?"
+      }
+    },
+    {
+      "id": "restaurant-service-4",
+      "before": {
+        "id": "restaurant-service-4",
+        "words": [
+          "hada",
+          "tajin",
+          "delicious"
+        ],
+        "meaning": "Ce tajine est délicieux."
+      },
+      "after": {
+        "id": "restaurant-service-4",
+        "words": [
+          "had-determiner",
+          "tajin",
+          "delicious"
+        ],
+        "meaning": "Ce tajine est délicieux."
+      }
+    },
+    {
+      "id": "restaurant-bill-1",
+      "before": {
+        "id": "restaurant-bill-1",
+        "words": [
+          "bghit",
+          "bill",
+          "afak"
+        ],
+        "meaning": "Je voudrais l’addition, s’il te plaît."
+      },
+      "after": {
+        "id": "restaurant-bill-1",
+        "words": [
+          "bghit",
+          "def-bill",
+          "afak"
+        ],
+        "meaning": "Je voudrais l’addition, s’il te plaît."
+      }
+    },
+    {
+      "id": "tourisme-1",
+      "before": {
+        "id": "tourisme-1",
+        "words": [
+          "fin",
+          "museum"
+        ],
+        "meaning": "Où est le musée ?"
+      },
+      "after": {
+        "id": "tourisme-1",
+        "words": [
+          "fin",
+          "def-museum"
+        ],
+        "meaning": "Où est le musée ?"
+      }
+    },
+    {
+      "id": "tourisme-3",
+      "before": {
+        "id": "tourisme-3",
+        "words": [
+          "fin",
+          "beach"
+        ],
+        "meaning": "Où est la plage ?"
+      },
+      "after": {
+        "id": "tourisme-3",
+        "words": [
+          "fin",
+          "def-beach"
+        ],
+        "meaning": "Où est la plage ?"
+      }
+    },
+    {
+      "id": "tourism-tickets-1",
+      "before": {
+        "id": "tourism-tickets-1",
+        "words": [
+          "fin",
+          "entry"
+        ],
+        "meaning": "Où est l’entrée ?"
+      },
+      "after": {
+        "id": "tourism-tickets-1",
+        "words": [
+          "fin",
+          "def-entry"
+        ],
+        "meaning": "Où est l’entrée ?"
+      }
+    },
+    {
+      "id": "tourism-tickets-2",
+      "before": {
+        "id": "tourism-tickets-2",
+        "words": [
+          "bshhal",
+          "ticket"
+        ],
+        "meaning": "Combien coûte le billet ?"
+      },
+      "after": {
+        "id": "tourism-tickets-2",
+        "words": [
+          "bshhal",
+          "def-ticket"
+        ],
+        "meaning": "Combien coûte le billet ?"
+      }
+    },
+    {
+      "id": "tourism-tickets-3",
+      "before": {
+        "id": "tourism-tickets-3",
+        "words": [
+          "bghit",
+          "jooj",
+          "dyal",
+          "ticket"
+        ],
+        "meaning": "Je voudrais deux billets."
+      },
+      "after": {
+        "id": "tourism-tickets-3",
+        "words": [
+          "bghit",
+          "jooj",
+          "wraq-tickets"
+        ],
+        "meaning": "Je voudrais deux billets."
+      }
+    },
+    {
+      "id": "tourism-tickets-4",
+      "before": {
+        "id": "tourism-tickets-4",
+        "words": [
+          "fash",
+          "opens",
+          "museum"
+        ],
+        "meaning": "Quand ouvre le musée ?"
+      },
+      "after": {
+        "id": "tourism-tickets-4",
+        "words": [
+          "fash",
+          "opens",
+          "def-museum"
+        ],
+        "meaning": "Quand ouvre le musée ?"
+      }
+    },
+    {
+      "id": "tourism-photo-2",
+      "before": {
+        "id": "tourism-photo-2",
+        "words": [
+          "fash",
+          "closes",
+          "museum"
+        ],
+        "meaning": "Quand ferme le musée ?"
+      },
+      "after": {
+        "id": "tourism-photo-2",
+        "words": [
+          "fash",
+          "closes",
+          "def-museum"
+        ],
+        "meaning": "Quand ferme le musée ?"
+      }
+    },
+    {
+      "id": "tourism-photo-3",
+      "before": {
+        "id": "tourism-photo-3",
+        "words": [
+          "fin",
+          "exit"
+        ],
+        "meaning": "Où est la sortie ?"
+      },
+      "after": {
+        "id": "tourism-photo-3",
+        "words": [
+          "fin",
+          "def-exit"
+        ],
+        "meaning": "Où est la sortie ?"
+      }
+    },
+    {
+      "id": "transport-voyage-1",
+      "before": {
+        "id": "transport-voyage-1",
+        "words": [
+          "fin",
+          "stop",
+          "dyal",
+          "bus"
+        ],
+        "meaning": "Où est l’arrêt de bus ?"
+      },
+      "after": {
+        "id": "transport-voyage-1",
+        "words": [
+          "fin",
+          "mahata",
+          "dyal",
+          "def-bus"
+        ],
+        "meaning": "Où est l’arrêt de bus ?"
+      }
+    },
+    {
+      "id": "transport-voyage-2",
+      "before": {
+        "id": "transport-voyage-2",
+        "words": [
+          "fin",
+          "tram"
+        ],
+        "meaning": "Où est le tramway ?"
+      },
+      "after": {
+        "id": "transport-voyage-2",
+        "words": [
+          "fin",
+          "def-tram"
+        ],
+        "meaning": "Où est le tramway ?"
+      }
+    },
+    {
+      "id": "transport-voyage-3",
+      "before": {
+        "id": "transport-voyage-3",
+        "words": [
+          "wash",
+          "hada",
+          "bus",
+          "goes",
+          "to-station"
+        ],
+        "meaning": "Est-ce que ce bus va à la gare ?"
+      },
+      "after": {
+        "id": "transport-voyage-3",
+        "words": [
+          "wash",
+          "had-determiner",
+          "def-bus",
+          "goes",
+          "to-station"
+        ],
+        "meaning": "Est-ce que ce bus va à la gare ?"
+      }
+    },
+    {
+      "id": "transport-train-1",
+      "before": {
+        "id": "transport-train-1",
+        "words": [
+          "fin",
+          "platform"
+        ],
+        "meaning": "Où est le quai ?"
+      },
+      "after": {
+        "id": "transport-train-1",
+        "words": [
+          "fin",
+          "def-platform"
+        ],
+        "meaning": "Où est le quai ?"
+      }
+    },
+    {
+      "id": "transport-train-2",
+      "before": {
+        "id": "transport-train-2",
+        "words": [
+          "fash",
+          "leaves",
+          "train"
+        ],
+        "meaning": "Quand part le train ?"
+      },
+      "after": {
+        "id": "transport-train-2",
+        "words": [
+          "fash",
+          "leaves",
+          "def-train"
+        ],
+        "meaning": "Quand part le train ?"
+      }
+    },
+    {
+      "id": "transport-train-3",
+      "before": {
+        "id": "transport-train-3",
+        "words": [
+          "bshhal",
+          "ticket"
+        ],
+        "meaning": "Combien coûte le billet ?"
+      },
+      "after": {
+        "id": "transport-train-3",
+        "words": [
+          "bshhal",
+          "def-ticket"
+        ],
+        "meaning": "Combien coûte le billet ?"
+      }
+    },
+    {
+      "id": "transport-avion-2",
+      "before": {
+        "id": "transport-avion-2",
+        "words": [
+          "fin",
+          "airport"
+        ],
+        "meaning": "Où est l’aéroport ?"
+      },
+      "after": {
+        "id": "transport-avion-2",
+        "words": [
+          "fin",
+          "def-airport"
+        ],
+        "meaning": "Où est l’aéroport ?"
+      }
+    },
+    {
+      "id": "cuisiner-1",
+      "before": {
+        "id": "cuisiner-1",
+        "words": [
+          "wash-food",
+          "tomatoes"
+        ],
+        "meaning": "Lave les tomates."
+      },
+      "after": {
+        "id": "cuisiner-1",
+        "words": [
+          "wash-food",
+          "def-tomatoes"
+        ],
+        "meaning": "Lave les tomates."
+      }
+    },
+    {
+      "id": "cuisiner-2",
+      "before": {
+        "id": "cuisiner-2",
+        "words": [
+          "cut-food",
+          "besla"
+        ],
+        "meaning": "Coupe les oignons."
+      },
+      "after": {
+        "id": "cuisiner-2",
+        "words": [
+          "cut-food",
+          "def-besla"
+        ],
+        "meaning": "Coupe les oignons."
+      }
+    },
+    {
+      "id": "cuisiner-3",
+      "before": {
+        "id": "cuisiner-3",
+        "words": [
+          "fin",
+          "mus"
+        ],
+        "meaning": "Où est le couteau ?"
+      },
+      "after": {
+        "id": "cuisiner-3",
+        "words": [
+          "fin",
+          "def-mus"
+        ],
+        "meaning": "Où est le couteau ?"
+      }
+    },
+    {
+      "id": "cooking-season-1",
+      "before": {
+        "id": "cooking-season-1",
+        "words": [
+          "mix-food",
+          "tomatoes",
+          "w-and",
+          "besla"
+        ],
+        "meaning": "Mélange les tomates et les oignons."
+      },
+      "after": {
+        "id": "cooking-season-1",
+        "words": [
+          "mix-food",
+          "def-tomatoes",
+          "w-and",
+          "def-besla"
+        ],
+        "meaning": "Mélange les tomates et les oignons."
+      }
+    },
+    {
+      "id": "cooking-help-1",
+      "before": {
+        "id": "cooking-help-1",
+        "words": [
+          "fin",
+          "recipe"
+        ],
+        "meaning": "Où est la recette ?"
+      },
+      "after": {
+        "id": "cooking-help-1",
+        "words": [
+          "fin",
+          "def-recipe"
+        ],
+        "meaning": "Où est la recette ?"
+      }
+    },
+    {
+      "id": "cooking-help-2",
+      "before": {
+        "id": "cooking-help-2",
+        "words": [
+          "fin",
+          "pan"
+        ],
+        "meaning": "Où est la poêle ?"
+      },
+      "after": {
+        "id": "cooking-help-2",
+        "words": [
+          "fin",
+          "def-pan"
+        ],
+        "meaning": "Où est la poêle ?"
+      }
+    },
+    {
+      "id": "cooking-help-3",
+      "before": {
+        "id": "cooking-help-3",
+        "words": [
+          "cook-food",
+          "roz"
+        ],
+        "meaning": "Fais cuire le riz."
+      },
+      "after": {
+        "id": "cooking-help-3",
+        "words": [
+          "cook-food",
+          "def-roz"
+        ],
+        "meaning": "Fais cuire le riz."
+      }
+    },
+    {
+      "id": "fruits-legumes-3",
+      "before": {
+        "id": "fruits-legumes-3",
+        "words": [
+          "bshhal",
+          "della7"
+        ],
+        "meaning": "Combien coûte la pastèque ?"
+      },
+      "after": {
+        "id": "fruits-legumes-3",
+        "words": [
+          "bshhal",
+          "def-della7"
+        ],
+        "meaning": "Combien coûte la pastèque ?"
+      }
+    },
+    {
+      "id": "produce-vegetables-4",
+      "before": {
+        "id": "produce-vegetables-4",
+        "words": [
+          "bshhal",
+          "kilo",
+          "dyal",
+          "jelbana"
+        ],
+        "meaning": "Combien coûte le kilo de petits pois ?"
+      },
+      "after": {
+        "id": "produce-vegetables-4",
+        "words": [
+          "bshhal",
+          "def-kilo",
+          "dyal",
+          "jelbana"
+        ],
+        "meaning": "Combien coûte le kilo de petits pois ?"
+      }
+    },
+    {
+      "id": "jewels-materials-3",
+      "before": {
+        "id": "jewels-materials-3",
+        "words": [
+          "bshhal",
+          "hada",
+          "ring"
+        ],
+        "meaning": "Combien coûte cette bague ?"
+      },
+      "after": {
+        "id": "jewels-materials-3",
+        "words": [
+          "bshhal",
+          "had-determiner",
+          "def-ring"
+        ],
+        "meaning": "Combien coûte cette bague ?"
+      }
+    },
+    {
+      "id": "garage-1",
+      "before": {
+        "id": "garage-1",
+        "words": [
+          "fin",
+          "garage"
+        ],
+        "meaning": "Où est le garage ?"
+      },
+      "after": {
+        "id": "garage-1",
+        "words": [
+          "fin",
+          "def-garage"
+        ],
+        "meaning": "Où est le garage ?"
+      }
+    },
+    {
+      "id": "garage-repair-2",
+      "before": {
+        "id": "garage-repair-2",
+        "words": [
+          "bshhal",
+          "repair"
+        ],
+        "meaning": "Combien coûte la réparation ?"
+      },
+      "after": {
+        "id": "garage-repair-2",
+        "words": [
+          "bshhal",
+          "def-repair"
+        ],
+        "meaning": "Combien coûte la réparation ?"
+      }
+    },
+    {
+      "id": "police-plainte-1",
+      "before": {
+        "id": "police-plainte-1",
+        "words": [
+          "fin",
+          "police-station"
+        ],
+        "meaning": "Où est le commissariat ?"
+      },
+      "after": {
+        "id": "police-plainte-1",
+        "words": [
+          "fin",
+          "def-police-station"
+        ],
+        "meaning": "Où est le commissariat ?"
+      }
+    },
+    {
+      "id": "immobilier-notaire-2",
+      "before": {
+        "id": "immobilier-notaire-2",
+        "words": [
+          "bshhal",
+          "rent"
+        ],
+        "meaning": "Quel est le loyer ?"
+      },
+      "after": {
+        "id": "immobilier-notaire-2",
+        "words": [
+          "bshhal",
+          "def-rent"
+        ],
+        "meaning": "Quel est le loyer ?"
+      }
+    },
+    {
+      "id": "immobilier-notaire-3",
+      "before": {
+        "id": "immobilier-notaire-3",
+        "words": [
+          "bghit",
+          "visit-verb",
+          "apartment"
+        ],
+        "meaning": "Je voudrais visiter l’appartement."
+      },
+      "after": {
+        "id": "immobilier-notaire-3",
+        "words": [
+          "bghit",
+          "visit-verb",
+          "def-apartment"
+        ],
+        "meaning": "Je voudrais visiter l’appartement."
+      }
+    },
+    {
+      "id": "immobilier-notaire-4",
+      "before": {
+        "id": "immobilier-notaire-4",
+        "words": [
+          "bghit",
+          "address",
+          "afak"
+        ],
+        "meaning": "Je voudrais l’adresse, s’il te plaît."
+      },
+      "after": {
+        "id": "immobilier-notaire-4",
+        "words": [
+          "bghit",
+          "def-address",
+          "afak"
+        ],
+        "meaning": "Je voudrais l’adresse, s’il te plaît."
+      }
+    },
+    {
+      "id": "property-documents-2",
+      "before": {
+        "id": "property-documents-2",
+        "words": [
+          "bghit",
+          "read-verb",
+          "contract"
+        ],
+        "meaning": "Je voudrais lire le contrat."
+      },
+      "after": {
+        "id": "property-documents-2",
+        "words": [
+          "bghit",
+          "read-verb",
+          "def-contract"
+        ],
+        "meaning": "Je voudrais lire le contrat."
+      }
+    },
+    {
+      "id": "property-documents-3",
+      "before": {
+        "id": "property-documents-3",
+        "words": [
+          "bghit",
+          "copy",
+          "dyal",
+          "contract"
+        ],
+        "meaning": "Je voudrais une copie du contrat."
+      },
+      "after": {
+        "id": "property-documents-3",
+        "words": [
+          "bghit",
+          "copy",
+          "dyal",
+          "def-contract"
+        ],
+        "meaning": "Je voudrais une copie du contrat."
+      }
+    },
+    {
+      "id": "property-documents-4",
+      "before": {
+        "id": "property-documents-4",
+        "words": [
+          "explain-verb",
+          "liya",
+          "contract",
+          "afak"
+        ],
+        "meaning": "Explique-moi le contrat, s’il te plaît."
+      },
+      "after": {
+        "id": "property-documents-4",
+        "words": [
+          "explain-verb",
+          "liya",
+          "def-contract",
+          "afak"
+        ],
+        "meaning": "Explique-moi le contrat, s’il te plaît."
+      }
+    },
+    {
+      "id": "property-clarify-1",
+      "before": {
+        "id": "property-clarify-1",
+        "words": [
+          "bshhal",
+          "fees"
+        ],
+        "meaning": "Quels sont les frais ?"
+      },
+      "after": {
+        "id": "property-clarify-1",
+        "words": [
+          "bshhal",
+          "def-fees"
+        ],
+        "meaning": "Quels sont les frais ?"
+      }
+    },
+    {
+      "id": "property-clarify-2",
+      "before": {
+        "id": "property-clarify-2",
+        "words": [
+          "bshhal",
+          "deposit-rent"
+        ],
+        "meaning": "Quel est le montant de la garantie ?"
+      },
+      "after": {
+        "id": "property-clarify-2",
+        "words": [
+          "bshhal",
+          "def-deposit-rent"
+        ],
+        "meaning": "Quel est le montant de la garantie ?"
+      }
+    },
+    {
+      "id": "plage-1",
+      "before": {
+        "id": "plage-1",
+        "words": [
+          "fin",
+          "beach"
+        ],
+        "meaning": "Où est la plage ?"
+      },
+      "after": {
+        "id": "plage-1",
+        "words": [
+          "fin",
+          "def-beach"
+        ],
+        "meaning": "Où est la plage ?"
+      }
+    },
+    {
+      "id": "plage-2",
+      "before": {
+        "id": "plage-2",
+        "words": [
+          "fin",
+          "shower"
+        ],
+        "meaning": "Où est la douche ?"
+      },
+      "after": {
+        "id": "plage-2",
+        "words": [
+          "fin",
+          "def-shower"
+        ],
+        "meaning": "Où est la douche ?"
+      }
+    },
+    {
+      "id": "plage-3",
+      "before": {
+        "id": "plage-3",
+        "words": [
+          "fin",
+          "toilets"
+        ],
+        "meaning": "Où sont les toilettes ?"
+      },
+      "after": {
+        "id": "plage-3",
+        "words": [
+          "fin",
+          "def-toilets"
+        ],
+        "meaning": "Où sont les toilettes ?"
+      }
+    },
+    {
+      "id": "beach-accessories-3",
+      "before": {
+        "id": "beach-accessories-3",
+        "words": [
+          "fin",
+          "shade"
+        ],
+        "meaning": "Où y a-t-il de l’ombre ?"
+      },
+      "after": {
+        "id": "beach-accessories-3",
+        "words": [
+          "fin",
+          "def-shade"
+        ],
+        "meaning": "Où est l’ombre ?"
+      }
+    },
+    {
+      "id": "compter-1",
+      "before": {
+        "id": "compter-1",
+        "words": [
+          "bghit",
+          "jooj",
+          "dyal",
+          "ticket"
+        ],
+        "meaning": "Je voudrais deux billets."
+      },
+      "after": {
+        "id": "compter-1",
+        "words": [
+          "bghit",
+          "jooj",
+          "wraq-tickets"
+        ],
+        "meaning": "Je voudrais deux billets."
+      }
+    },
+    {
+      "id": "compter-2",
+      "before": {
+        "id": "compter-2",
+        "words": [
+          "bghit",
+          "num-3",
+          "dyal",
+          "portion"
+        ],
+        "meaning": "Je voudrais trois portions."
+      },
+      "after": {
+        "id": "compter-2",
+        "words": [
+          "bghit",
+          "num-3",
+          "kisan"
+        ],
+        "meaning": "Je voudrais trois verres."
+      }
+    }
+  ],
+  "mapExamples": {
+    "before": [
+      {
+        "words": [
+          "sbitar",
+          "qrib"
+        ],
+        "meaning": "L’hôpital est proche."
+      },
+      {
+        "words": [
+          "souk",
+          "b3id"
+        ],
+        "meaning": "Le marché est loin."
+      },
+      {
+        "words": [
+          "sbitar",
+          "7da",
+          "mdrasa"
+        ],
+        "meaning": "L’hôpital est à côté de l’école."
+      },
+      {
+        "words": [
+          "sbitar",
+          "bin",
+          "mdrasa",
+          "w-and",
+          "souk"
+        ],
+        "meaning": "L’hôpital est entre l’école et le marché."
+      }
+    ],
+    "after": [
+      {
+        "words": [
+          "def-sbitar",
+          "qrib"
+        ],
+        "meaning": "L’hôpital est proche."
+      },
+      {
+        "words": [
+          "souk",
+          "b3id"
+        ],
+        "meaning": "Le marché est loin."
+      },
+      {
+        "words": [
+          "def-sbitar",
+          "7da",
+          "def-mdrasa"
+        ],
+        "meaning": "L’hôpital est à côté de l’école."
+      },
+      {
+        "words": [
+          "def-sbitar",
+          "bin",
+          "def-mdrasa",
+          "w-and",
+          "souk"
+        ],
+        "meaning": "L’hôpital est entre l’école et le marché."
+      }
+    ]
+  }
+}
