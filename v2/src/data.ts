@@ -1,0 +1,57 @@
+export type Entry={id:string;fr:string;latin:string;ar:string;aliases?:string[];note?:string;scene:string};
+export type Scene={id:string;title:string;subtitle:string;emoji:string;level:string;words:string[]};
+export const entries:Entry[]=[
+["salam","Bonjour / salut","salam","سلام","meet"],["salam3","Que la paix soit sur vous","s-salamu 3likum","السلام عليكم","meet"],["jawab-salam","Et sur vous la paix","w 3likum s-salam","و عليكم السلام","meet"],["sbah","Bonjour (matin)","sbah l-khir","صباح الخير","meet"],["msa","Bonsoir","msa l-khir","مسا الخير","meet"],["labas","Ça va ?","labas?","لاباس؟","meet"],["hamdullah","Ça va, Dieu merci","l-hamdullah","الحمد لله","meet"],["smiti","Je m'appelle…","smiti…","سميتي…","identity"],["shnu-smitek","Comment tu t'appelles ?","shnu smitek?","شنو سميتك؟","identity"],["mnin","D'où viens-tu ?","mnin nta/nti?","منين نتا/نتي؟","identity"],["ana","Moi / je","ana","أنا","identity"],["nta","Toi (masc.)","nta","نتا","identity"],["nti","Toi (fém.)","nti","نتي","identity"],["shukran","Merci","shukran","شكرا","polite"],["afak","S'il te/vous plaît","3afak","عافاك","polite"],["smhli","Excuse-moi / pardon","smh li","سمح لي","polite"],["wakha","D'accord","wakha","واخا","polite"],["la","Non","la","لا","polite"],["iyyeh","Oui","iyyeh","إيه","polite"],["bslama","Au revoir","bslama","بسلامة","polite"],
+["ma-fhemtsh","Je n'ai pas compris","ma fhemtsh","ما فهمتش","clarify"],["3awd","Répète, s'il te plaît","3awd 3afak","عاود عافاك","clarify"],["bshwiya","Doucement / lentement","b-shwiya","بشوية","clarify"],["shnu","Quoi ? / quel ?","shnu?","شنو؟","clarify"],["kifash","Comment ?","kifash?","كيفاش؟","clarify"],
+["wahed","Un","wahed","واحد","numbers"],["juj","Deux","juj","جوج","numbers"],["tlata","Trois","tlata","ثلاثة","numbers"],["rb3a","Quatre","rb3a","ربعة","numbers"],["khmsa","Cinq","khmsa","خمسة","numbers"],["3shra","Dix","3shra","عشرة","numbers"],
+["bshhal","Combien ça coûte ?","bshhal?","بشحال؟","market"],["ghali","Cher","ghali","غالي","market"],["rkhis","Pas cher","rkhis","رخيص","market"],["bghit","Je veux / je voudrais","bghit","بغيت","market"],["hada","Celui-ci / ceci","hada","هادا","market"],["hadi","Celle-ci / ceci","hadi","هادي","market"],["nqes","Baisse un peu (le prix)","nqes shwiya","نقص شوية","bargain"],["bzaf","Beaucoup / trop","bzaf","بزاف","bargain"],["mzyan","Bien / bon","mzyan","مزيان","bargain"],
+["qahwa","Café","qahwa","قهوة","cafe"],["atay","Thé","atay","أتاي","cafe"],["ma","Eau","l-ma","الما","cafe"],["sukkar","Sucre","sukkar","سكر","cafe"],["bla","Sans","bla","بلا","cafe"],
+["makla","Nourriture / repas","makla","ماكلة","food"],["khobz","Pain","khobz","خبز","food"],["djaj","Poulet","djaj","دجاج","food"],["lhem","Viande","l-hem","اللحم","food"],["hut","Poisson","hut","حوت","food"],["bnin","Délicieux / bon","bnin","بنين","food"],["hsab","L'addition","l-hsab","الحساب","food"],
+["fin","Où ?","fin?","فين؟","direction"],["nishan","Tout droit","nishan","نيشان","direction"],["ymin","À droite","l-ymin","ليمين","direction"],["ysr","À gauche","l-ysr","ليسر","direction"],["qrib","Près","qrib","قريب","direction"],["b3id","Loin","b3id","بعيد","direction"],
+["taxi","Taxi","taxi","طاكسي","taxi"],["hbes","Arrêtez ici","hbes hna","حبس هنا","taxi"],["hna","Ici","hna","هنا","taxi"],["mshi","Va / allez","mshi","مشي","taxi"],
+["train","Train","tran","طران","transport"],["gare","Gare","lagar","لاگار","transport"],["bus","Bus","tobis","طوبيس","transport"],["ticket","Billet","ticket","تيكي","transport"],
+["otel","Hôtel","otel","أوطيل","hotel"],["bit","Chambre","bit","بيت","hotel"],["kayn","Il y a / disponible","kayn","كاين","hotel"],["ma-kaynsh","Il n'y a pas","ma kaynsh","ما كاينش","hotel"],["lila","Nuit","lila","ليلة","hotel"],
+["lyum","Aujourd'hui","l-yum","اليوم","time"],["ghdda","Demain","ghdda","غدا","time"],["daba","Maintenant","daba","دابا","time"],["shhal-sa3a","Quelle heure est-il ?","shhal f s-sa3a?","شحال فالساعة؟","time"],["sbah-time","Le matin","s-sbah","الصباح","time"],
+["dar","Maison","dar","دار","home"],["bab","Porte","bab","باب","home"],["bit-n3as","Chambre à coucher","bit n-n3as","بيت النعاس","home"],["kuzina","Cuisine","kuzina","كوزينة","home"],
+["baba","Père / papa","baba","بابا","family"],["mama","Mère / maman","mama","ماما","family"],["khuya","Mon frère","khuya","خويا","family"],["khti","Ma sœur","khti","ختي","family"],["wld","Fils / garçon","wld","ولد","family"],["bnt","Fille","bnt","بنت","family"],
+["khdma","Travail","khdma","خدمة","work"],["khdam","Je travaille / travaillant","khdam","خدام","work"],["fin-khdam","Où travailles-tu ?","fin khdam?","فين خدام؟","work"],
+["telefon","Téléphone","telefon","تلفون","phone"],["numro","Numéro","numro","نمرو","phone"],["3iyet","Appeler","3iyet","عيط","phone"],["wifi","Wi-Fi","wifi","ويفي","phone"],
+["qmis","Chemise","qmis","قميص","clothes"],["sbbat","Chaussures","sbbat","صباط","clothes"],["kbir","Grand","kbir","كبير","clothes"],["sghir","Petit","sghir","صغير","clothes"],["lawn","Couleur","l-lawn","اللون","clothes"],
+["ras","Tête","ras","راس","health"],["krsh","Ventre","krsh","كرش","health"],["mrid","Malade","mrid","مريض","health"],["dwa","Médicament","dwa","دوا","pharmacy"],["farmasi","Pharmacie","farmasi","فرماسي","pharmacy"],["wje3","J'ai mal","kaywje3ni","كيوجعني","pharmacy"],
+["shms","Soleil","shms","شمس","weather"],["shta","Pluie","shta","شتا","weather"],["skhun","Chaud","skhun","سخون","weather"],["bard","Froid","bard","بارد","weather"],
+["bghiti","Tu veux ?","bghiti?","بغيتي؟","invite"],["aji","Viens","aji","أجي","invite"],["marhba","Bienvenue","marhba","مرحبا","invite"],["inshallah","Si Dieu le veut","inshallah","إن شاء الله","invite"],
+["mushkil","Problème","mushkil","مشكل","help"],["3awn","Aide-moi","3awni","عاوني","help"],["bolis","Police","bolis","بوليس","emergency"],["ambulans","Ambulance","ambulans","أمبولانس","emergency"],
+["nhar","Jour","nhar","نهار","routine"],["n3as","Dormir","n3as","نعس","routine"],["nakul","Je mange","kanakul","كناكل","routine"],["nshrb","Je bois","kanshrb","كنشرب","routine"],
+["kanbghi","J'aime","kanbghi","كنبغي","likes"],["ma-kanbghish","Je n'aime pas","ma kanbghish","ما كنبغيش","likes"],["kura","Football / ballon","kura","كورة","likes"],["musiqa","Musique","musiqa","موسيقى","likes"]
+].map(([id,fr,latin,ar,scene])=>({id,fr,latin,ar,scene,aliases:[]} as Entry));
+const A=(id:string,...aliases:string[])=>{const e=entries.find(x=>x.id===id);if(e)e.aliases=aliases};
+A("bshhal","combien","prix","chhal","bchhal","shhal");A("qahwa","café","cafe","kahwa");A("shukran","merci","choukran");A("ma-fhemtsh","je comprends pas","pas compris");A("afak","s il vous plait","svp");A("fin","où","ou");A("salam","salut","bonjour");A("otel","hotel","hôtel");A("farmasi","pharmacie");A("shta","pluie");
+export const scenes:Scene[]=[
+["meet","Premiers mots","Saluer naturellement et répondre.","👋","Départ",["salam","salam3","jawab-salam","sbah","msa","labas","hamdullah"]],
+["identity","Faire connaissance","Dire son nom et demander qui est l'autre.","🙂","Départ",["smiti","shnu-smitek","mnin","ana","nta","nti"]],
+["polite","Être poli","Merci, pardon, oui, non et au revoir.","🤝","Départ",["shukran","afak","smhli","wakha","la","iyyeh","bslama"]],
+["clarify","Quand on ne comprend pas","Faire répéter et demander de parler doucement.","👂","Départ",["ma-fhemtsh","3awd","bshwiya","shnu","kifash"]],
+["numbers","Compter et payer","Les premiers nombres indispensables.","🔢","Essentiel",["wahed","juj","tlata","rb3a","khmsa","3shra"]],
+["cafe","Commander au café","Commander une boisson comme au quotidien.","🍵","Essentiel",["bghit","qahwa","atay","ma","sukkar","bla","shukran"]],
+["food","Au restaurant","Commander, apprécier et demander l'addition.","🍲","Essentiel",["makla","khobz","djaj","lhem","hut","bnin","hsab"]],
+["market","Acheter au marché","Demander le prix et choisir.","🧺","Essentiel",["bshhal","bghit","hada","hadi","ghali","rkhis"]],
+["bargain","Négocier un prix","Réagir à un prix et négocier simplement.","💰","Pratique",["bshhal","bzaf","ghali","nqes","mzyan"]],
+["direction","Demander son chemin","Comprendre droite, gauche et tout droit.","🧭","Essentiel",["fin","nishan","ymin","ysr","qrib","b3id"]],
+["taxi","Prendre un taxi","Donner une direction et demander l'arrêt.","🚕","Essentiel",["taxi","mshi","hna","hbes","bshhal"]],
+["transport","Train et bus","Trouver la gare et acheter un billet.","🚆","Pratique",["train","gare","bus","ticket","fin","bshhal"]],
+["hotel","À l'hôtel","Demander une chambre et une disponibilité.","🛎️","Pratique",["otel","bit","kayn","ma-kaynsh","lila","bshhal"]],
+["time","Heure et rendez-vous","Parler d'aujourd'hui, demain et de l'heure.","📅","Essentiel",["lyum","ghdda","daba","shhal-sa3a","sbah-time"]],
+["family","Parler de sa famille","Présenter les proches simplement.","👨‍👩‍👧","Conversation",["baba","mama","khuya","khti","wld","bnt"]],
+["home","À la maison","Nommer les lieux de base du logement.","🏠","Conversation",["dar","bab","bit-n3as","kuzina"]],
+["work","Parler du travail","Dire qu'on travaille et demander où.","💼","Conversation",["khdma","khdam","fin-khdam"]],
+["phone","Téléphone et Internet","Numéro, appel et Wi-Fi.","📱","Pratique",["telefon","numro","3iyet","wifi"]],
+["clothes","Acheter des vêtements","Taille, chaussures, chemise et couleur.","👕","Pratique",["qmis","sbbat","kbir","sghir","lawn","bshhal"]],
+["health","Dire où on a mal","Exprimer simplement un problème physique.","🩺","Pratique",["mrid","ras","krsh","wje3"]],
+["pharmacy","À la pharmacie","Demander une pharmacie ou un médicament.","💊","Pratique",["farmasi","dwa","wje3","fin"]],
+["weather","Parler du temps","Chaud, froid, soleil et pluie.","☀️","Conversation",["shms","shta","skhun","bard"]],
+["invite","Invitation et visite","Inviter, accueillir et répondre.","☕","Conversation",["bghiti","aji","marhba","inshallah"]],
+["help","Demander de l'aide","Signaler un problème et demander de l'aide.","🆘","Survie",["mushkil","3awn","smhli"]],
+["emergency","Urgence","Police et ambulance : vocabulaire minimal.","🚨","Survie",["bolis","ambulans","3awn","fin"]],
+["routine","Raconter sa journée","Manger, boire et dormir.","🌅","Conversation",["nhar","nakul","nshrb","n3as"]],
+["likes","Dire ce qu'on aime","Exprimer goûts et préférences.","❤️","Conversation",["kanbghi","ma-kanbghish","kura","musiqa"]]
+].map(([id,title,subtitle,emoji,level,words])=>({id,title,subtitle,emoji,level,words} as Scene));
