@@ -17,7 +17,7 @@ pnpm dev
 
 Garder la visibilité du port **privée**. Le Codespace doit rester actif pendant l’utilisation.
 
-Le navigateur peut éditer un CV et produire des PDF sans clé OpenAI. La sauvegarde automatique reste dans ce navigateur ; exporter une sauvegarde JSON avant de changer de navigateur ou d’appareil.
+Le navigateur peut éditer un CV, importer le texte d’un PDF/DOCX/TXT et produire des PDF sans clé OpenAI. La sauvegarde automatique reste dans ce navigateur ; exporter une sauvegarde JSON avant de changer de navigateur ou d’appareil.
 
 ## Activer les fonctions IA
 
@@ -46,3 +46,11 @@ Le dossier du projet est `/workspaces/powershell/cv-studio`. La configuration Co
 Pour un Codespace déjà ouvert à la racine du dépôt : après mise à jour de la branche `cv-studio-cloud`, choisir **File → Open Workspace from File**, puis `/workspaces/powershell/CV-Studio.code-workspace`. Ou utiliser **File → Open Folder** et choisir `/workspaces/powershell/cv-studio`.
 
 L’espace nommé **CV Studio** affiche uniquement ce projet, ouvre le terminal dans son dossier et propose les tâches **CV Studio : démarrer** et **CV Studio : vérifier** (Terminal → Run Task). Le démarrage automatique ne nécessite pas de lancer la tâche une seconde fois.
+
+## Import sans crédits API
+
+Dans **Contenu → Méthode d’import**, le choix par défaut est **Sans IA — aucun crédit OpenAI**. Importer un PDF avec texte sélectionnable, un DOCX ou un TXT UTF-8. Dans la fenêtre de relecture, sélectionner un passage du texte, choisir son champ et cliquer **Appliquer la sélection**. Les autres champs sont conservés. Le texte complet peut aussi être téléchargé.
+
+Ce mode extrait le texte sur le serveur CV Studio (dans le Codespace si utilisé dans le cloud), sans le transmettre à OpenAI. Il ne reconnaît pas les images/scans et ne classe pas automatiquement les expériences ou compétences. Les PDF à colonnes peuvent nécessiter une remise en ordre. Aucun stockage des documents importés n’est ajouté.
+
+L’analyse automatique d’origine reste disponible en choisissant **Avec IA**, avec les fonctions de reformulation, condensation et traduction. Ces fonctions nécessitent toujours une clé API valide et du crédit OpenAI. L’import sans IA constitue une option supplémentaire, pas un remplacement de l’analyse.

@@ -25,6 +25,7 @@ import {
 import { readDraft, parseBackup, DRAFT_KEY } from "./storage.mjs";
 import "../shared/resume.css";
 import "./style.css";
+import { TextImport } from "./TextImport.jsx";
 const initial = (() => {
   try {
     return readDraft(window.localStorage);
@@ -270,6 +271,8 @@ function App() {
   const [saved, setSaved] = useState(false);
   const [job, setJob] = useState("");
   const [proposal, setProposal] = useState(null);
+  const [importMode, setImportMode] = useState("local");
+  const [extracted, setExtracted] = useState(null);
   const [fit, setFit] = useState({ fits: true, fontSize: 14 });
   const [demo, setDemo] = useState(
     initial.draft?.resume.experiences.some((e) =>
@@ -378,6 +381,11 @@ function App() {
       const data = new FormData();
       data.append("file", file);
       data.append("kind", kind);
+      if (kind === "content" && importMode === "local") {
+        const response = await request("import-text", data, true);
+        setExtracted(await response.json());
+        return;
+      }
       const r = await request("import", data, true);
       setProposal(
         (kind === "template" ? templateResultSchema : resultSchema).parse(
@@ -546,7 +554,11 @@ function App() {
                     <h2>Votre parcours</h2>
                     <Button
                       icon={Upload}
-                      disabled={!!busy || !config?.aiConfigured}
+                      disabled={
+                        !!busy ||
+                        !config ||
+                        (importMode === "ai" && !config.aiConfigured)
+                      }
                       onClick={() => contentFile.current.click()}
                     >
                       Importer un CV
@@ -556,12 +568,25 @@ function App() {
                     Complétez ce qui vous ressemble. Les champs vides
                     n’apparaissent pas sur le CV.
                   </p>
-                  {!config?.aiConfigured && (
-                    <p className="helper">
-                      L’import de documents utilise l’IA et nécessite une clé
-                      OpenAI. La restauration JSON fonctionne sans clé.
-                    </p>
-                  )}
+                  <label className="field">
+                    <span>Méthode d’import</span>
+                    <select
+                      value={importMode}
+                      onChange={(e) => setImportMode(e.target.value)}
+                    >
+                      <option value="local">
+                        Sans IA — aucun crédit OpenAI
+                      </option>
+                      <option value="ai" disabled={!config?.aiConfigured}>
+                        Avec IA — utilise les crédits API OpenAI
+                      </option>
+                    </select>
+                  </label>
+                  <p className="helper">
+                    {importMode === "local"
+                      ? "PDF avec texte sélectionnable, DOCX ou TXT : récupérez le texte, puis répartissez-le dans les champs. Aucun envoi à OpenAI. Les images et scans nécessitent un OCR."
+                      : "Le document sera envoyé à OpenAI pour proposer un CV structuré. Une clé API et des crédits sont nécessaires. Vous pourrez relire avant application."}
+                  </p>
                   <section className="editor-section">
                     <h3>Informations personnelles</h3>
                     <Field
@@ -916,7 +941,11 @@ function App() {
       <input
         ref={contentFile}
         type="file"
-        accept=".pdf,.docx,.txt,.png,.jpg,.jpeg"
+        accept={
+          importMode === "local"
+            ? ".pdf,.docx,.txt"
+            : ".pdf,.docx,.txt,.png,.jpg,.jpeg"
+        }
         hidden
         onChange={(e) => {
           importFile(e.target.files[0], "content");
@@ -933,6 +962,23 @@ function App() {
           e.target.value = "";
         }}
       />
+      {extracted && (
+        <TextImport
+          document={extracted}
+          resume={resume}
+          onApply={(next) => {
+            setResume(next);
+            setDemo(false);
+          }}
+          onClose={() => setExtracted(null)}
+          onDownload={(text) =>
+            download(
+              new Blob([text], { type: "text/plain;charset=utf-8" }),
+              "CV-texte.txt",
+            )
+          }
+        />
+      )}
       {proposal && (
         <Proposal
           proposal={proposal}

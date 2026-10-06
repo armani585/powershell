@@ -1,5 +1,6 @@
 import express from "express";
 import { aiErrorMessage } from "./lib/ai-error.mjs";
+import { extractDocument } from "./lib/extract-document.mjs";
 import multer from "multer";
 import mammoth from "mammoth";
 import OpenAI from "openai";
@@ -187,6 +188,21 @@ async function fileContent(file, template) {
       : "CV accepté : PDF, DOCX, TXT, PNG ou JPG valide.",
   );
 }
+let activeExtractions = 0;
+app.post("/api/import-text", upload.single("file"), async (req, res) => {
+  if (activeExtractions >= 2)
+    throw failure(
+      "Une lecture de document est déjà en cours. Réessayez dans un instant.",
+      429,
+    );
+  activeExtractions++;
+  try {
+    res.json(await extractDocument(req.file));
+  } finally {
+    activeExtractions--;
+  }
+});
+
 app.post("/api/import", upload.single("file"), async (req, res) => {
   const template = req.body.kind === "template";
   const content = await fileContent(req.file, template);
@@ -278,28 +294,26 @@ app.use((err, _req, res, next) => {
       .status(400)
       .json({ error: "Données invalides ou trop longues. Vérifiez votre CV." });
   if (err instanceof multer.MulterError)
-    return res
-      .status(400)
-      .json({
-        error:
-          err.code === "LIMIT_FILE_SIZE"
-            ? "Le fichier dépasse 8 Mo."
-            : "Import invalide : un seul fichier est accepté.",
-      });
+    return res.status(400).json({
+      error:
+        err.code === "LIMIT_FILE_SIZE"
+          ? "Le fichier dépasse 8 Mo."
+          : "Import invalide : un seul fichier est accepté.",
+    });
   if (err.name === "APIConnectionTimeoutError")
     return res
       .status(504)
       .json({ error: "L’IA a mis trop de temps à répondre. Réessayez." });
   if (err instanceof OpenAI.APIError) {
-    return res.status(err.status === 429 ? 429 : 502).json({ error: aiErrorMessage(err) });
+    return res
+      .status(err.status === 429 ? 429 : 502)
+      .json({ error: aiErrorMessage(err) });
   }
-  res
-    .status(err.status || 500)
-    .json({
-      error: err.status
-        ? err.message
-        : "Une erreur est survenue. Réessayez ; pour le PDF, vérifiez que Microsoft Edge ou Chromium est installé.",
-    });
+  res.status(err.status || 500).json({
+    error: err.status
+      ? err.message
+      : "Une erreur est survenue. Réessayez ; pour le PDF, vérifiez que Microsoft Edge ou Chromium est installé.",
+  });
 });
 const server = createHttpServer(app);
 if (process.argv.includes("--production")) {
