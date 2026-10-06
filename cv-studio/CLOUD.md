@@ -6,14 +6,16 @@ Le projet complet reconstruit se trouve dans `cv-studio/`. Il reprend les foncti
 
 1. Ouvrir https://github.com/armani585/powershell/tree/cv-studio-cloud.
 2. Cliquer **Code → Codespaces → créer un Codespace**, en sélectionnant la branche **cv-studio-cloud** et la configuration **CV Studio** (options avancées si nécessaire).
-3. Attendre l’installation des dépendances et de Chromium, puis ouvrir un terminal :
+3. Attendre l’installation des dépendances et de Chromium. CV Studio démarre automatiquement à la création et à chaque redémarrage du Codespace ; le port 4317 s’ouvre dans le navigateur.
+
+Si le navigateur ne s’ouvre pas, utiliser l’onglet **Ports**. En cas de problème de démarrage, voir `cv-studio/work/codespace-server.log`. Pour démarrer manuellement :
 
 ```sh
 cd /workspaces/powershell/cv-studio
 pnpm dev
 ```
 
-4. Dans l’onglet **Ports**, ouvrir **4317** dans le navigateur. Garder la visibilité **privée**. Le serveur doit rester actif.
+Garder la visibilité du port **privée**. Le Codespace doit rester actif pendant l’utilisation.
 
 Le navigateur peut éditer un CV et produire des PDF sans clé OpenAI. La sauvegarde automatique reste dans ce navigateur ; exporter une sauvegarde JSON avant de changer de navigateur ou d’appareil.
 

@@ -10,7 +10,7 @@
   "portsAttributes": {
     "4317": {
       "label": "CV Studio",
-      "onAutoForward": "notify",
+      "onAutoForward": "openBrowser",
       "visibility": "private"
     }
   },
@@ -21,5 +21,6 @@
         "terminal.integrated.cwd": "${containerWorkspaceFolder}/cv-studio"
       }
     }
-  }
+  },
+  "postStartCommand": "bash .devcontainer/cv-studio/start.sh"
 }
