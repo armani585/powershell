@@ -19,11 +19,21 @@ Garder la visibilité du port **privée**. Le Codespace doit rester actif pendan
 
 Le navigateur peut éditer un CV, importer le texte d’un PDF/DOCX/TXT et produire des PDF sans clé OpenAI. La sauvegarde automatique reste dans ce navigateur ; exporter une sauvegarde JSON avant de changer de navigateur ou d’appareil.
 
-## Activer les fonctions IA
+## Analyse IA sans crédits OpenAI
 
-Ajouter `OPENAI_API_KEY` dans https://github.com/settings/codespaces sous les secrets Codespaces, autoriser le dépôt `powershell`, puis redémarrer le Codespace. `OPENAI_MODEL` vaut `gpt-5-mini` par défaut. Une clé côté serveur active l’import de documents, la reformulation, la condensation et la traduction ; ces fonctions utilisent les crédits de votre projet OpenAI.
+La configuration CV Studio utilise désormais `AI_PROVIDER=ollama` et le modèle `qwen2.5:3b`. À l’ouverture du Codespace, l’application démarre puis installe Ollama et télécharge le modèle en arrière-plan. L’éditeur et les PDF restent disponibles pendant cette première installation. L’interface vérifie l’état du moteur toutes les 15 secondes et active l’analyse lorsqu’il est prêt.
 
-Ne jamais mettre `.env.local` dans Git : le dépôt est public. Ce fichier n’est pas publié. Une proposition doit toujours être relue avant application.
+Le modèle occupe environ **1,9 Go**, en plus du moteur. La configuration demande **8 Go de RAM** au minimum ; le calcul sur CPU peut prendre plusieurs minutes. Ollama écoute uniquement sur `127.0.0.1:11434` ; seul le port 4317 de l’application est à ouvrir, en privé. Aucun document n’est envoyé à OpenAI en mode Ollama. Les ressources du Codespace peuvent être facturées par GitHub selon le compte et les quotas.
+
+Pour un Codespace créé avant cette mise à jour : mettre à jour la branche `cv-studio-cloud`, puis lancer **Codespaces: Rebuild Container** depuis la palette de commandes afin d’appliquer les nouveaux paramètres. Les journaux sont `cv-studio/work/ollama-setup.log` (installation) et `cv-studio/work/ollama.log` (moteur). Un téléchargement interrompu peut être relancé avec `bash scripts/setup-ollama.sh` dans le dossier CV Studio.
+
+Les fonctions conservées sont l’analyse/structuration automatique, la reformulation, la condensation et la traduction FR/EN. Toujours relire les propositions : un petit modèle peut commettre des erreurs ou omettre des informations. Les PDF doivent contenir du texte sélectionnable ; le modèle prévu ne lit pas les images/scans et ne reproduit pas un modèle visuel. L’application refuse un document trop long au lieu de le tronquer silencieusement. Une seule analyse Ollama peut s’exécuter à la fois.
+
+### Utiliser OpenAI en option
+
+Pour revenir à OpenAI, définir `AI_PROVIDER` à `openai` dans la configuration du conteneur puis reconstruire celui-ci. Ajouter `OPENAI_API_KEY` dans https://github.com/settings/codespaces, autoriser ce dépôt, puis redémarrer. `OPENAI_MODEL` vaut `gpt-5-mini` par défaut. Les clés restent côté serveur ; ne jamais publier `.env.local`. La facturation API est distincte de ChatGPT/Codex.
+
+Documentation du moteur : https://docs.ollama.com/linux et https://docs.ollama.com/api/chat.
 
 ## Vérification et production
 
@@ -53,4 +63,8 @@ Dans **Contenu → Méthode d’import**, le choix par défaut est **Sans IA —
 
 Ce mode extrait le texte sur le serveur CV Studio (dans le Codespace si utilisé dans le cloud), sans le transmettre à OpenAI. Il ne reconnaît pas les images/scans et ne classe pas automatiquement les expériences ou compétences. Les PDF à colonnes peuvent nécessiter une remise en ordre. Aucun stockage des documents importés n’est ajouté.
 
-L’analyse automatique d’origine reste disponible en choisissant **Avec IA**, avec les fonctions de reformulation, condensation et traduction. Ces fonctions nécessitent toujours une clé API valide et du crédit OpenAI. L’import sans IA constitue une option supplémentaire, pas un remplacement de l’analyse.
+L’analyse automatique reste disponible en choisissant **Avec IA**, avec les fonctions de reformulation, condensation et traduction. Avec Ollama, ces fonctions utilisent le modèle installé dans le Codespace sans crédit API. Avec OpenAI, elles nécessitent une clé API valide et du crédit OpenAI. L’import sans IA constitue une option supplémentaire, pas un remplacement de l’analyse.
+
+## Vérifications de l’intégration Ollama
+
+Tests du contrat HTTP et des réponses structurées, erreurs de moteur/modèle, limite d’entrée et concurrence ; parcours navigateur d’import/relecture/application, reformulation/condensation/traduction, conservation des coordonnées, état indisponible et affichage mobile/desktop. Les réponses d’Ollama ont été simulées pour ces contrôles. Le téléchargement du moteur/modèle et une inférence réelle dans le Codespace de l’utilisateur ne sont pas encore vérifiés : l’environnement de cette session ne donne pas accès à ce Codespace ni aux domaines de téléchargement Ollama.

@@ -282,18 +282,39 @@ function App() {
   const backup = useRef(null);
   const contentFile = useRef(null);
   const templateFile = useRef(null);
+  const importModeChosen = useRef(false);
+  const localAI = config?.aiProvider === "ollama";
   useEffect(() => {
-    fetch("/api/config")
-      .then((r) => {
-        if (!r.ok) throw Error();
-        return r.json();
-      })
-      .then(setConfig)
-      .catch(() =>
-        setNotice(
-          "Le serveur ne répond pas. Rechargez la page après son démarrage.",
-        ),
-      );
+    const controller = new AbortController();
+    async function refresh() {
+      try {
+        const response = await fetch("/api/config", {
+          signal: controller.signal,
+        });
+        if (!response.ok) throw Error();
+        const next = await response.json();
+        setConfig(next);
+        if (
+          next.aiProvider === "ollama" &&
+          next.aiConfigured &&
+          !importModeChosen.current
+        ) {
+          setImportMode("ai");
+          importModeChosen.current = true;
+        }
+      } catch (error) {
+        if (error.name !== "AbortError")
+          setNotice(
+            "Le serveur ne répond pas. Rechargez la page après son démarrage.",
+          );
+      }
+    }
+    void refresh();
+    const interval = setInterval(refresh, 15000);
+    return () => {
+      controller.abort();
+      clearInterval(interval);
+    };
   }, []);
   useEffect(() => {
     if (storageBlocked) return;
@@ -572,21 +593,33 @@ function App() {
                     <span>Méthode d’import</span>
                     <select
                       value={importMode}
-                      onChange={(e) => setImportMode(e.target.value)}
+                      onChange={(e) => {
+                        importModeChosen.current = true;
+                        setImportMode(e.target.value);
+                      }}
                     >
                       <option value="local">
                         Sans IA — aucun crédit OpenAI
                       </option>
                       <option value="ai" disabled={!config?.aiConfigured}>
-                        Avec IA — utilise les crédits API OpenAI
+                        {localAI
+                          ? "Avec IA — Ollama, sans crédits OpenAI"
+                          : "Avec IA — utilise les crédits API OpenAI"}
                       </option>
                     </select>
                   </label>
                   <p className="helper">
                     {importMode === "local"
                       ? "PDF avec texte sélectionnable, DOCX ou TXT : récupérez le texte, puis répartissez-le dans les champs. Aucun envoi à OpenAI. Les images et scans nécessitent un OCR."
-                      : "Le document sera envoyé à OpenAI pour proposer un CV structuré. Une clé API et des crédits sont nécessaires. Vous pourrez relire avant application."}
+                      : localAI
+                        ? "Ollama analyse et structure le texte de votre CV sur le serveur CV Studio. Aucun envoi à OpenAI. Relisez la proposition ; le calcul peut prendre plusieurs minutes."
+                        : "Le document sera envoyé à OpenAI pour proposer un CV structuré. Une clé API et des crédits sont nécessaires. Vous pourrez relire avant application."}
                   </p>
+                  {localAI && (
+                    <p className="ai-state" role="status">
+                      {config.aiMessage}
+                    </p>
+                  )}
                   <section className="editor-section">
                     <h3>Informations personnelles</h3>
                     <Field
@@ -810,14 +843,21 @@ function App() {
                     </p>
                     <Button
                       icon={Upload}
-                      disabled={!!busy || !config?.aiConfigured}
+                      disabled={
+                        !!busy ||
+                        !config?.aiConfigured ||
+                        config?.visionSupported === false
+                      }
                       onClick={() => templateFile.current.click()}
                     >
                       Importer un modèle
                     </Button>
-                    {!config?.aiConfigured && (
+                    {(!config?.aiConfigured ||
+                      config?.visionSupported === false) && (
                       <p className="helper">
-                        Configurez une clé OpenAI pour activer cet import.
+                        {localAI
+                          ? "L’import visuel n’est pas disponible avec ce modèle Ollama. Choisissez une mise en page ci-dessus, ou utilisez OpenAI pour analyser un modèle visuel."
+                          : "Configurez une clé OpenAI pour activer cet import."}
                       </p>
                     )}
                   </section>
@@ -837,9 +877,10 @@ function App() {
                   <p className="ai-state">
                     {!config
                       ? "Connexion au serveur…"
-                      : config.aiConfigured
-                        ? "Assistant disponible"
-                        : "Clé OpenAI à configurer dans les secrets Codespaces ou .env.local."}
+                      : config.aiMessage ||
+                        (config.aiConfigured
+                          ? "Assistant disponible"
+                          : "Clé OpenAI à configurer dans les secrets Codespaces ou .env.local.")}
                   </p>
                   <Field
                     label="Offre ou poste visé (facultatif)"
@@ -882,8 +923,9 @@ function App() {
                     ))}
                   </div>
                   <p className="helper">
-                    Ces actions envoient le CV et l’offre à OpenAI. Les quotas
-                    et la facturation de votre projet s’appliquent.
+                    {localAI
+                      ? "Ces actions utilisent Ollama sur le serveur CV Studio, sans envoi à OpenAI ni crédits API. Elles utilisent les ressources du Codespace et peuvent prendre plusieurs minutes. Relisez les propositions du modèle."
+                      : "Ces actions envoient le CV et l’offre à OpenAI. Les quotas et la facturation de votre projet s’appliquent."}
                   </p>
                 </>
               )}
@@ -942,7 +984,7 @@ function App() {
         ref={contentFile}
         type="file"
         accept={
-          importMode === "local"
+          importMode === "local" || localAI
             ? ".pdf,.docx,.txt"
             : ".pdf,.docx,.txt,.png,.jpg,.jpeg"
         }

@@ -22,14 +22,20 @@ Adresse par defaut : http://127.0.0.1:4317. Definir PORT dans `.env.local` pour 
 
 ## Configuration IA
 
-La cle `OPENAI_API_KEY` reste dans `.env.local`, uniquement cote serveur. Ne pas partager ce fichier. `OPENAI_MODEL` vaut `gpt-5-mini` par defaut et peut etre remplace par un modele compatible Responses, vision et Structured Outputs. Les appels utilisent `store: false`. Cela ne supprime pas les regles de retention appliquees par le fournisseur. La facturation et les quotas dependent du projet OpenAI.
+Deux moteurs sont disponibles. Dans la configuration Codespaces CV Studio, **Ollama** est sélectionné par défaut : le modèle `qwen2.5:3b` (environ 1,9 Go) est téléchargé puis exécuté dans le Codespace. Il analyse automatiquement le texte des PDF, DOCX et TXT, reformule, condense et traduit les CV sans clé ni crédits OpenAI. Prévoir au moins 8 Go de RAM ; les calculs sur CPU peuvent prendre plusieurs minutes. Les ressources et la facturation éventuelle de Codespaces restent applicables. La qualité du modèle doit être vérifiée par relecture ; elle n’est pas garantie équivalente à celle d’OpenAI.
 
-Documentation : https://developers.openai.com/api/docs/guides/structured-outputs
+En dehors de Codespaces, installer Ollama depuis https://ollama.com, exécuter `ollama pull qwen2.5:3b` et définir `AI_PROVIDER=ollama` dans `.env.local`. Le moteur doit écouter sur `127.0.0.1:11434`. Sous Linux, `bash scripts/setup-ollama.sh` automatise son installation dans le dossier `work/`. Windows nécessite l’installateur Ollama pour Windows.
+
+`AI_PROVIDER=openai` conserve le moteur d’origine. La clé `OPENAI_API_KEY` reste côté serveur ; ne pas partager `.env.local`. `OPENAI_MODEL` vaut `gpt-5-mini` par défaut. Les crédits API OpenAI sont distincts de ChatGPT/Codex. Les appels utilisent `store: false`, ce qui ne supprime pas les règles de rétention du fournisseur.
+
+Le modèle Ollama configuré traite du texte : les scans, images et imports de modèles visuels nécessitent un OCR ou le moteur OpenAI. Les trois mises en page manuelles restent disponibles.
+
+Documentation : https://docs.ollama.com/api/chat et https://docs.ollama.com/capabilities/structured-outputs
 
 ## Flux
 
 - Import sans IA (par défaut) : PDF avec texte sélectionnable, DOCX ou TXT UTF-8, 8 Mo maximum, 20 pages PDF et 60 000 caractères maximum. Extraction sur le serveur CV Studio, sans envoi à OpenAI. Sélectionner les passages pour les répartir dans les champs ou télécharger le texte. Ce mode ne réalise pas une analyse intelligente et ne reconnaît pas le texte des images/scans.
-- Import avec IA : PDF, DOCX, TXT, PNG et JPEG, 8 Mo maximum. Analyse et structuration automatiques avec OpenAI, conservées en option. Clé et crédits API requis ; proposition à relire avant application.
+- Import avec IA : PDF, DOCX, TXT, PNG et JPEG, 8 Mo maximum. Analyse et structuration automatiques avec le moteur choisi, proposition à relire avant application. Ollama accepte les PDF avec texte, DOCX et TXT ; OpenAI accepte aussi les images et nécessite une clé et des crédits API.
 - Import de modele : PDF, PNG ou JPEG. L'IA choisit parmi les trois mises en page et adapte la couleur et la famille de police. Ce n'est pas une reproduction exacte d'un fichier arbitraire. Exporter un modele Word en PDF avant import visuel.
 - L'IA ne doit pas inventer de faits et preserve les coordonnees lors des reformulations. Toujours relire sa proposition ; aucune garantie automatique d'exactitude des informations extraites.
 - Le CV est ajuste a une page avec une taille de texte minimale de 11,5 px (environ 8,6 points). Si cela ne suffit pas, le PDF est bloque : condenser ou retirer du contenu, sans troncature silencieuse.
