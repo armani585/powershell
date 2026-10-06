@@ -22,9 +22,9 @@ Adresse par defaut : http://127.0.0.1:4317. Definir PORT dans `.env.local` pour 
 
 ## Configuration IA
 
-Deux moteurs sont disponibles. Dans la configuration Codespaces CV Studio, **Ollama** est sélectionné par défaut : le modèle `qwen2.5:3b` (environ 1,9 Go) est téléchargé puis exécuté dans le Codespace. Il analyse automatiquement le texte des PDF, DOCX et TXT, reformule, condense et traduit les CV sans clé ni crédits OpenAI. Prévoir au moins 8 Go de RAM ; les calculs sur CPU peuvent prendre plusieurs minutes. Les ressources et la facturation éventuelle de Codespaces restent applicables. La qualité du modèle doit être vérifiée par relecture ; elle n’est pas garantie équivalente à celle d’OpenAI.
+Deux moteurs sont disponibles. **Ollama** est sélectionné par défaut, en local comme dans Codespaces, même si une ancienne clé OpenAI est présente : le modèle `qwen2.5:3b` (environ 1,9 Go) est téléchargé puis exécuté dans le Codespace. Il analyse automatiquement le texte des PDF, DOCX et TXT, reformule, condense et traduit les CV sans clé ni crédits OpenAI. Prévoir au moins 8 Go de RAM ; les calculs sur CPU peuvent prendre plusieurs minutes. Les ressources et la facturation éventuelle de Codespaces restent applicables. La qualité du modèle doit être vérifiée par relecture ; elle n’est pas garantie équivalente à celle d’OpenAI.
 
-En dehors de Codespaces, installer Ollama depuis https://ollama.com, exécuter `ollama pull qwen2.5:3b` et définir `AI_PROVIDER=ollama` dans `.env.local`. Le moteur doit écouter sur `127.0.0.1:11434`. Sous Linux, `bash scripts/setup-ollama.sh` automatise son installation dans le dossier `work/`. Windows nécessite l’installateur Ollama pour Windows.
+En dehors de Codespaces, installer Ollama depuis https://ollama.com, exécuter `ollama pull qwen2.5:3b` et vérifier que `.env.local` ne force pas `AI_PROVIDER=openai`. Le moteur doit écouter sur `127.0.0.1:11434`. Sous Linux, `bash scripts/setup-ollama.sh` automatise son installation dans le dossier `work/`. Windows nécessite l’installateur Ollama pour Windows.
 
 `AI_PROVIDER=openai` conserve le moteur d’origine. La clé `OPENAI_API_KEY` reste côté serveur ; ne pas partager `.env.local`. `OPENAI_MODEL` vaut `gpt-5-mini` par défaut. Les crédits API OpenAI sont distincts de ChatGPT/Codex. Les appels utilisent `store: false`, ce qui ne supprime pas les règles de rétention du fournisseur.
 
@@ -48,3 +48,7 @@ Documentation : https://docs.ollama.com/api/chat et https://docs.ollama.com/capa
 `pnpm test` verifie les schemas et le rendu sans injection de HTML. `pnpm build` produit la version de production. Les vérifications de navigateur ont aussi couvert l’édition, les sauvegardes, les trois modèles, le PDF et les erreurs. Les réponses IA ont été simulées pour vérifier le parcours sans appel payant.
 
 L'application est concue pour un utilisateur en local. Un deploiement public necessiterait authentification, stockage protege et quotas par utilisateur.
+
+## Ancien message de quota OpenAI après une mise à jour
+
+Publier du code sur GitHub ne met pas à jour un serveur déjà lancé. Récupérer la branche `cv-studio-cloud` dans le dossier utilisé, installer les dépendances, arrêter puis redémarrer CV Studio. Le moteur par défaut est Ollama ; une valeur explicite `AI_PROVIDER=openai` dans l’environnement ou `.env.local` reste prioritaire et doit être changée en `ollama` pour utiliser le modèle local. Installer et démarrer Ollama reste nécessaire pour l’analyse. L’onglet Assistant IA indique le moteur et sa disponibilité. Une adresse `127.0.0.1` peut desservir une autre copie que celle du Codespace.

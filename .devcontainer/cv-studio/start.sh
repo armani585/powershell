@@ -3,7 +3,7 @@ set -euo pipefail
 project_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../cv-studio" && pwd)"
 cd "$project_dir"
 mkdir -p work
-cv_ai_provider="$(node --input-type=module -e "import dotenv from 'dotenv';dotenv.config({path:'.env.local',quiet:true});process.stdout.write(process.env.AI_PROVIDER||'openai');")"
+cv_ai_provider="$(node --input-type=module -e "import dotenv from 'dotenv';dotenv.config({path:'.env.local',quiet:true});process.stdout.write(process.env.AI_PROVIDER||'ollama');")"
 if [[ "$cv_ai_provider" == ollama ]]; then
   nohup bash scripts/setup-ollama.sh >work/ollama-setup.log 2>&1 </dev/null &
 fi

@@ -40,7 +40,7 @@ if (
     `${process.env.CODESPACE_NAME}-${port}.${process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}`,
   );
 }
-const provider = process.env.AI_PROVIDER || "openai";
+const provider = process.env.AI_PROVIDER || "ollama";
 if (!["openai", "ollama"].includes(provider))
   throw new Error("AI_PROVIDER doit valoir openai ou ollama.");
 const ollama =
