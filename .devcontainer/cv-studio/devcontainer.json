@@ -14,7 +14,7 @@
       "visibility": "private"
     }
   },
-  "postCreateCommand": "cd cv-studio && npm install -g pnpm@10 && pnpm install --frozen-lockfile",
+  "postCreateCommand": "cd cv-studio && npm install -g pnpm@10 && pnpm install --frozen-lockfile && pnpm exec playwright install --with-deps chromium",
   "customizations": {
     "vscode": {
       "settings": {

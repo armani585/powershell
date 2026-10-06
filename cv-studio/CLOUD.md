@@ -1,25 +1,38 @@
 # CV Studio dans GitHub Codespaces
 
-Les fichiers sont conservés dans `cv-studio/` pour préserver le projet existant.
+Le projet complet reconstruit se trouve dans `cv-studio/`. Il reprend les fonctions du serveur fourni ; l’interface a été recréée, les sources d’origine n’ayant pas été fournies.
 
-## État de cet import
+## Ouvrir le projet dans le cloud
 
-Les dix fichiers fournis ne constituent pas le projet complet. Les dossiers `src/`, `shared/` et `tests/` n’ont pas été fournis. Le serveur importe `shared/model.mjs`, `shared/resume.mjs` et `shared/resume.css` ; la page importe `src/main.jsx`. Le lancement et la compilation restent bloqués jusqu’à l’ajout de ces dossiers. Aucun remplacement de leur contenu n’a été inventé.
-
-## Ouvrir l’environnement cloud
-
-Depuis GitHub, sélectionner Code → Codespaces → créer un Codespace (options avancées si nécessaire), puis choisir la configuration **CV Studio**. L’installation des dépendances s’effectue à la création.
-
-Ajouter `OPENAI_API_KEY` dans les secrets Codespaces du compte GitHub et autoriser ce dépôt, puis créer ou redémarrer le Codespace. Ne jamais placer la clé dans Git : ce dépôt est public. `.env.local` a été volontairement exclu de l’import. L’éditeur et le PDF peuvent fonctionner sans clé ; les fonctions IA en ont besoin.
-
-Après ajout des sources manquantes :
+1. Ouvrir https://github.com/armani585/powershell/tree/cv-studio-cloud.
+2. Cliquer **Code → Codespaces → créer un Codespace**, en sélectionnant la branche **cv-studio-cloud** et la configuration **CV Studio** (options avancées si nécessaire).
+3. Attendre l’installation des dépendances et de Chromium, puis ouvrir un terminal :
 
 ```sh
 cd /workspaces/powershell/cv-studio
-pnpm exec playwright install --with-deps chromium
 pnpm dev
 ```
 
-Dans l’onglet Ports, ouvrir le port **4317** dans le navigateur et garder sa visibilité **privée**. Le serveur accepte le nom d’hôte du Codespace et écoute sur `0.0.0.0` uniquement dans Codespaces. En local, il continue d’écouter sur `127.0.0.1`.
+4. Dans l’onglet **Ports**, ouvrir **4317** dans le navigateur. Garder la visibilité **privée**. Le serveur doit rester actif.
 
-Pour la production dans cet environnement : `pnpm build`, puis `pnpm start`. Codespaces est un environnement de travail cloud et ne constitue pas un hébergement permanent. Un site public demanderait une adaptation supplémentaire avec authentification et quotas.
+Le navigateur peut éditer un CV et produire des PDF sans clé OpenAI. La sauvegarde automatique reste dans ce navigateur ; exporter une sauvegarde JSON avant de changer de navigateur ou d’appareil.
+
+## Activer les fonctions IA
+
+Ajouter `OPENAI_API_KEY` dans https://github.com/settings/codespaces sous les secrets Codespaces, autoriser le dépôt `powershell`, puis redémarrer le Codespace. `OPENAI_MODEL` vaut `gpt-5-mini` par défaut. Une clé côté serveur active l’import de documents, la reformulation, la condensation et la traduction ; ces fonctions utilisent les crédits de votre projet OpenAI.
+
+Ne jamais mettre `.env.local` dans Git : le dépôt est public. Ce fichier n’est pas publié. Une proposition doit toujours être relue avant application.
+
+## Vérification et production
+
+```sh
+pnpm test
+pnpm build
+pnpm start
+```
+
+Le serveur écoute sur `0.0.0.0` uniquement dans Codespaces et autorise son nom d’hôte spécifique. En local, il écoute sur `127.0.0.1`. Codespaces est un environnement de travail cloud, pas un hébergement permanent. Cette application est destinée à un utilisateur avec un port privé ; un site public nécessiterait une authentification et des quotas.
+
+## Contrôles réalisés lors de la reconstruction
+
+Compilation de production ; cinq tests de schémas, sauvegardes et HTML échappé ; contrôles Chromium à 375, 820 et 1280 px ; édition et persistance ; sauvegarde/restauration JSON ; trois mises en page ; PDF A4 une page avec extraction du texte ; refus du débordement ; session API et erreurs sans clé. Le parcours de relecture IA a été contrôlé avec des réponses simulées, sans appel payant au fournisseur. La création d’un Codespace réel n’a pas été testée dans cette session.

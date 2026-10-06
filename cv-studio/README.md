@@ -2,6 +2,10 @@
 
 Application locale de creation de CV avec apercu A4, trois mises en page, import de CV et de modeles, reformulation, condensation, traduction FR/EN et PDF avec texte selectionnable.
 
+## Travailler dans le cloud
+
+Voir [CLOUD.md](CLOUD.md) pour ouvrir le projet dans GitHub Codespaces. L’interface et les fichiers partagés ont été reconstruits pour ce dépôt à partir des fonctions décrites dans les fichiers fournis.
+
 ## Demarrage Windows
 
 Double-cliquer sur `Demarrer CV Studio.cmd`. Le serveur ecoute uniquement sur `127.0.0.1`. Garder le terminal ouvert pendant l'utilisation.
@@ -34,6 +38,6 @@ Documentation : https://developers.openai.com/api/docs/guides/structured-outputs
 
 ## Verification
 
-`pnpm test` verifie les schemas et le rendu sans injection de HTML. `pnpm build` produit la version de production. Le dossier work contient des verifications de navigateur lorsque presentes.
+`pnpm test` verifie les schemas et le rendu sans injection de HTML. `pnpm build` produit la version de production. Les vérifications de navigateur ont aussi couvert l’édition, les sauvegardes, les trois modèles, le PDF et les erreurs. Les réponses IA ont été simulées pour vérifier le parcours sans appel payant.
 
 L'application est concue pour un utilisateur en local. Un deploiement public necessiterait authentification, stockage protege et quotas par utilisateur.
