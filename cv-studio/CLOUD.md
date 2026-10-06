@@ -38,3 +38,11 @@ Le serveur écoute sur `0.0.0.0` uniquement dans Codespaces et autorise son nom 
 ## Contrôles réalisés lors de la reconstruction
 
 Compilation de production ; cinq tests de schémas, sauvegardes et HTML échappé ; contrôles Chromium à 375, 820 et 1280 px ; édition et persistance ; sauvegarde/restauration JSON ; trois mises en page ; PDF A4 une page avec extraction du texte ; refus du débordement ; session API et erreurs sans clé. Le parcours de relecture IA a été contrôlé avec des réponses simulées, sans appel payant au fournisseur. La création d’un Codespace réel n’a pas été testée dans cette session.
+
+## Espace de travail dédié
+
+Le dossier du projet est `/workspaces/powershell/cv-studio`. La configuration Codespaces CV Studio ouvre directement ce dossier pour les nouveaux environnements ou après une reconstruction du conteneur.
+
+Pour un Codespace déjà ouvert à la racine du dépôt : après mise à jour de la branche `cv-studio-cloud`, choisir **File → Open Workspace from File**, puis `/workspaces/powershell/CV-Studio.code-workspace`. Ou utiliser **File → Open Folder** et choisir `/workspaces/powershell/cv-studio`.
+
+L’espace nommé **CV Studio** affiche uniquement ce projet, ouvre le terminal dans son dossier et propose les tâches **CV Studio : démarrer** et **CV Studio : vérifier** (Terminal → Run Task). Le démarrage automatique ne nécessite pas de lancer la tâche une seconde fois.

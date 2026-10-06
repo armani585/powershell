@@ -14,13 +14,14 @@
       "visibility": "private"
     }
   },
-  "postCreateCommand": "cd cv-studio && npm install -g pnpm@10 && pnpm install --frozen-lockfile && pnpm exec playwright install --with-deps chromium",
+  "postCreateCommand": "cd /workspaces/powershell/cv-studio && npm install -g pnpm@10 && pnpm install --frozen-lockfile && pnpm exec playwright install --with-deps chromium",
   "customizations": {
     "vscode": {
       "settings": {
-        "terminal.integrated.cwd": "${containerWorkspaceFolder}/cv-studio"
+        "terminal.integrated.cwd": "/workspaces/powershell/cv-studio"
       }
     }
   },
-  "postStartCommand": "bash .devcontainer/cv-studio/start.sh"
+  "postStartCommand": "bash /workspaces/powershell/.devcontainer/cv-studio/start.sh",
+  "workspaceFolder": "/workspaces/powershell/cv-studio"
 }
