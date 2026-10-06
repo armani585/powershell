@@ -1,0 +1,25 @@
+{
+  "name": "CV Studio",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {}
+  },
+  "forwardPorts": [
+    4317
+  ],
+  "portsAttributes": {
+    "4317": {
+      "label": "CV Studio",
+      "onAutoForward": "notify",
+      "visibility": "private"
+    }
+  },
+  "postCreateCommand": "cd cv-studio && npm install -g pnpm@10 && pnpm install --frozen-lockfile",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.cwd": "${containerWorkspaceFolder}/cv-studio"
+      }
+    }
+  }
+}
