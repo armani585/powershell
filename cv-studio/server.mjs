@@ -1,4 +1,5 @@
 import express from "express";
+import { aiErrorMessage } from "./lib/ai-error.mjs";
 import multer from "multer";
 import mammoth from "mammoth";
 import OpenAI from "openai";
@@ -285,21 +286,13 @@ app.use((err, _req, res, next) => {
             ? "Le fichier dépasse 8 Mo."
             : "Import invalide : un seul fichier est accepté.",
       });
-  if (err instanceof OpenAI.APIError) {
-    const message =
-      err.status === 429
-        ? "Le quota OpenAI est épuisé ou la limite de requêtes est atteinte. Vérifiez les crédits et la facturation du projet OpenAI."
-        : err.status === 401
-          ? "Clé OpenAI refusée. Vérifiez la configuration du serveur."
-          : err.status === 403
-            ? "Le projet OpenAI n’a pas accès à ce modèle."
-            : "La demande OpenAI a échoué. Réessayez ou vérifiez le modèle configuré.";
-    return res.status(err.status === 429 ? 429 : 502).json({ error: message });
-  }
   if (err.name === "APIConnectionTimeoutError")
     return res
       .status(504)
       .json({ error: "L’IA a mis trop de temps à répondre. Réessayez." });
+  if (err instanceof OpenAI.APIError) {
+    return res.status(err.status === 429 ? 429 : 502).json({ error: aiErrorMessage(err) });
+  }
   res
     .status(err.status || 500)
     .json({
