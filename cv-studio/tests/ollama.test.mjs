@@ -27,6 +27,8 @@ test("Ollama uses the local chat endpoint and structured output, with no API cre
   assert.equal(payload.model, "qwen2.5:3b");
   assert.equal(payload.format.type, "object");
   assert.equal(payload.options.temperature, 0);
+  assert.equal(payload.options.num_thread, undefined);
+  assert.equal(payload.options.num_batch, undefined);
   assert.match(payload.messages[0].content, /Ne rien inventer/);
 });
 test("readiness distinguishes missing service and missing model", async () => {

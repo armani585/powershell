@@ -102,10 +102,9 @@ export function createOllama({
           ...(textMode ? {} : { format }),
           stream: false,
           keep_alive: "5m",
-          // Explicit, bounded CPU batches avoid the severe prefill stalls seen
-          // with the default runner after a large import on the Sprite VM.
+          // Bound CPU batches and thread contention on the Sprite VM.
           options: { temperature: 0, num_ctx: contextSize, num_predict: outputLimit,
-            num_thread: 4, num_batch: 128 },
+            ...(textMode ? { num_thread: 4, num_batch: 128 } : {}) },
         }),
       });
       if (response.status === 404)
