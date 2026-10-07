@@ -122,11 +122,40 @@ test("timeout is communicated without exposing provider content", async () => {
   );
 });
 
-test('RH JSON mode avoids complex decoder grammar but still validates every response',async()=>{
- let payload;
- const client=createOllama({fetchImpl:async(url,options)=>{payload=JSON.parse(options.body);return answer();}});
- await client.ask(schema,'Keep the source facts.',input,{jsonMode:true});
- assert.equal(payload.format,'json');assert.match(payload.messages[0].content,/jamais avec un schéma/);assert.ok(!payload.messages[0].content.includes('properties'));
- const invalid=createOllama({fetchImpl:async()=>answer('{"name":99}')});
- await assert.rejects(invalid.ask(schema,'',input,{jsonMode:true}),error=>error.status===502);
+test('RH requests plain prose without decoder grammar and validates the response length',async()=>{
+ const textSchema=z.object({text:z.string().min(1).max(3000)});let payload;
+ const client=createOllama({fetchImpl:async(url,options)=>{payload=JSON.parse(options.body);return answer('Préparer les dossiers clients.');}});
+ assert.deepEqual(await client.ask(textSchema,'Keep source facts.',input,{textMode:true}),{text:'Préparer les dossiers clients.'});
+ assert.equal(payload.format,undefined);assert.match(payload.messages[0].content,/sans JSON/);assert.ok(!payload.messages[0].content.includes('properties'));
+ const invalid=createOllama({fetchImpl:async()=>answer('x'.repeat(3001))});
+ await assert.rejects(invalid.ask(textSchema,'',input,{textMode:true}),error=>error.status===502);
+});
+
+test('CPU work and context are bounded without truncating a long offer', async () => {
+  let payload;
+  const client = createOllama({fetchImpl: async (url, options) => {
+    payload = JSON.parse(options.body); return answer();
+  }});
+  for (const size of [100, 8000, 18000]) {
+    const text = 'é'.repeat(size / 2);
+    await client.ask(z.object({text:z.string()}), '', [{type:'input_text', text}], {textMode:true});
+    assert.equal(payload.messages[1].content, text);
+    assert.equal(payload.options.num_thread, 4);
+    assert.equal(payload.options.num_batch, 128);
+    assert.equal(payload.options.num_predict, 2048);
+    const bytes = Buffer.byteLength(JSON.stringify(payload.messages));
+    assert.ok(payload.options.num_ctx >= bytes + payload.options.num_predict);
+    assert.equal(payload.options.num_ctx, size < 6000 ? 8192 : size < 14000 ? 16384 : 32768);
+  }
+});
+
+test('passage timeout reports its actual limit and releases the request slot', async () => {
+  let calls = 0;
+  const client = createOllama({fetchImpl: async () => {
+    if (++calls === 1) throw Object.assign(Error(), {name:'TimeoutError'});
+    return answer();
+  }});
+  await assert.rejects(client.ask(schema, '', input, {textMode:true,requestTimeoutMs:45000}),
+    error => error.status === 504 && /45 secondes/.test(error.message));
+  assert.deepEqual(await client.ask(schema, '', input), {name:'Camille'});
 });

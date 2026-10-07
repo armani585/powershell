@@ -53,7 +53,7 @@ export function createOllama({
       };
     }
   }
-  async function ask(schema, instructions, content, { jsonMode = false, requestTimeoutMs = timeoutMs } = {}) {
+  async function ask(schema, instructions, content, { textMode = false, requestTimeoutMs = timeoutMs } = {}) {
     if (busy)
       throw failure(
         "Une analyse est déjà en cours. Attendez sa fin avant de réessayer.",
@@ -69,14 +69,19 @@ export function createOllama({
       {
         role: "system",
         content:
-          instructions + (jsonMode
-            ? "\nRéponds avec les valeurs demandées, jamais avec un schéma JSON."
+          instructions + (textMode
+            ? "\nRéponds uniquement par le texte réécrit, sans JSON, commentaire, guillemets ni balise."
             : "\nRespecte exactement ce schéma JSON : " + JSON.stringify(format)),
       },
       { role: "user", content: content.map((item) => item.text).join("\n\n") },
     ];
-    // A conservative UTF-8 byte bound leaves room in the 32K context for the answer.
-    if (Buffer.byteLength(JSON.stringify(messages), "utf8") > 22000)
+    const inputBytes = Buffer.byteLength(JSON.stringify(messages), "utf8");
+    // Keep enough room for every input byte plus the bounded output. Small RH
+    // passages need no 32K KV cache. Never silently truncate the source or offer.
+    const outputLimit = textMode ? 2048 : 6000;
+    const contextSize = textMode && inputBytes <= 6144 ? 8192
+      : textMode && inputBytes <= 14336 ? 16384 : 32768;
+    if (inputBytes > 22000)
       throw failure(
         "Ce CV ou cette offre est trop long pour ce modèle. Raccourcissez le document ou l’offre, puis réessayez.",
         413,
@@ -91,10 +96,16 @@ export function createOllama({
         body: JSON.stringify({
           model,
           messages,
-          format: jsonMode ? "json" : format,
+          // RH has a tiny response contract, validated below. Avoid constrained
+          // decoding entirely: even the generic JSON grammar can stall this
+          // CPU runner before its first generated token.
+          ...(textMode ? {} : { format }),
           stream: false,
           keep_alive: "5m",
-          options: { temperature: 0, num_ctx: 32768, num_predict: 6000 },
+          // Explicit, bounded CPU batches avoid the severe prefill stalls seen
+          // with the default runner after a large import on the Sprite VM.
+          options: { temperature: 0, num_ctx: contextSize, num_predict: outputLimit,
+            num_thread: 4, num_batch: 128 },
         }),
       });
       if (response.status === 404)
@@ -107,13 +118,17 @@ export function createOllama({
           502,
         );
       const data = await response.json();
+      console.info("Ollama timing", JSON.stringify({ inputBytes, contextSize,
+        promptTokens: data.prompt_eval_count, outputTokens: data.eval_count,
+        prefillMs: Math.round((data.prompt_eval_duration || 0) / 1e6),
+        generationMs: Math.round((data.eval_duration || 0) / 1e6) }));
       if (data.done !== true || data.done_reason === "length")
         throw failure(
           "La réponse Ollama est incomplète. Réessayez avec un document plus court.",
           502,
         );
       try {
-        return schema.parse(JSON.parse(data.message?.content));
+        return schema.parse(textMode ? { text: data.message?.content?.trim() } : JSON.parse(data.message?.content));
       } catch {
         throw failure(
           "Ollama a produit une réponse invalide. Votre CV est conservé. Réessayez ou choisissez un modèle plus performant.",
@@ -124,7 +139,7 @@ export function createOllama({
       if (error.status) throw error;
       if (["TimeoutError", "AbortError"].includes(error.name))
         throw failure(
-          "L’analyse Ollama a dépassé cinq minutes. Essayez un document plus court ou davantage de ressources de calcul.",
+          `Le moteur de rédaction n’a pas répondu en ${Math.ceil(Math.min(timeoutMs, requestTimeoutMs) / 1000)} secondes. Votre CV est conservé.` + (textMode ? " Les passages déjà traités seront réutilisés si vous relancez l’optimisation." : " Réessayez dans quelques instants."),
           504,
         );
       throw failure(
