@@ -1,5 +1,7 @@
 # CV Studio dans GitHub Codespaces
 
+Pour l’instance privée actuellement vérifiée avec une analyse Ollama réelle, voir [SPRITES.md](SPRITES.md). Ce document décrit l’alternative Codespaces.
+
 Le projet complet reconstruit se trouve dans `cv-studio/`. Il reprend les fonctions du serveur fourni ; l’interface a été recréée, les sources d’origine n’ayant pas été fournies.
 
 ## Ouvrir le projet dans le cloud
@@ -59,7 +61,7 @@ L’espace nommé **CV Studio** affiche uniquement ce projet, ouvre le terminal 
 
 ## Import sans crédits API
 
-Dans **Contenu → Méthode d’import**, le choix par défaut est **Sans IA — aucun crédit OpenAI**. Importer un PDF avec texte sélectionnable, un DOCX ou un TXT UTF-8. Dans la fenêtre de relecture, sélectionner un passage du texte, choisir son champ et cliquer **Appliquer la sélection**. Les autres champs sont conservés. Le texte complet peut aussi être téléchargé.
+Dans **Contenu → Méthode d’import**, choisir **Sans IA — aucun crédit OpenAI** pour une extraction manuelle ; lorsque le moteur est prêt, l’analyse IA est sélectionnée automatiquement. Importer un PDF avec texte sélectionnable, un DOCX ou un TXT UTF-8. Dans la fenêtre de relecture, sélectionner un passage du texte, choisir son champ et cliquer **Appliquer la sélection**. Les autres champs sont conservés. Le texte complet peut aussi être téléchargé.
 
 Ce mode extrait le texte sur le serveur CV Studio (dans le Codespace si utilisé dans le cloud), sans le transmettre à OpenAI. Il ne reconnaît pas les images/scans et ne classe pas automatiquement les expériences ou compétences. Les PDF à colonnes peuvent nécessiter une remise en ordre. Aucun stockage des documents importés n’est ajouté.
 

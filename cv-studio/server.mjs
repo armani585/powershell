@@ -30,8 +30,16 @@ const app = express();
 app.disable("x-powered-by");
 const token = randomBytes(32).toString("hex");
 const port = Number(process.env.PORT || 4317);
-const host = process.env.CODESPACES === "true" ? "0.0.0.0" : "127.0.0.1";
+const host = process.env.CV_LISTEN_HOST || (process.env.CODESPACES === "true" ? "0.0.0.0" : "127.0.0.1");
+if (!["127.0.0.1", "0.0.0.0", "::1"].includes(host))
+  throw new Error("CV_LISTEN_HOST invalide.");
 const allowedHosts = ["127.0.0.1", "localhost", "[::1]"];
+if (process.env.CV_PUBLIC_ORIGIN) {
+  const origin = new URL(process.env.CV_PUBLIC_ORIGIN);
+  if (origin.protocol !== "https:" || origin.username || origin.password || origin.pathname !== "/" || origin.search || origin.hash)
+    throw new Error("CV_PUBLIC_ORIGIN doit être une origine HTTPS sans chemin ni identifiants.");
+  allowedHosts.push(origin.hostname);
+}
 if (
   process.env.CODESPACE_NAME &&
   process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN

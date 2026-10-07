@@ -4,7 +4,7 @@ Application locale de creation de CV avec apercu A4, trois mises en page, import
 
 ## Travailler dans le cloud
 
-Voir [CLOUD.md](CLOUD.md) pour ouvrir le projet dans GitHub Codespaces. L’interface et les fichiers partagés ont été reconstruits pour ce dépôt à partir des fonctions décrites dans les fichiers fournis.
+Une instance privée avec Ollama est disponible sur [CV Studio](https://mcp-cv-studio-b2qhc.sprites.app), avec connexion Fly.io au compte propriétaire. Voir [SPRITES.md](SPRITES.md) pour cette installation vérifiée et [CLOUD.md](CLOUD.md) pour GitHub Codespaces. L’interface et les fichiers partagés ont été reconstruits pour ce dépôt à partir des fonctions décrites dans les fichiers fournis.
 
 ## Demarrage Windows
 
@@ -34,7 +34,7 @@ Documentation : https://docs.ollama.com/api/chat et https://docs.ollama.com/capa
 
 ## Flux
 
-- Import sans IA (par défaut) : PDF avec texte sélectionnable, DOCX ou TXT UTF-8, 8 Mo maximum, 20 pages PDF et 60 000 caractères maximum. Extraction sur le serveur CV Studio, sans envoi à OpenAI. Sélectionner les passages pour les répartir dans les champs ou télécharger le texte. Ce mode ne réalise pas une analyse intelligente et ne reconnaît pas le texte des images/scans.
+- Import sans IA (sélectionné si le moteur IA n’est pas prêt) : PDF avec texte sélectionnable, DOCX ou TXT UTF-8, 8 Mo maximum, 20 pages PDF et 60 000 caractères maximum. Extraction sur le serveur CV Studio, sans envoi à OpenAI. Sélectionner les passages pour les répartir dans les champs ou télécharger le texte. Ce mode ne réalise pas une analyse intelligente et ne reconnaît pas le texte des images/scans.
 - Import avec IA : PDF, DOCX, TXT, PNG et JPEG, 8 Mo maximum. Analyse et structuration automatiques avec le moteur choisi, proposition à relire avant application. Ollama accepte les PDF avec texte, DOCX et TXT ; OpenAI accepte aussi les images et nécessite une clé et des crédits API.
 - Import de modele : PDF, PNG ou JPEG. L'IA choisit parmi les trois mises en page et adapte la couleur et la famille de police. Ce n'est pas une reproduction exacte d'un fichier arbitraire. Exporter un modele Word en PDF avant import visuel.
 - L'IA ne doit pas inventer de faits et preserve les coordonnees lors des reformulations. Toujours relire sa proposition ; aucune garantie automatique d'exactitude des informations extraites.
