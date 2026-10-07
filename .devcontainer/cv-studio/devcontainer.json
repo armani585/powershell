@@ -1,0 +1,40 @@
+{
+  "name": "CV Studio",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {}
+  },
+  "forwardPorts": [
+    4317
+  ],
+  "portsAttributes": {
+    "4317": {
+      "label": "CV Studio",
+      "onAutoForward": "openBrowser",
+      "visibility": "private"
+    },
+    "11434": {
+      "onAutoForward": "ignore"
+    }
+  },
+  "postCreateCommand": "cd /workspaces/powershell/cv-studio && npm install -g pnpm@10 && pnpm install --frozen-lockfile && pnpm exec playwright install --with-deps chromium",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.cwd": "/workspaces/powershell/cv-studio"
+      }
+    }
+  },
+  "postStartCommand": "bash /workspaces/powershell/.devcontainer/cv-studio/start.sh",
+  "workspaceFolder": "/workspaces/powershell/cv-studio",
+  "containerEnv": {
+    "AI_PROVIDER": "ollama",
+    "OLLAMA_MODEL": "qwen2.5:3b",
+    "OLLAMA_BASE_URL": "http://127.0.0.1:11434"
+  },
+  "hostRequirements": {
+    "cpus": 2,
+    "memory": "8gb",
+    "storage": "16gb"
+  }
+}
