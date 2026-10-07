@@ -1,4 +1,5 @@
 import express from "express";
+import { createRewriteJobs } from "./lib/rewrite-jobs.mjs";
 import { rewriteSchema, rewriteInput, mergeRewrite, rhSchema, expandRh, rhInput } from "./lib/rewrite.mjs";
 import { aiErrorMessage } from "./lib/ai-error.mjs";
 import { extractDocument } from "./lib/extract-document.mjs";
@@ -140,14 +141,12 @@ async function ask(schema, instructions, content) {
   return response.output_parsed;
 }
 
-app.post("/api/rewrite", async (req, res) => {
-  const body = z
-    .object({
+const rewriteBodySchema = z.object({
       resume: resumeSchema,
       action: z.enum(["improve", "condense", "translate"]),
       job: z.string().max(10000).default(""),
-    })
-    .parse(req.body);
+    });
+async function rewriteResume(body) {
   const tasks = {
     improve:
       "Réécris ce CV comme un rédacteur RH expérimenté, dans sa langue actuelle : profil ciblé et sobre de 45 à 60 mots maximum, missions formulées avec des verbes précis et actifs. Valorise le travail réellement décrit, le périmètre et les contributions documentées. Une participation ne devient jamais une direction de projet ; une mission ne devient jamais un résultat acquis. Conserve les chiffres fournis, sans ajouter de gains, budgets, effectifs ou pourcentages. Remplace les formulations vagues uniquement lorsque la source permet une formulation plus précise. Évite les superlatifs et le jargon. Adapte le vocabulaire au poste visé seulement si les faits du CV le justifient. Conserve toutes les expériences et formations ; aucune responsabilité ni compétence supplémentaire. Dans notes, indique les principaux changements et les précisions que la personne pourrait apporter, sans les intégrer comme faits.",
@@ -167,7 +166,21 @@ app.post("/api/rewrite", async (req, res) => {
     { type: "input_text", text: JSON.stringify({ cv: body.action === "improve" ? rhInput(body.resume) : rewriteInput(body.resume), offre: body.job }) },
   ]);
   const result = mergeRewrite(body.resume, body.action === "improve" ? expandRh(body.resume, answer) : answer, body.action);
-  res.json(result);
+  return result;
+}
+app.post("/api/rewrite", async (req, res) => res.json(await rewriteResume(rewriteBodySchema.parse(req.body))));
+const rewriteJobs = createRewriteJobs({ execute: rewriteResume });
+app.post("/api/rewrite-jobs", (req, res) => {
+  const body = rewriteBodySchema.parse(req.body);
+  const job = rewriteJobs.start(req.body.requestId, body);
+  res.setHeader("Cache-Control", "no-store");
+  res.status(202).json(job);
+});
+app.get("/api/rewrite-jobs/:id", (req, res) => {
+  if (req.headers["x-cv-token"] !== token)
+    return res.status(403).json({ error: "Session expirée. Rechargez la page ; votre CV est conservé." });
+  res.setHeader("Cache-Control", "no-store");
+  res.json(rewriteJobs.get(req.params.id));
 });
 
 async function fileContent(file, template) {

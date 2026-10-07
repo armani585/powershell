@@ -25,6 +25,7 @@ import {
 import { readDraft, parseBackup, DRAFT_KEY } from "./storage.mjs";
 import "../shared/resume.css";
 import "./style.css";
+import { runRewriteJob } from "./rewrite-job.mjs";
 import { TextImport } from "./TextImport.jsx";
 const initial = (() => {
   try {
@@ -272,6 +273,7 @@ function App() {
   const [tab, setTab] = useState("content");
   const [config, setConfig] = useState(null);
   const [busy, setBusy] = useState("");
+  const [connectionNotice, setConnectionNotice] = useState("");
   const [notice, setNotice] = useState(initial.error || "");
   const [saveError, setSaveError] = useState(initial.error || "");
   const [storageBlocked, setStorageBlocked] = useState(!!initial.error);
@@ -296,11 +298,12 @@ function App() {
     async function refresh() {
       try {
         const response = await fetch("/api/config", {
-          signal: controller.signal,
+          signal: AbortSignal.any([controller.signal, AbortSignal.timeout(8000)]),
         });
         if (!response.ok) throw Error();
         const next = await response.json();
         setConfig(next);
+        setConnectionNotice("");
         if (
           next.aiProvider === "ollama" &&
           next.aiConfigured &&
@@ -311,9 +314,7 @@ function App() {
         }
       } catch (error) {
         if (error.name !== "AbortError")
-          setNotice(
-            "Le serveur ne répond pas. Rechargez la page après son démarrage.",
-          );
+          setConnectionNotice("Connexion au serveur interrompue. Reconnexion automatique en cours ; votre brouillon est conservé.");
       }
     }
     void refresh();
@@ -394,12 +395,9 @@ function App() {
   const actionTitle = action => ({ improve: "Optimisation RH", condense: "Ajustement sur une page", translate: resume.language === "fr" ? "Traduction en anglais" : "Traduction en français" })[action];
   const ai = (action) =>
     run(actionTitle(action), async () => {
-      const result = await request("rewrite", {
-        resume: resumeSchema.parse(resume),
-        action,
-        job,
-      });
-      setProposal({ ...resultSchema.parse(await result.json()), title: actionTitle(action), originalResume: resume });
+      const result = await runRewriteJob({ body: { resume: resumeSchema.parse(resume), action, job }, token: config.token,
+        onProgress: message => setBusy(actionTitle(action) + " · " + message) });
+      setProposal({ ...resultSchema.parse(result), title: actionTitle(action), originalResume: resume });
     });
   const onePage = () => run("Ajustement sur une page", async () => {
     const original = validated();
@@ -412,8 +410,9 @@ function App() {
     if (!measured.fits) {
       if (!config?.aiConfigured) throw Error("La mise en page compacte ne suffit pas. L’assistant doit être disponible pour proposer une rédaction plus courte ; votre CV est conservé.");
       setBusy("Raccourcissement du texte, en conservant chaque expérience");
-      const response = await request("rewrite", { resume: original.resume, action: "condense", job });
-      next = resultSchema.parse(await response.json());
+      const result = await runRewriteJob({ body: { resume: original.resume, action: "condense", job }, token: config.token,
+        onProgress: message => setBusy("Ajustement sur une page · " + message) });
+      next = resultSchema.parse(result);
       measured = await measure(next.resume, measured.design);
       next.notes.unshift("Chaque expérience et formation est conservée. Relisez les descriptions raccourcies avant application.");
     }
@@ -545,6 +544,7 @@ function App() {
             Texte sélectionnable
           </span>
         </section>
+        {connectionNotice && <p className="notice" role="status">{connectionNotice}</p>}
         {(notice || saveError || busy) && (
           <div className={`notice ${saveError ? "error" : ""}`} role="status">
             {busy ? busy + "…" : notice}
