@@ -22,6 +22,9 @@ export function createRewriteJobs({ execute, now = Date.now, retentionMs = 60000
       if (previous.fingerprint !== fingerprint) throw failure('Cette demande correspond à un autre contenu.', 409);
       return view(previous);
     }
+    // Identical successful requests reuse the validated result until expiry.
+    const cached = [...jobs.values()].find(job => job.fingerprint === fingerprint && job.status === 'done');
+    if (cached) return { ...view(cached), cached: true };
     if ([...jobs.values()].some(job => job.status === 'running')) throw failure('Une demande est déjà en cours. Attendez sa fin avant de réessayer.', 429);
     if (jobs.size >= maxJobs) {
       const oldest = [...jobs.values()].sort((a, b) => a.finishedAt - b.finishedAt)[0];

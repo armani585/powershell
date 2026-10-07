@@ -2,22 +2,29 @@ import { z } from 'zod';
 import { resumeSchema } from '../shared/model.mjs';
 const text = z.string().max(1000);
 const entry = z.object({ id: z.number().int(), title: z.string().max(200), bullets: z.array(text).max(12) });
-const missionFields = source => Object.fromEntries(source.experiences.flatMap((e, i) => e.bullets.map((b, j) => [`e${i}_b${j}`, b])));
+const missionFields = source => source.experiences.flatMap((e, i) => e.bullets.map((text, j) => ({ id: `e${i}_b${j}`, text })));
 export function rhSchema(source) {
   return z.object({ rewrittenProfile: z.string().max(3000),
-    missions: z.object(Object.fromEntries(Object.keys(missionFields(source)).map(key => [key, text]))).strict(),
-    notes: z.array(z.string().max(2000)).max(20),
+    // An array keeps the decoding grammar small even for dozens of missions.
+    missions: z.array(z.object({ id: z.string().max(30), text })).length(missionFields(source).length),
+    notes: z.array(z.string().max(300)).max(2),
   });
 }
 export function rhInput(source) {
-  return { profile: source.profile, title: source.title, missions: missionFields(source),
+  return { language: source.language, profile: source.profile, title: source.title, missions: missionFields(source),
     context: source.experiences.map(({title,organization,period},id) => ({id,title,organization,period})) };
 }
 export function expandRh(source, raw) {
   const result = rhSchema(source).parse(raw);
+  const original = missionFields(source);
+  if (result.missions.some((mission, i) => mission.id !== original[i].id))
+    reject('La rédaction RH a déplacé ou remplacé une mission. Elle a été refusée.');
+  if (result.missions.some((mission, i) => original[i].text.trim() && !mission.text.trim()))
+    reject('La rédaction RH a effacé une mission. Elle a été refusée.');
+  const rewritten = new Map(result.missions.map(m => [m.id, m.text]));
   return { ...rewriteInput(source), profile: result.rewrittenProfile,
     experiences: source.experiences.map((e, i) => ({ id: i, title: e.title,
-      bullets: e.bullets.map((_, j) => result.missions[`e${i}_b${j}`]) })), notes: result.notes };
+      bullets: e.bullets.map((_, j) => rewritten.get(`e${i}_b${j}`)) })), notes: result.notes };
 }
 export const rewriteSchema = z.object({
   title: z.string().max(200), profile: z.string().max(3000),

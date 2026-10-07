@@ -66,3 +66,9 @@ L’ajustement A4 mesure le rendu Chromium réel : mise en page actuelle, espace
 La rédaction RH, la traduction et la condensation lancent désormais un calcul en arrière-plan. Le navigateur récupère son état par des requêtes courtes et réessaie automatiquement après une coupure temporaire. Un identifiant de demande empêche de lancer deux calculs si l’accusé de réception s’est perdu. Garder la page ouverte pendant l’opération ; le brouillon n’est remplacé qu’après application de la proposition.
 
 Les résultats temporaires restent uniquement dans la mémoire du serveur, avec un nettoyage après environ dix minutes suivant la fin du calcul (douze résultats maximum, une demande en cours). Leur lecture exige le jeton de session. Ils disparaissent lors d’un redémarrage du serveur ; une erreur explicite invite alors à relancer l’action. Les messages de connexion sont séparés des erreurs de traitement et disparaissent après reconnexion.
+
+## Rapidité de l’optimisation RH
+
+La réponse RH utilise une liste de missions avec des identifiants vérifiés, plutôt qu’un objet contenant une propriété différente pour chaque mission. Le nombre et l’ordre des missions restent contrôlés, et une mission vide à la place d’un texte existant est refusée. Ce format évite que la grammaire de génération grandisse avec le nombre de propriétés et ralentisse fortement les CV longs. Les commentaires de l’IA sont limités à deux remarques brèves.
+
+Une demande strictement identique (CV, action et poste visé) réutilise son résultat réussi encore présent en mémoire, sans nouvelle inférence. Modifier le CV, changer d’action ou de poste déclenche un nouveau calcul. Les échecs ne sont pas réutilisés. Le cache est limité par les mêmes règles de rétention que les calculs en arrière-plan et disparaît au redémarrage.

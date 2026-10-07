@@ -42,6 +42,26 @@ test('RH generation changes only original prose slots and preserves education an
 });
 test('RH cannot add or drop a mission description',()=>{
  const source=sampleResume();const answer={rewrittenProfile:source.profile,missions:rhInput(source).missions,notes:[]};
- answer.missions.e99_b0='Mission inventée.';assert.throws(()=>expandRh(source,answer));
- delete answer.missions.e99_b0;delete answer.missions.e0_b0;assert.throws(()=>expandRh(source,answer));
+ answer.missions.push({id:'e99_b0',text:'Mission inventée.'});assert.throws(()=>expandRh(source,answer));
+ answer.missions.pop();answer.missions.pop();assert.throws(()=>expandRh(source,answer));
+});
+
+test('RH rejects reordered, duplicated and erased mission slots',()=>{
+ for(const mode of ['reverse','duplicate','empty']) {
+  const source=sampleResume();const answer={rewrittenProfile:source.profile,missions:rhInput(source).missions,notes:[]};
+  if(mode==='reverse')answer.missions.reverse();
+  if(mode==='duplicate')answer.missions[1].id=answer.missions[0].id;
+  if(mode==='empty')answer.missions[0].text='  ';
+  assert.throws(()=>expandRh(source,answer));
+ }
+});
+
+test('RH response grammar remains bounded for the maximum number of mission slots',async()=>{
+ const {rhSchema}=await import('../lib/rewrite.mjs');
+ const {zodTextFormat}=await import('openai/helpers/zod');
+ const source=sampleResume();source.experiences=Array.from({length:20},()=>({...source.experiences[0],bullets:Array(12).fill('Mission documentée.')}));
+ const format=zodTextFormat(rhSchema(source),'rh').schema;
+ assert.ok(JSON.stringify(format).length<2000,'Response grammar must not add a property for every mission');
+ const answer={rewrittenProfile:source.profile,missions:rhInput(source).missions,notes:[]};
+ assert.equal(expandRh(source,answer).experiences.flatMap(e=>e.bullets).length,240);
 });
