@@ -39,7 +39,9 @@ export async function runRewriteJob({ body, token, onProgress = () => {}, fetchI
     if (job.status === 'failed') throw Error(job.error || 'Le traitement a échoué. Votre CV est conservé.');
     if (!job.id || job.status !== 'running') throw Error('Le suivi du calcul a renvoyé une réponse inattendue. Votre CV est conservé.');
     const seconds = Math.round((now() - started) / 1000);
-    onProgress(`Calcul en cours · ${seconds} s écoulées. Vous pouvez laisser cette page ouverte`);
+    const progression = job.progress && Number.isInteger(job.progress.completed) && Number.isInteger(job.progress.total)
+      ? `${job.progress.completed}/${job.progress.total} passages traités · ` : '';
+    onProgress(`Calcul en cours · ${progression}${seconds} s écoulées. Vous pouvez laisser cette page ouverte`);
     await pause(2000);
     job = await retry(() => call('/' + encodeURIComponent(job.id)));
   }

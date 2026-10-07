@@ -2,29 +2,51 @@ import { z } from 'zod';
 import { resumeSchema } from '../shared/model.mjs';
 const text = z.string().max(1000);
 const entry = z.object({ id: z.number().int(), title: z.string().max(200), bullets: z.array(text).max(12) });
-const missionFields = source => source.experiences.flatMap((e, i) => e.bullets.map((text, j) => ({ id: `e${i}_b${j}`, text })));
-export function rhSchema(source) {
-  return z.object({ rewrittenProfile: z.string().max(3000),
-    // An array keeps the decoding grammar small even for dozens of missions.
-    missions: z.array(z.object({ id: z.string().max(30), text })).length(missionFields(source).length),
-    notes: z.array(z.string().max(300)).max(2),
-  });
+// Identical sentences in identical roles can share a wording, but every original
+// position is kept in the CV. Only explicitly proposed edits are applied.
+function rhGroups(source) {
+  const groups = []; const keys = new Map();
+  source.experiences.forEach((e, i) => e.bullets.forEach((text, j) => {
+    const key = JSON.stringify([e.title, text]);
+    let group = keys.get(key);
+    if (!group) { group = { id: 'm' + groups.length, title: e.title, text, positions: [] }; groups.push(group); keys.set(key, group); }
+    group.positions.push([i, j]);
+  }));
+  return groups;
+}
+export function rhSchema() {
+  return z.object({ profile: z.string().max(3000).nullable(),
+    edits: z.array(z.object({ id: z.string().max(30), text })).max(240),
+  }).strict();
 }
 export function rhInput(source) {
-  return { language: source.language, profile: source.profile, title: source.title, missions: missionFields(source),
-    context: source.experiences.map(({title,organization,period},id) => ({id,title,organization,period})) };
+  return { language: source.language, profile: source.profile, title: source.title,
+    missions: rhGroups(source).map(({id,title,text}) => ({id,title,text})) };
 }
 export function expandRh(source, raw) {
-  const result = rhSchema(source).parse(raw);
-  const original = missionFields(source);
-  if (result.missions.some((mission, i) => mission.id !== original[i].id))
-    reject('La rédaction RH a déplacé ou remplacé une mission. Elle a été refusée.');
-  if (result.missions.some((mission, i) => original[i].text.trim() && !mission.text.trim()))
-    reject('La rédaction RH a effacé une mission. Elle a été refusée.');
-  const rewritten = new Map(result.missions.map(m => [m.id, m.text]));
-  return { ...rewriteInput(source), profile: result.rewrittenProfile,
-    experiences: source.experiences.map((e, i) => ({ id: i, title: e.title,
-      bullets: e.bullets.map((_, j) => rewritten.get(`e${i}_b${j}`)) })), notes: result.notes };
+  const result = rhSchema().parse(raw);
+  const groups = new Map(rhGroups(source).map(g => [g.id, g]));
+  const output = rewriteInput(structuredClone(source));
+  const used = new Set();let changed = 0;
+  const numbers = text => [...new Set(text.match(/\d+(?:[.,]\d+)*/g) || [])].sort().join('|');
+  for (const edit of result.edits) {
+    const original = groups.get(edit.id);
+    if (!original || used.has(edit.id)) reject('La proposition contient une mission inconnue ou dupliquée. Elle a été refusée.');
+    used.add(edit.id);
+    if (original.text.trim() && !edit.text.trim()) reject('La rédaction RH a effacé une mission. Elle a été refusée.');
+    if (numbers(original.text) !== numbers(edit.text)) reject('La rédaction RH a modifié les chiffres d’une mission. Elle a été refusée.');
+    for (const [i,j] of original.positions) {
+      output.experiences[i].bullets[j] = edit.text;
+      if (edit.text !== original.text) changed++;
+    }
+  }
+  if (result.profile !== null) {
+    if (source.profile.trim() && !result.profile.trim()) reject('La rédaction RH a effacé le profil. Elle a été refusée.');
+    if (numbers(source.profile) !== numbers(result.profile)) reject('La rédaction RH a modifié les chiffres du profil. Elle a été refusée.');
+    output.profile = result.profile;
+  }
+  return { ...output, notes: [changed ? `${changed} formulation(s) de mission améliorée(s). Les autres missions sont conservées.` : 'Les formulations des missions ont été conservées.',
+    output.profile !== source.profile ? 'Profil reformulé : relisez la proposition avant application.' : 'Profil conservé.'] };
 }
 export const rewriteSchema = z.object({
   title: z.string().max(200), profile: z.string().max(3000),

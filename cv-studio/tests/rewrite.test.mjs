@@ -33,35 +33,38 @@ test('a copied French CV cannot be labelled as an English translation',()=>{
  assert.throws(()=>mergeRewrite(source,result,'translate'),/sans le traduire/);
 });
 
-test('RH generation changes only original prose slots and preserves education and facts',()=>{
- const source=sampleResume();
- const answer={rewrittenProfile:'Coordination de projets numériques.',missions:rhInput(source).missions,notes:[]};
+test('RH edits preserve all untouched fields and every original position',()=>{
+ const source=sampleResume();const missions=rhInput(source).missions;
+ const answer={profile:'Coordination de projets numériques.',edits:[{id:missions[0].id,text:'Coordonner les équipes.'}]};
  const result=mergeRewrite(source,expandRh(source,answer),'improve').resume;
- assert.equal(result.profile,answer.rewrittenProfile);assert.deepEqual(result.education,source.education);
- assert.deepEqual(result.experiences,source.experiences);
+ assert.equal(result.profile,answer.profile);assert.deepEqual(result.education,source.education);
+ assert.equal(result.experiences[0].bullets[0],answer.edits[0].text);
+ assert.equal(result.experiences[0].bullets[1],source.experiences[0].bullets[1]);
+ assert.equal(result.experiences.length,source.experiences.length);
 });
-test('RH cannot add or drop a mission description',()=>{
- const source=sampleResume();const answer={rewrittenProfile:source.profile,missions:rhInput(source).missions,notes:[]};
- answer.missions.push({id:'e99_b0',text:'Mission inventée.'});assert.throws(()=>expandRh(source,answer));
- answer.missions.pop();answer.missions.pop();assert.throws(()=>expandRh(source,answer));
+test('empty edit list conserves the entire CV rather than deleting missions',()=>{
+ const source=sampleResume();assert.deepEqual(mergeRewrite(source,expandRh(source,{profile:null,edits:[]}),'improve').resume,source);
 });
-
-test('RH rejects reordered, duplicated and erased mission slots',()=>{
- for(const mode of ['reverse','duplicate','empty']) {
-  const source=sampleResume();const answer={rewrittenProfile:source.profile,missions:rhInput(source).missions,notes:[]};
-  if(mode==='reverse')answer.missions.reverse();
-  if(mode==='duplicate')answer.missions[1].id=answer.missions[0].id;
-  if(mode==='empty')answer.missions[0].text='  ';
-  assert.throws(()=>expandRh(source,answer));
- }
+test('RH refuses unknown, duplicate or empty edits',()=>{
+ const source=sampleResume();const id=rhInput(source).missions[0].id;
+ for(const edits of [[{id:'unknown',text:'Inventé'}],[{id,text:'Mission'},{id,text:'Mission'}],[{id,text:'  '}]])assert.throws(()=>expandRh(source,{profile:null,edits}));
 });
-
-test('RH response grammar remains bounded for the maximum number of mission slots',async()=>{
- const {rhSchema}=await import('../lib/rewrite.mjs');
- const {zodTextFormat}=await import('openai/helpers/zod');
- const source=sampleResume();source.experiences=Array.from({length:20},()=>({...source.experiences[0],bullets:Array(12).fill('Mission documentée.')}));
- const format=zodTextFormat(rhSchema(source),'rh').schema;
- assert.ok(JSON.stringify(format).length<2000,'Response grammar must not add a property for every mission');
- const answer={rewrittenProfile:source.profile,missions:rhInput(source).missions,notes:[]};
- assert.equal(expandRh(source,answer).experiences.flatMap(e=>e.bullets).length,240);
+test('RH maps edits by id without changing experience or bullet order',()=>{
+ const source=sampleResume();const missions=rhInput(source).missions;
+ const edits=missions.map(m=>({id:m.id,text:m.text+' ' })).reverse();
+ const result=expandRh(source,{profile:null,edits});
+ assert.deepEqual(result.experiences.map(e=>e.bullets),source.experiences.map(e=>e.bullets.map(b=>b+' ')));
+});
+test('RH preserves figures in each mission, not just somewhere in the CV',()=>{
+ const source=sampleResume();source.experiences[0].bullets=['Coordonner 5 personnes.','Suivre 12 projets.'];
+ const id=rhInput(source).missions[0].id;
+ for(const text of ['Coordonner 12 personnes.','Coordonner les personnes.'])assert.throws(()=>expandRh(source,{profile:null,edits:[{id,text}]}));
+});
+test('deduplication retains repeated experience records and every repeated mission',()=>{
+ const source=sampleResume();source.experiences=Array.from({length:20},(_,i)=>({...source.experiences[0],organization:'Entreprise '+i,bullets:Array(12).fill('Je fais le suivi des livrables.')}));
+ assert.equal(rhInput(source).missions.length,1);
+ const result=expandRh(source,{profile:null,edits:[{id:'m0',text:'Suivre les livrables.'}]});
+ assert.equal(result.experiences.length,20);assert.equal(result.experiences.flatMap(e=>e.bullets).length,240);
+ assert.deepEqual(result.experiences.map(e=>e.organization),source.experiences.map(e=>e.organization));
+ assert.ok(result.experiences.every(e=>e.bullets.every(b=>b==='Suivre les livrables.')));
 });

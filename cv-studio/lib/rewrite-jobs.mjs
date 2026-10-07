@@ -10,6 +10,7 @@ export function createRewriteJobs({ execute, now = Date.now, retentionMs = 60000
     }
   };
   const view = job => ({ id: job.id, status: job.status,
+    ...(job.status === 'running' && job.progress ? { progress: job.progress } : {}),
     ...(job.status === 'done' ? { result: job.result } : {}),
     ...(job.status === 'failed' ? { error: job.error } : {}),
   });
@@ -33,7 +34,10 @@ export function createRewriteJobs({ execute, now = Date.now, retentionMs = 60000
     const job = { id: randomUUID(), requestId, fingerprint, status: 'running' };
     jobs.set(job.id, job); requests.set(requestId, job.id);
     // Respond before waiting for inference. Repeated submissions reuse this job.
-    Promise.resolve().then(() => execute(input)).then(result => {
+    Promise.resolve().then(() => execute(input, progress => {
+      if (Number.isInteger(progress?.completed) && Number.isInteger(progress?.total) && progress.completed >= 0 && progress.completed <= progress.total && progress.total <= 241)
+        job.progress = { completed: progress.completed, total: progress.total };
+    })).then(result => {
       job.result = result; job.status = 'done';
     }, error => {
       job.error = error.status && error.status < 600 ? error.message : 'Le traitement a échoué. Votre CV est conservé. Réessayez.';

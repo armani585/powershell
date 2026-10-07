@@ -53,7 +53,7 @@ export function createOllama({
       };
     }
   }
-  async function ask(schema, instructions, content) {
+  async function ask(schema, instructions, content, { jsonMode = false, requestTimeoutMs = timeoutMs } = {}) {
     if (busy)
       throw failure(
         "Une analyse est déjà en cours. Attendez sa fin avant de réessayer.",
@@ -69,9 +69,9 @@ export function createOllama({
       {
         role: "system",
         content:
-          instructions +
-          "\nRespecte exactement ce schéma JSON : " +
-          JSON.stringify(format),
+          instructions + (jsonMode
+            ? "\nRéponds avec les valeurs demandées, jamais avec un schéma JSON."
+            : "\nRespecte exactement ce schéma JSON : " + JSON.stringify(format)),
       },
       { role: "user", content: content.map((item) => item.text).join("\n\n") },
     ];
@@ -87,11 +87,11 @@ export function createOllama({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         redirect: "error",
-        signal: AbortSignal.timeout(timeoutMs),
+        signal: AbortSignal.timeout(Math.max(1, Math.min(timeoutMs, requestTimeoutMs))),
         body: JSON.stringify({
           model,
           messages,
-          format,
+          format: jsonMode ? "json" : format,
           stream: false,
           keep_alive: "5m",
           options: { temperature: 0, num_ctx: 32768, num_predict: 6000 },

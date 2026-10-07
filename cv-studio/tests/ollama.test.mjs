@@ -121,3 +121,12 @@ test("timeout is communicated without exposing provider content", async () => {
     (error) => error.status === 504 && !error.message.includes("private data"),
   );
 });
+
+test('RH JSON mode avoids complex decoder grammar but still validates every response',async()=>{
+ let payload;
+ const client=createOllama({fetchImpl:async(url,options)=>{payload=JSON.parse(options.body);return answer();}});
+ await client.ask(schema,'Keep the source facts.',input,{jsonMode:true});
+ assert.equal(payload.format,'json');assert.match(payload.messages[0].content,/jamais avec un schéma/);assert.ok(!payload.messages[0].content.includes('properties'));
+ const invalid=createOllama({fetchImpl:async()=>answer('{"name":99}')});
+ await assert.rejects(invalid.ask(schema,'',input,{jsonMode:true}),error=>error.status===502);
+});
