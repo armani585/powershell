@@ -52,3 +52,11 @@ L'application est concue pour un utilisateur en local. Un deploiement public nec
 ## Ancien message de quota OpenAI après une mise à jour
 
 Publier du code sur GitHub ne met pas à jour un serveur déjà lancé. Récupérer la branche `cv-studio-cloud` dans le dossier utilisé, installer les dépendances, arrêter puis redémarrer CV Studio. Le moteur par défaut est Ollama ; une valeur explicite `AI_PROVIDER=openai` dans l’environnement ou `.env.local` reste prioritaire et doit être changée en `ollama` pour utiliser le modèle local. Installer et démarrer Ollama reste nécessaire pour l’analyse. L’onglet Assistant IA indique le moteur et sa disponibilité. Une adresse `127.0.0.1` peut desservir une autre copie que celle du Codespace.
+
+## Optimisation RH, traduction et une page
+
+Les trois boutons sont visibles au-dessus de l’éditeur : **Optimiser la rédaction RH**, **Tenir sur une page**, **Traduire en anglais** (ou en français pour un CV anglais). Appliquer d’abord le CV importé. Une offre ou un poste facultatif permet de cibler la rédaction RH. Une proposition doit être relue et appliquée avant de remplacer le brouillon.
+
+La réécriture utilise des identifiants d’entrée : toute suppression, création, duplication ou permutation d’expérience ou de formation est refusée. Le serveur reprend les entreprises, périodes, lieux et coordonnées du CV original. Hors traduction, il conserve aussi les intitulés, compétences, langues et centres d’intérêt. Les chiffres nouvellement introduits sont refusés. Ces contrôles structurels ne prouvent pas la fidélité de chaque phrase : vérifier les missions reformulées, les qualifications et les niveaux traduits avant application.
+
+L’ajustement A4 mesure le rendu Chromium réel : mise en page actuelle, espacement compact, puis modèle Essentiel compact si nécessaire. Si aucune option ne suffit, le moteur propose une condensation de la prose en conservant chaque entrée, puis le serveur mesure à nouveau. Un CV encore trop long est signalé et son export reste bloqué ; aucune expérience n’est supprimée pour le faire tenir. Les CV très longs peuvent rester incompatibles avec une page lisible.

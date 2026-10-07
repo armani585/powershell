@@ -152,7 +152,7 @@ function Preview({ resume, design, onFit }) {
   }, []);
   useLayoutEffect(() => {
     onFit(fitPage(paper.current.querySelector(".cv-page")));
-  }, [resume, design, onFit]);
+  }, [resume, design, onFit, width]);
   const scale = Math.min(1, width / 794);
   return (
     <div className="preview-container" ref={container}>
@@ -180,12 +180,19 @@ function Proposal({ proposal, onApply, onClose }) {
   return (
     <dialog ref={dialog} aria-labelledby="proposal-title" onCancel={onClose}>
       <div className="dialog-head">
-        <h2 id="proposal-title">Relire la proposition</h2>
+        <h2 id="proposal-title">{proposal.title || "Relire la proposition"}</h2>
         <Button onClick={onClose}>Fermer</Button>
       </div>
       <p className="helper">
         Vérifiez les informations avant de remplacer votre CV.
       </p>
+      {proposal.originalResume && <details className="source-review"><summary>Comparer avec le texte d’origine</summary>
+        <p>{proposal.originalResume.profile}</p>
+        {proposal.originalResume.experiences.map((entry, i) => <section key={i}><strong>{entry.title} · {entry.organization} · {entry.period}</strong><ul>{entry.bullets.map((b, j) => <li key={j}>{b}</li>)}</ul></section>)}
+      </details>}
+      {proposal.pageFit && <p className={proposal.pageFit.fits ? "notice" : "notice error"}>
+        {proposal.pageFit.fits ? "Vérifié : le CV tient sur une page A4, sans retirer d’expérience." : "Le CV dépasse encore une page : aucune expérience n’a été retirée. L’export reste bloqué pour éviter une coupure."}
+      </p>}
       <ul className="notes">
         {proposal.notes.map((note, i) => (
           <li key={i}>{note}</li>
@@ -383,15 +390,35 @@ function App() {
       download(await r.blob(), "CV.pdf");
       setNotice("Le PDF est prêt.");
     });
+  const hasContent = !!(resume.profile || resume.title || resume.experiences.length || resume.education.length || resume.skills.length);
+  const actionTitle = action => ({ improve: "Optimisation RH", condense: "Ajustement sur une page", translate: resume.language === "fr" ? "Traduction en anglais" : "Traduction en français" })[action];
   const ai = (action) =>
-    run("Préparation de la proposition", async () => {
+    run(actionTitle(action), async () => {
       const result = await request("rewrite", {
         resume: resumeSchema.parse(resume),
         action,
         job,
       });
-      setProposal(resultSchema.parse(await result.json()));
+      setProposal({ ...resultSchema.parse(await result.json()), title: actionTitle(action), originalResume: resume });
     });
+  const onePage = () => run("Ajustement sur une page", async () => {
+    const original = validated();
+    const measure = async (r, d) => {
+      const response = await request("fit", { resume: r, design: d });
+      return response.json();
+    };
+    let measured = await measure(original.resume, original.design);
+    let next = { resume: original.resume, notes: ["Toutes les expériences, formations et informations sont conservées. Seule la mise en page a été ajustée."] };
+    if (!measured.fits) {
+      if (!config?.aiConfigured) throw Error("La mise en page compacte ne suffit pas. L’assistant doit être disponible pour proposer une rédaction plus courte ; votre CV est conservé.");
+      setBusy("Raccourcissement du texte, en conservant chaque expérience");
+      const response = await request("rewrite", { resume: original.resume, action: "condense", job });
+      next = resultSchema.parse(await response.json());
+      measured = await measure(next.resume, measured.design);
+      next.notes.unshift("Chaque expérience et formation est conservée. Relisez les descriptions raccourcies avant application.");
+    }
+    setProposal({ ...next, design: designSchema.parse(measured.design), pageFit: measured, title: "Proposition sur une page", originalResume: original.resume });
+  });
   const importFile = (file, kind) => {
     if (!file) return;
     run("Lecture du document", async () => {
@@ -524,6 +551,17 @@ function App() {
             {saveError && <p>{saveError}</p>}
           </div>
         )}
+        <section className="cv-tools" aria-label="Améliorer votre CV">
+          <div><h2>Valorisez votre parcours</h2><p className="helper">Chaque expérience est conservée. Relisez et appliquez les propositions à votre rythme.</p></div>
+          <div className="end-actions">
+            <Button icon={Sparkles} disabled={!!busy || !hasContent || !config?.aiConfigured} onClick={() => ai("improve")}>Optimiser la rédaction RH</Button>
+            <Button icon={FileText} disabled={!!busy || !hasContent || !config} onClick={onePage}>Tenir sur une page</Button>
+            <Button disabled={!!busy || !hasContent || !config?.aiConfigured} onClick={() => ai("translate")}>{resume.language === "fr" ? "Traduire en anglais" : "Traduire en français"}</Button>
+          </div>
+          <details><summary>Adapter la rédaction à un poste (facultatif)</summary><Field label="Poste ou offre à cibler" value={job} onChange={setJob} multiline maxLength={10000} /></details>
+          {!hasContent && <p className="helper">Importez et appliquez votre CV, ou renseignez votre parcours pour activer ces actions.</p>}
+          {hasContent && !config?.aiConfigured && <p className="helper">{config?.aiMessage || "Connexion à l’assistant…"}</p>}
+        </section>
         <div className="workspace">
           <section className="editor-panel" aria-label="Éditeur du CV">
             <div className="tablist" role="tablist" aria-label="Réglages du CV">
@@ -893,12 +931,12 @@ function App() {
                     {[
                       [
                         "improve",
-                        "Améliorer la formulation",
-                        "Clarifier votre parcours pour le poste visé.",
+                        "Optimiser la rédaction RH",
+                        "Valoriser les missions réelles, sans inventer de résultats.",
                       ],
                       [
                         "condense",
-                        "Condenser sur une page",
+                        "Tenir sur une page",
                         "Raccourcir la prose en conservant les faits.",
                       ],
                       [
@@ -911,8 +949,8 @@ function App() {
                     ].map(([action, label, description]) => (
                       <button
                         key={action}
-                        disabled={!!busy || !config?.aiConfigured}
-                        onClick={() => ai(action)}
+                        disabled={!!busy || !hasContent || !config || (action !== "condense" && !config.aiConfigured)}
+                        onClick={() => action === "condense" ? onePage() : ai(action)}
                       >
                         <span>
                           <strong>{label}</strong>
@@ -924,7 +962,7 @@ function App() {
                   </div>
                   <p className="helper">
                     {localAI
-                      ? "Ces actions utilisent Ollama sur le serveur CV Studio, sans envoi à OpenAI ni crédits API. Elles utilisent les ressources du Codespace et peuvent prendre plusieurs minutes. Relisez les propositions du modèle."
+                      ? "Ces actions utilisent Ollama sur le serveur CV Studio, sans envoi à OpenAI ni crédits API. Elles utilisent les ressources du serveur et peuvent prendre plusieurs minutes. Relisez les propositions du modèle."
                       : "Ces actions envoient le CV et l’offre à OpenAI. Les quotas et la facturation de votre projet s’appliquent."}
                   </p>
                 </>
@@ -1029,7 +1067,7 @@ function App() {
             if (proposal.resume) {
               setResume(proposal.resume);
               setDemo(false);
-            } else setDesign(proposal.design);
+            } if (proposal.design) setDesign(proposal.design);
             setProposal(null);
             setNotice("La proposition a été appliquée.");
           }}

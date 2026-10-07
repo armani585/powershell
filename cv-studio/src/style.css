@@ -599,3 +599,13 @@ dialog::backdrop {
   font-family: inherit;
   line-height: 1.6;
 }
+
+.cv-tools { background: white; border: 1px solid #c4ccc5; border-radius: 12px; padding: 20px 24px; margin-bottom: 24px; }
+.cv-tools .helper { margin-bottom: 12px; }
+.cv-tools details { margin-top: 12px; }
+.cv-tools summary { cursor: pointer; font-size: 13px; }
+.cv-tools details .field { margin-top: 12px; }
+
+.source-review { margin: 12px 0; padding: 12px; border: 1px solid var(--border); border-radius: 8px; }
+.source-review summary { cursor: pointer; font-weight: bold; }
+.source-review p, .source-review section { margin-top: 12px; }

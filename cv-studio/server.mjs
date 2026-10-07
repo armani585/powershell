@@ -1,4 +1,5 @@
 import express from "express";
+import { rewriteSchema, rewriteInput, mergeRewrite, rhSchema, expandRh, rhInput } from "./lib/rewrite.mjs";
 import { aiErrorMessage } from "./lib/ai-error.mjs";
 import { extractDocument } from "./lib/extract-document.mjs";
 import { createOllama } from "./lib/ollama.mjs";
@@ -149,26 +150,23 @@ app.post("/api/rewrite", async (req, res) => {
     .parse(req.body);
   const tasks = {
     improve:
-      "Améliore la formulation du CV dans sa langue actuelle. Profil de 45 à 60 mots maximum, 2 à 3 puces par expérience. Mets en avant les éléments pertinents pour le poste visé, mais ne copie jamais une compétence de l’offre si elle n’existe pas dans le CV. Conserve toutes les expériences, formations et compétences factuelles.",
+      "Réécris ce CV comme un rédacteur RH expérimenté, dans sa langue actuelle : profil ciblé et sobre de 45 à 60 mots maximum, missions formulées avec des verbes précis et actifs. Valorise le travail réellement décrit, le périmètre et les contributions documentées. Une participation ne devient jamais une direction de projet ; une mission ne devient jamais un résultat acquis. Conserve les chiffres fournis, sans ajouter de gains, budgets, effectifs ou pourcentages. Remplace les formulations vagues uniquement lorsque la source permet une formulation plus précise. Évite les superlatifs et le jargon. Adapte le vocabulaire au poste visé seulement si les faits du CV le justifient. Conserve toutes les expériences et formations ; aucune responsabilité ni compétence supplémentaire. Dans notes, indique les principaux changements et les précisions que la personne pourrait apporter, sans les intégrer comme faits.",
     condense:
       "Condense ce CV pour une seule page A4, idéalement 300 à 420 mots. Profil de 35 mots maximum. 1 à 2 puces courtes par expérience. Conserve toutes les entreprises, fonctions, périodes, formations et compétences : raccourcis d’abord la prose et supprime les répétitions. Signale les détails écartés dans notes. Conserve la langue actuelle.",
     translate: `Traduis intégralement le CV en ${body.resume.language === "fr" ? "anglais professionnel naturel (language=en)" : "français professionnel (language=fr)"}. Traduis aussi les périodes, lieux courants et intitulés de rubriques implicites. Ne change pas les noms propres, coordonnées, faits ni niveaux. N'invente aucune équivalence de diplôme. La traduction conserve chaque expérience, formation et compétence.`,
   };
-  const result = await ask(resultSchema, tasks[body.action], [
-    {
-      type: "input_text",
-      text: JSON.stringify({ cv: body.resume, offre: body.job }),
-    },
+  const translationGuide = body.action === "translate"
+    ? (body.resume.language === "fr"
+      ? "\nOUTPUT LANGUAGE: ENGLISH. You are a professional French-to-English CV translator. Translate title, profile, every job/degree title, every bullet, every skill, every language label and every interest into English. Do not copy French sentences. For example: Cheffe de projet digital → Digital Project Manager; Coordonner les équipes → Coordinate teams; Gestion de projet → Project management; Français : langue maternelle → French: native. Keep ids unchanged. The entire output prose must be English; only notes remain French."
+      : "\nLANGUE DE SORTIE : FRANÇAIS. Traduis chaque titre, description, compétence, langue et centre d’intérêt en français. Ne recopie pas les phrases anglaises. Seuls les noms propres restent inchangés.")
+    : "";
+  const rhGuide = body.action === "improve"
+    ? "\nRÉÉCRITURE RH EFFECTIVE : conserve exactement le même nombre de bullets par expérience, dans le même ordre. Chaque phrase reformule uniquement la phrase source correspondante, sans compléter par des tâches supposées (par exemple aucun suivi des objectifs si seuls des livrables sont mentionnés). reformule le champ profile et les bullets avec une syntaxe professionnelle et des verbes d’action précis. Ne recopie pas simplement les phrases source. Exemple de transformation fidèle : « Je m’occupe du planning des projets » → « Planifier les activités et suivre le calendrier des projets. » Exemple : « Je fais les réunions avec les équipes et je suis les livrables » → « Organiser les réunions de coordination et suivre les livrables. » Ne transforme jamais « participer » en « diriger ». Aucun nouveau résultat, chiffre ou responsabilité. Retourne les formulations réécrites dans rewrittenProfile et missions. Chaque clé de missions correspond à la même clé de la source : e0_b0 est la première mission de la première expérience. Ce sont de nouvelles formulations professionnelles, jamais une simple copie. Exemple profil source : « Je fais le suivi des choses à faire et je travaille avec les équipes. » Exemple reformulé : « Suivi des activités des projets en collaboration avec les équipes. »"
+    : "";
+  const answer = await ask(body.action === "improve" ? rhSchema(body.resume) : rewriteSchema, tasks[body.action] + translationGuide + rhGuide + "\nRetourne chaque expérience et formation avec son id original, exactement une fois et dans le même ordre. Ne fusionne ni ne supprime aucune entrée. Les titres et listes de compétences sont traduits seulement pour la traduction ; les descriptions de missions (bullets) et le profil sont à reformuler pour improve et condense. Les identités, entreprises, lieux, périodes et coordonnées seront conservés par le serveur.", [
+    { type: "input_text", text: JSON.stringify({ cv: body.action === "improve" ? rhInput(body.resume) : rewriteInput(body.resume), offre: body.job }) },
   ]);
-  // Personal contact information is never rewritten by the model.
-  for (const key of ["name", "email", "phone", "website", "location"])
-    result.resume[key] = body.resume[key];
-  result.resume.language =
-    body.action === "translate"
-      ? body.resume.language === "fr"
-        ? "en"
-        : "fr"
-      : body.resume.language;
+  const result = mergeRewrite(body.resume, body.action === "improve" ? expandRh(body.resume, answer) : answer, body.action);
   res.json(result);
 });
 
@@ -293,6 +291,26 @@ async function browser() {
     });
   return browserPromise;
 }
+// Measure the actual A4 layout before proposing a one-page version.
+app.post("/api/fit", async (req, res) => {
+  const { resume, design } = z.object({ resume: resumeSchema, design: designSchema }).parse(req.body);
+  const instance = await browser();
+  const page = await instance.newPage();
+  try {
+    await page.route("**/*", route => route.abort());
+    await page.emulateMedia({ media: "print" });
+    const candidates = [design, { ...design, density: "compact" }, { ...design, density: "compact", template: "essential" }];
+    let result;
+    for (const candidate of candidates) {
+      await page.setContent(`<!doctype html><html><head><style>body{margin:0}${cvCss}</style></head><body>${renderToStaticMarkup(React.createElement(Resume, { resume, design: candidate, id: "fit-resume" }))}</body></html>`);
+      await page.evaluate(() => document.fonts.ready);
+      const fit = await page.evaluate(fitPage, await page.locator("#fit-resume").elementHandle());
+      result = { design: candidate, ...fit };
+      if (fit.fits) break;
+    }
+    res.json(result);
+  } finally { await page.close(); }
+});
 app.post("/api/pdf", async (req, res) => {
   const { resume, design } = z
     .object({ resume: resumeSchema, design: designSchema })

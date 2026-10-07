@@ -115,7 +115,9 @@ export function fitPage(element) {
     element.scrollWidth <= element.clientWidth + 1 &&
     (!content ||
       content.getBoundingClientRect().bottom <=
-        element.getBoundingClientRect().bottom - 24);
+        element.getBoundingClientRect().bottom -
+          parseFloat(getComputedStyle(element).paddingBottom) *
+          (element.getBoundingClientRect().height / element.offsetHeight));
   while (!fits() && size > 11.5) {
     size = Math.max(11.5, size - 0.25);
     element.style.setProperty("--cv-font-size", size + "px");
