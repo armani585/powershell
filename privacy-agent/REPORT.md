@@ -1,13 +1,43 @@
 # Rapport de validation — Privacy Agent
 
 Date : 8 octobre 2026. Branche : `feature/privacy-agent-cloud-v1`.
-Révision applicative livrée et déployée : `35818d838c8e2fad0f7686a356e1dea53aa56148`.
+Révision applicative livrée et déployée : `29cbd88aad4ba0cceea9f5a0aa77b2200d16aad7`.
 
 **État : implémentation et tests synthétiques validés ; déploiement privé effectué,
 clés privées générées et vérifiées avec des données synthétiques ; accès applicatif
 fermé tant que le compte autorisé n'a pas été identifié ; client Google installé et
 parcours d'identification initiale activé sans autorisation automatique. Le projet n’est
 pas déclaré prêt pour un usage réel : Google/MFA et Brave restent à vérifier de bout en bout.**
+
+## Correctif du bouton de connexion — 8 octobre 2026
+
+Le clic était perdu : le nettoyage de session effaçait aussi l'événement du bouton
+avant sa lecture. Les boutons de connexion et les deux déconnexions concernées
+conservent maintenant leur seul événement, tout en supprimant les données privées.
+Les trois tests de régression échouaient avant correction et réussissent après.
+Chromium clique maintenant réellement et vérifie la redirection native `/auth/login`.
+
+Un second défaut a été découvert en suivant cette redirection sur le serveur :
+`httpx` manquait à l'intégration Starlette d'Authlib, provoquant HTTP500. Ajout de
+`httpx==0.28.1` et `httpcore==1.0.9` aux dépendances verrouillées, installées dans
+le venv cloud après checkpoint privé v9. Le commit `acb7534` contient ces dépendances
+et un test du client OAuth natif Streamlit avec discovery simulée, state, nonce et PKCE.
+Le code en cours d'exécution est `29cbd88` ; ses dépendances sont à jour avec `acb7534`.
+La release complète `acb7534` est également disponible sur le serveur.
+
+Contrôle réel de l'endpoint natif après installation : HTTP302 vers
+`accounts.google.com`, callback attendu, scope `openid` seul, state et nonce présents.
+Aucun code d'autorisation ni jeton d'identité réel n'a été obtenu ou affiché.
+Le choix du compte Google par l'utilisateur et le retour authentifié restent à vérifier.
+
+Suite locale : 116 tests et135 sous-tests réussis, dont Chromium. Bandit : aucun
+problème signalé. Audit actualisé des43 dépendances verrouillées : aucune vulnérabilité
+connue. Authlib émet un avertissement de dépréciation pour son adaptateur HTTPX ;
+le parcours testé fonctionne, migration HTTPX2 à évaluer lors d'une mise à jour.
+Le test natif supplémentaire passe également sur Python3.13 dans le cloud.
+CI du correctif bouton : [réussie](https://github.com/armani585/powershell/actions/runs/37848494896).
+Le checkpoint v9 contient la configuration privée : il doit suivre la politique
+restreinte de conservation des sauvegardes et ne doit pas être exporté publiquement.
 
 ## Revue initiale
 
@@ -58,15 +88,16 @@ n'est pas présenté comme une connexion réelle. Aucune base V2 de production c
 
 CI de cette release : [run réussi](https://github.com/armani585/powershell/actions/runs/37847716996).
 Capture locale : [identification Google](evidence/browser-google-identification.png).
-Les résultats Docker et audit de dépendances ci-dessous datent de la release précédente ;
-aucune dépendance n'a changé. Bandit et toute la suite de tests ont été réexécutés.
+Le résultat Docker ci-dessous précède l'ajout HTTPX. L'audit des dépendances, Bandit
+et toute la suite de tests ont été réexécutés après le correctif ; l'image Docker
+avec ces nouvelles dépendances n'a pas été reconstruite dans cette intervention.
 
 ## Vérifications exécutées
 
 | Contrôle | Résultat / portée |
 |---|---|
-| Suite finale locale sur le commit livré, Python3.12.14 | **112 tests réussis**,135 sous-tests, aucun ignoré avec Chromium activé |
-| Couverture du code applicatif, tests exclus du calcul | **91%** mesurés, pas une preuve d'absence de défaut |
+| Suite finale locale sur le commit livré, Python3.12.14 | **116 tests réussis**,135 sous-tests, aucun ignoré avec Chromium activé |
+| Couverture du code applicatif, tests exclus du calcul | **92%** mesurés, pas une preuve d'absence de défaut |
 | Streamlit AppTest | 10 tests UI : refus sans auth/clé, consentement, stockage volontaire, brouillon/validation/édition, isolation/suppression |
 | Chromium — application réelle non authentifiée | Accès fermé, aucun champ privé/onglet privé ni base créée |
 | Chromium — harnais synthétique séparé | Recherche simulée, enregistrement, dossier, validation humaine, copie, export JSON volontaire et suppression |
@@ -75,10 +106,10 @@ aucune dépendance n'a changé. Bandit et toute la suite de tests ont été rée
 | Connecteur Brave | Transport simulé uniquement : consentement exact/utilisateur/usage unique/expiration, quotas, redirections bloquées, payload borné |
 | RGPD | Transitions interdites, modification après validation, falsification du contenu, dates de réception et mois calendaire testés |
 | Bandit1.9.4 | Aucun problème signalé dans les modules applicatifs |
-| pip-audit2.10.1 | Aucune vulnérabilité connue signalée pour les41 versions de production verrouillées au moment de l'audit |
+| pip-audit2.10.1 | Aucune vulnérabilité connue signalée pour les43 versions de production verrouillées au moment de l'audit |
 | Image Docker | Construction réussie ; imports et endpoint santé testés sans réseau sortant, UID10001 et filesystem read-only |
 | GitHub Actions | Runs push et PR du commit applicatif réussis ; tests, Bandit et audit dépendances |
-| Cloud Sprites, Python3.13 | **109 tests réussis**,135 sous-tests ;3 tests navigateur ignorés car Chromium absent sur le Sprite |
+| Cloud Sprites, Python3.13 | **112 tests réussis**,135 sous-tests ;3 tests navigateur ignorés ; test OAuth natif supplémentaire réussi séparément car Chromium absent sur le Sprite |
 
 Commandes principales :
 
@@ -104,7 +135,7 @@ et [courrier validé dans le harnais de test](evidence/browser-approved-syntheti
 - Sprite existant : `mcp-privacy-agent-cloud`, ID `sprite-f19b4807-7901-42f7-851a-3464c02685fa`.
 - Réglages conservés et relus : `auth=sprite`, `private_access=admins`.
 - Points de restauration : **v4** avant la sécurisation initiale ; **v7** avant le provisionnement Google et la génération des clés.
-- Release séparée : `/home/sprite/privacy-releases/35818d8/privacy-agent`.
+- Release séparée : `/home/sprite/privacy-releases/29cbd88/privacy-agent`.
 - Environnement Python séparé : `/home/sprite/privacy-venv-v2`.
 - Services `privacy-agent` et `privacy-retention` démarrés ; l'application dépend du service de purge horaire.
 - Endpoint interne `/_stcore/health` : HTTP200, `ok`.

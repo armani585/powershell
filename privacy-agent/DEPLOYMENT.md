@@ -1,7 +1,8 @@
 # Exploitation du déploiement privé
 
-Le service utilise la release applicative `35818d8`, indépendamment des commits
-ultérieurs de documentation. Ne pas exposer le port ni changer `auth=sprite` /
+Le service utilise la release applicative `29cbd88`, indépendamment des commits
+ultérieurs de documentation. Son venv contient également les dépendances HTTPX
+verrouillées dans `acb7534`, nécessaires au parcours OAuth natif. Ne pas exposer le port ni changer `auth=sprite` /
 `private_access=admins` pour contourner la connexion.
 
 ## Configuration à fournir via le gestionnaire de secrets
