@@ -76,7 +76,6 @@ with tab_search:
     with right:
         if st.button("Effacer l'aperçu et les termes"):
             st.session_state.pop("preview",None)
-            st.session_state["terms"] = ""
             st.rerun()
     if st.session_state.get("preview"):
         st.dataframe(st.session_state["preview"],use_container_width=True)
