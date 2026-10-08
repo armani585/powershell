@@ -126,6 +126,8 @@ class AppTests(unittest.TestCase):
             self.assertTrue(app.error)
             self.assertNotIn("synthetic-secret", " ".join(item.value for item in app.error))
             self.assertNotIn("Fictitious Query", " ".join(item.value for item in app.error))
+            self.assertTrue(self.element(app.button, "Rechercher avec ce consentement").disabled)
+            self.assertFalse(app.checkbox(key="search-consent").value)
 
     def test_delete_all_is_confirmed_and_preserves_other_users(self):
         app = self.authenticated()
@@ -154,3 +156,33 @@ class AppTests(unittest.TestCase):
         export = next(item.value for item in app.code if item.language == "json")
         self.assertIn("Organisme UI fictif", export)
         self.assertNotIn("Organisme secret B", export)
+
+    def test_query_round_trip_never_restores_prior_consent(self):
+        os.environ.update(PRIVACY_ENABLE_EXTERNAL_SEARCH="1", BRAVE_SEARCH_API_KEY="synthetic-key")
+        app = self.authenticated()
+        field = lambda: self.element(app.text_input, "Terme exact à rechercher")
+        field().input("Fictitious A").run()
+        app.checkbox(key="search-consent").check().run()
+        field().input("Fictitious B").run()
+        field().input("Fictitious A").run()
+        self.assertFalse(app.checkbox(key="search-consent").value)
+        self.assertTrue(self.element(app.button, "Rechercher avec ce consentement").disabled)
+
+    def test_full_manual_tracking_requires_attestation_and_reaches_closed(self):
+        app = self.authenticated()
+        self.create_case(app)
+        next(c for c in app.checkbox if c.key and c.key.startswith("review-")).check().run()
+        self.click(app, "Valider le brouillon affiché")
+        self.click(app, "Enregistrer ma déclaration d'envoi manuel")
+        self.assertTrue(any("Attestation explicite" in e.value for e in app.error))
+        self.element(app.checkbox, "J'atteste avoir envoyé moi-même ce courrier validé hors de l'application.").check()
+        self.click(app, "Enregistrer ma déclaration d'envoi manuel")
+        self.assertTrue(any("provisoire" in c.value for c in app.caption))
+        self.click(app, "Enregistrer la réception")
+        self.assertTrue(any("un mois après réception" in c.value for c in app.caption))
+        self.click(app, "Enregistrer la réponse")
+        self.click(app, "Clôturer le suivi")
+        with SecureStore(self.path, self.principal.user_id) as store:
+            record = json.loads(store.list_records(kind="request")[0]["value"])
+        self.assertEqual(record["status"], "closed")
+        self.assertTrue(record["sent_on"] and record["received_on"] and record["response_received_on"])

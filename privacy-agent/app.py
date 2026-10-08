@@ -90,6 +90,9 @@ def render_workspace(store, principal):
         if st.session_state.pop("reset-search-consent", False):
             st.session_state["search-consent"] = False
 
+        if st.session_state.pop("search-error", False):
+            st.error("Recherche impossible ou quota atteint. Vérifiez le consentement, la configuration et réessayez plus tard.")
+
         def reset_consent():
             st.session_state["search-consent"] = False
 
@@ -106,7 +109,10 @@ def render_workspace(store, principal):
                 st.session_state["reset-search-consent"] = True
                 st.rerun()
             except (PermissionError, ValueError, RuntimeError):
-                st.error("Recherche impossible ou quota atteint. Vérifiez le consentement, la configuration et réessayez plus tard.")
+                st.session_state["reset-search-consent"] = True
+                st.session_state["search-error"] = True
+                st.session_state.pop("search-results", None)
+                st.rerun()
         preview = st.session_state.get("search-results")
         if preview and preview["query"] == query:
             st.caption(f"{len(preview['items'])} résultat(s). Aucun site résultat n'est téléchargé par l'application.")

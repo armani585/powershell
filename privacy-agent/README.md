@@ -4,6 +4,9 @@ Application Streamlit en français : connexion OIDC, recherche Brave sur consent
 explicite, résultats chiffrés par compte et suivi manuel des demandes RGPD.
 **Aucune fonction d'envoi de courrier, aucun scraping de pages, aucune API IA.**
 
+Le fournisseur choisi est Google : voir [GOOGLE_SETUP.md](GOOGLE_SETUP.md) pour les
+paramètres et le provisionnement privé sans affichage de secrets.
+
 ## Démarrage privé
 
 Python 3.12. `pip install -r requirements.lock`. Copier `.env.example` vers `.env`
