@@ -13,3 +13,10 @@ class ReviewTests(unittest.TestCase):
     def test_reject_invalid(self):
         with self.assertRaises(ValueError):
             erasure_draft("http://127.0.0.1")
+
+
+class AdditionalReviewTests(unittest.TestCase):
+    def test_invalid_types_and_controls(self):
+        for query, snippet in [(None, "test"), ("test", None), ("a\nb", "test"), ("a\x00b", "test")]:
+            with self.subTest(query=query), self.assertRaises(ValueError):
+                assess_snippet(query, snippet)

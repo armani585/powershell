@@ -1,38 +1,55 @@
-"""Validation d'URL de résultats publics, sans accès réseau."""
-from urllib.parse import urlsplit, urlunsplit
+"""Validate result links offline. No DNS lookup or page retrieval is performed.
+
+A valid link is a syntactically public HTTPS DNS name, not a guarantee about its
+DNS address or content. Do not reuse this function as an SSRF fetch allow-list.
+"""
 import ipaddress
+import re
+from urllib.parse import urlsplit, urlunsplit
+
 
 def normalize_public_url(value: str) -> str:
-    value = value.strip()
-    if not value or len(value) > 2048 or any(ord(c) < 32 for c in value):
+    if (not isinstance(value, str) or not value.strip() or len(value) > 2048
+            or "\\" in value or any(ord(c) < 32 or ord(c) == 127 for c in value)):
         raise ValueError("URL invalide")
+    value = value.strip()
     try:
         parsed = urlsplit(value)
         host = (parsed.hostname or "").lower().rstrip(".")
         port = parsed.port
-    except ValueError as exc:
-        raise ValueError("URL invalide") from exc
-    if parsed.scheme != "https" or not host or parsed.username or parsed.password:
+    except ValueError:
+        raise ValueError("URL invalide") from None
+    if parsed.scheme != "https" or not host or "@" in parsed.netloc:
         raise ValueError("Seules les URL HTTPS publiques sans identifiants sont admises")
     if port not in (None, 443):
         raise ValueError("Port non autorisé")
-    if host == "localhost" or host.endswith((".localhost", ".local", ".internal")):
-        raise ValueError("Hôte local interdit")
     try:
         ipaddress.ip_address(host)
     except ValueError:
-        if "." not in host or any(not part or not all(c.isalnum() or c == "-" for c in part) for part in host.split(".")):
-            raise ValueError("Nom de domaine invalide")
+        pass
     else:
         raise ValueError("Adresses IP interdites")
-    netloc = host
-    return urlunsplit(("https", netloc, parsed.path or "/", parsed.query, ""))
+    try:
+        host = host.encode("idna").decode("ascii")
+    except UnicodeError:
+        raise ValueError("Nom de domaine invalide") from None
+    if host == "localhost" or host.endswith((".localhost", ".local", ".internal", ".lan", ".home", ".test", ".invalid", ".example", ".onion", ".arpa")):
+        raise ValueError("Hôte local ou réservé interdit")
+    labels = host.split(".")
+    if (len(host) > 253 or len(labels) < 2
+            or any(not re.fullmatch(r"[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?", part) for part in labels)
+            or not re.fullmatch(r"(?:[a-z]{2,63}|xn--[a-z0-9-]+)", labels[-1])):
+        raise ValueError("Nom de domaine invalide")
+    return urlunsplit(("https", host, parsed.path or "/", parsed.query, ""))
+
 
 def prepare_findings(lines: list[str]) -> list[str]:
-    if len(lines) > 25:
+    if not isinstance(lines, (list, tuple)) or len(lines) > 25:
         raise ValueError("Maximum 25 URL")
     normalized = []
     for line in lines:
+        if not isinstance(line, str):
+            raise ValueError("URL invalide")
         if line.strip():
             url = normalize_public_url(line)
             if url not in normalized:

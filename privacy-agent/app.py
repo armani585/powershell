@@ -1,165 +1,246 @@
-"""Privacy Agent Cloud — simulation et préparation de recherches sans envoi automatique."""
-import csv
-import io
+"""Private, authenticated workspace. No mail transport or automatic GDPR sends."""
+import json
 import os
-import sqlite3
+import time
+from datetime import datetime, timezone
 from pathlib import Path
+
 import streamlit as st
-from discovery import prepare_searches
+
+from auth import require_user
 from brokers import BROKERS
-from findings import prepare_findings
-from review import assess_snippet, erasure_draft
+from review import assess_snippet
+from search_api import create_search_consent, search_public_web
+from secure_store import SecureStore
+from workflow import (
+    approve_request, attest_manual_send, close_request, create_request, due_status,
+    edit_request, export_request, record_receipt, record_response, request_digest,
+)
 
-DATA_DIR = Path(os.environ.get("PRIVACY_DATA_DIR", "/home/sprite/privacy-data"))
-DATA_DIR.mkdir(parents=True, exist_ok=True, mode=0o700)
-DB = DATA_DIR / "privacy.db"
-EXAMPLES = [
- ("Annuaire fictif", "https://example.org/annuaire", "Téléphone affiché", "À examiner"),
- ("Ancien CV fictif", "https://example.org/cv", "CV indexé", "À examiner"),
- ("Profil fictif", "https://example.org/profil", "Ancien compte", "À examiner"),
- ("Forum fictif", "https://example.org/forum", "Pseudo public", "À examiner"),
- ("Courtier fictif", "https://example.org/data", "Adresse affichée", "À examiner"),
-]
-def connect():
-    db = sqlite3.connect(DB)
+STATUS_LABELS = {
+    "draft": "Brouillon à examiner", "approved": "Validé pour copie manuelle",
+    "sent_manual": "Envoi manuel déclaré", "response_received": "Réponse reçue",
+    "closed": "Clos",
+}
+
+
+def main():
+    st.set_page_config(page_title="Privacy Agent", page_icon="🛡️", layout="wide")
+    st.title("🛡️ Privacy Agent")
+    st.caption("Espace privé · Recherches sur consentement · Aucun envoi automatique")
+    principal = require_user(st)
+    @st.fragment(run_every="30s")
+    def enforce_session_expiry():
+        if time.time() >= principal.expires_at:
+            st.rerun(scope="app")
+
+    enforce_session_expiry()
+    data_dir = Path(os.environ.get("PRIVACY_DATA_DIR", "data"))
     try:
-        os.chmod(DB, 0o600)
-    except OSError:
-        pass
-    db.execute("CREATE TABLE IF NOT EXISTS traces (id INTEGER PRIMARY KEY, site TEXT, url TEXT, description TEXT, statut TEXT)")
-    db.execute("CREATE TABLE IF NOT EXISTS audit (id INTEGER PRIMARY KEY, action TEXT, date TEXT DEFAULT CURRENT_TIMESTAMP)")
-    if not db.execute("SELECT COUNT(*) FROM traces").fetchone()[0]:
-        db.executemany("INSERT INTO traces(site,url,description,statut) VALUES(?,?,?,?)", EXAMPLES)
-        db.commit()
-    db.execute("CREATE TABLE IF NOT EXISTS demo_requests (id INTEGER PRIMARY KEY, broker TEXT NOT NULL UNIQUE, status TEXT NOT NULL DEFAULT 'Brouillon')")
-    db.commit()
-    return db
+        with SecureStore(data_dir / "privacy-secure-v2.db", user_id=principal.user_id) as store:
+            render_workspace(store, principal)
+    except (OSError, RuntimeError, ValueError):
+        st.error("Espace indisponible : vérifiez la configuration du stockage et des clés avec l'administrateur.")
+        st.stop()
 
-st.set_page_config(page_title="Privacy Agent Cloud", page_icon="🛡️", layout="wide")
-st.title("🛡️ Privacy Agent Cloud")
-st.warning("MODE SIMULATION — aucune recherche ni transmission automatique. Les traces du tableau de bord sont fictives.")
-db = connect()
-tab_dashboard, tab_search, tab_findings, tab_brokers, tab_tracking, tab_audit = st.tabs(["Tableau de bord", "Préparer une recherche", "Résultats (démo)", "Courtiers en données", "Suivi RGPD (démo)", "Journal d'audit"])
-with tab_dashboard:
-    rows = db.execute("SELECT id,site,url,description,statut FROM traces ORDER BY id").fetchall()
-    a,b,c = st.columns(3)
-    a.metric("Traces fictives",len(rows))
-    b.metric("À examiner",sum(x[4]=="À examiner" for x in rows))
-    c.metric("Traitées en simulation",sum(x[4]=="Traité (simulation)" for x in rows))
-    for id,site,url,desc,status in rows:
-        with st.expander(f"{site} — {status}"):
-            st.write(f"URL fictive : {url}")
-            st.write(desc)
-            if st.button("Marquer traité (simulation)",key=f"done-{id}"):
-                db.execute("UPDATE traces SET statut=? WHERE id=?",("Traité (simulation)",id))
-                db.execute("INSERT INTO audit(action) VALUES(?)",(f"Statut simulé modifié pour fiche {id}",))
-                db.commit()
+
+def render_workspace(store, principal):
+    st.sidebar.caption("Chaque dossier appartient à votre compte. Conservation fixe : résultats 7 jours, dossiers 90 jours, événements 30 jours.")
+    st.sidebar.caption("La recherche transmet le terme à Brave uniquement après votre consentement pour cette requête.")
+    tabs = st.tabs(["Tableau de bord", "Recherche Internet", "Suivi RGPD", "Courtiers", "Mes données"])
+
+    def audit(action):
+        store.add(json.dumps({"event": action, "at": datetime.now(timezone.utc).isoformat()}),
+                  ttl_days=30, kind="audit")
+
+    def replace(row, updated):
+        if not store.update(row["id"], json.dumps(updated, ensure_ascii=False), expected_value=row["value"]):
+            st.error("Le dossier a expiré ou a été modifié dans une autre fenêtre. Rechargez la page.")
+            st.stop()
+        st.rerun()
+
+    findings = store.list_records(kind="finding")
+    requests = store.list_records(kind="request")
+    with tabs[0]:
+        st.subheader("Votre inventaire")
+        a, b = st.columns(2)
+        a.metric("Résultats conservés", len(findings))
+        b.metric("Demandes suivies", len(requests))
+        st.info("Une correspondance textuelle ne prouve pas l'identité d'une personne. Vérifiez chaque résultat avant de préparer une demande.")
+        if not findings:
+            st.write("Aucun résultat enregistré. Lancez une recherche consentie ou créez un dossier manuellement.")
+        for row in findings:
+            value = json.loads(row["value"])
+            with st.expander(f"Résultat {row['id']}"):
+                st.text(value["title"])
+                st.code(value["url"], language=None)
+                st.text(value["description"])
+                st.caption("Date limite de conservation : " + datetime.fromtimestamp(row["expires_at"], timezone.utc).date().isoformat())
+                if st.button("Supprimer ce résultat", key=f"delete-finding-{row['id']}"):
+                    store.delete(row["id"])
+                    audit("finding_deleted")
+                    st.rerun()
+
+    with tabs[1]:
+        st.subheader("Recherche avec l'API officielle Brave")
+        st.info("Le terme sera transmis à Brave Search via son API officielle. Ne saisissez que des données vous concernant ou pour lesquelles vous êtes autorisé. Les résultats restent temporaires jusqu'à leur enregistrement explicite (7 jours).")
+        enabled = os.environ.get("PRIVACY_ENABLE_EXTERNAL_SEARCH") == "1" and bool(os.environ.get("BRAVE_SEARCH_API_KEY"))
+        if not enabled:
+            st.warning("Recherche externe désactivée : activation et clé API requises côté serveur.")
+        if st.session_state.pop("reset-search-consent", False):
+            st.session_state["search-consent"] = False
+
+        def reset_consent():
+            st.session_state["search-consent"] = False
+
+        query = st.text_input("Terme exact à rechercher", max_chars=120, key="search-query", on_change=reset_consent)
+        import hashlib
+        scope = hashlib.sha256(query.encode()).hexdigest()
+        consent = st.checkbox("J'autorise la transmission de ce terme exact à Brave pour cette recherche.", key="search-consent")
+        if st.button("Rechercher avec ce consentement", disabled=not enabled or not consent or not query.strip()):
+            try:
+                approval = create_search_consent(query, user_id=principal.user_id, confirmed=consent)
+                results = search_public_web(query, user_id=principal.user_id, consent=approval, limit=5)
+                st.session_state["search-results"] = {"query": query, "items": results}
+                audit("search_consented_and_executed")
+                st.session_state["reset-search-consent"] = True
                 st.rerun()
-            draft = f"""Objet : Demande d'effacement (article 17 du RGPD)
-
-Madame, Monsieur,
-
-Je souhaite exercer mon droit à l'effacement concernant les données personnelles me concernant présentes à l'adresse suivante : {url}
-
-Merci de m'indiquer les suites données à ma demande dans les délais applicables.
-
-Cordialement,
-[Identité à compléter lors de l'envoi manuel]"""
-            st.download_button("Télécharger le brouillon RGPD (non envoyé)",draft,file_name=f"demande-rgpd-{id}.txt",mime="text/plain",key=f"draft-{id}")
-with tab_search:
-    st.info("Préparation locale : les requêtes restent dans cette session jusqu'à ce que tu ouvres volontairement un lien externe. Un clic transmet alors le terme au moteur choisi.")
-    terms = st.text_area("Termes de recherche (un par ligne)",value="Nom Exemple\nPseudoFictif",max_chars=1250,key="terms")
-    engines = st.multiselect("Moteurs",["google","bing"],default=["google","bing"])
-    left,right=st.columns(2)
-    with left:
-        if st.button("Préparer les recherches"):
-            try:
-                queries = prepare_searches(terms.splitlines(),tuple(engines))
-                st.session_state["preview"] = [(q.engine,q.query,q.url) for q in queries]
-            except ValueError as exc:
-                st.error(str(exc))
-    with right:
-        if st.button("Effacer l'aperçu"):
-            st.session_state.pop("preview",None)
+            except (PermissionError, ValueError, RuntimeError):
+                st.error("Recherche impossible ou quota atteint. Vérifiez le consentement, la configuration et réessayez plus tard.")
+        preview = st.session_state.get("search-results")
+        if preview and preview["query"] == query:
+            st.caption(f"{len(preview['items'])} résultat(s). Aucun site résultat n'est téléchargé par l'application.")
+            for i, item in enumerate(preview["items"]):
+                with st.expander(f"Résultat temporaire {i + 1}"):
+                    st.text(item["title"])
+                    st.code(item["url"], language=None)
+                    st.text(item["description"])
+                    st.caption(assess_snippet(query, item["description"])["status"])
+                    if st.button("Conserver ce résultat 7 jours", key=f"save-result-{scope}-{i}"):
+                        existing = {json.loads(r["value"])["url"] for r in findings}
+                        if item["url"] not in existing:
+                            store.add(json.dumps(item, ensure_ascii=False), ttl_days=7, kind="finding")
+                            audit("finding_saved")
+                        st.rerun()
+        if st.button("Effacer la recherche temporaire"):
+            for key in list(st.session_state):
+                if key in ("search-consent", "search-results", "search-query"):
+                    del st.session_state[key]
             st.rerun()
-    if st.session_state.get("preview"):
-        st.dataframe(st.session_state["preview"],use_container_width=True)
-        st.caption("Les liens ci-dessous ne s'ouvrent qu'après ton clic. Ne recherche pas de données sensibles sans en comprendre la transmission.")
-        for i,(engine,term,url) in enumerate(st.session_state["preview"]):
-            st.link_button(f"Ouvrir {engine} — recherche {i+1}",url)
-        output=io.StringIO()
-        writer=csv.writer(output)
-        writer.writerow(["Moteur","Terme","URL"])
-        writer.writerows(st.session_state["preview"])
-        st.download_button("Exporter l'aperçu CSV",output.getvalue(),file_name="apercu-recherches.csv",mime="text/csv")
-with tab_findings:
-    st.info("Essai avec des URL publiques fictives uniquement. Les URL ne sont pas téléchargées ni enregistrées dans la base.")
-    raw_findings = st.text_area("URL HTTPS fictives (une par ligne)", value="https://example.org/annuaire\\nhttps://example.org/profil", key="demo_findings")
-    if st.button("Vérifier les URL de démonstration"):
-        try:
-            st.session_state["findings_preview"] = prepare_findings(raw_findings.splitlines())
-        except ValueError as exc:
-            st.error(str(exc))
-    if st.session_state.get("findings_preview"):
-        st.write("Résultats dédoublonnés et validés :")
-        for url in st.session_state["findings_preview"]:
-            st.code(url)
-        st.caption("Aucun accès au site distant. Une URL valide n'est pas une preuve de présence de données.")
-        sample_url = st.selectbox("Adresse fictive à examiner", st.session_state["findings_preview"])
-        snippet = st.text_area("Extrait fictif à examiner", value="Nom Exemple apparaît dans un annuaire fictif.", max_chars=3000)
-        if st.button("Analyser l'extrait fictif"):
-            try:
-                st.session_state["review_result"] = assess_snippet("Nom Exemple", snippet)
-            except ValueError as exc:
-                st.error(str(exc))
-        if st.session_state.get("review_result"):
-            st.write(st.session_state["review_result"]["status"])
-            st.caption("Une correspondance de mots ne prouve jamais l'identité de la personne.")
-        st.download_button("Télécharger un brouillon RGPD fictif", erasure_draft(sample_url), file_name="demande-rgpd-fictive.txt", mime="text/plain")
 
-with tab_brokers:
-    st.info("Catalogue indicatif issu d’Eraser. Aucune demande envoyée ; aucune preuve que ces organismes détiennent tes données.")
-    for broker in BROKERS:
-        with st.expander(broker["name"] + " — " + broker["region"]):
-            st.write(broker["category"])
-            st.link_button("Procédure officielle", broker["privacy_url"])
-with tab_tracking:
-    st.info("Suivi fictif uniquement. Aucun courrier n'est envoyé, aucun organisme n'est contacté.")
-    if st.button("Créer les deux dossiers fictifs"):
+    with tabs[2]:
+        st.subheader("Demandes RGPD — préparation et suivi manuel")
+        st.info("L'application ne transmet aucun courrier. Relisez le destinataire et le texte exact, puis validez pour copier le courrier. Toute modification annule cette validation.")
+        with st.form("new-request"):
+            recipient = st.text_input("Organisme / destinataire vérifié", max_chars=200)
+            url = st.text_input("URL HTTPS concernée", placeholder="https://example.org/profil", max_chars=2048)
+            create = st.form_submit_button("Créer un brouillon")
+        if create:
+            try:
+                value = create_request(recipient, url)
+                store.add(json.dumps(value, ensure_ascii=False), ttl_days=90, kind="request")
+                st.rerun()
+            except ValueError:
+                st.error("Destinataire ou URL invalide. Utilisez une URL HTTPS publique.")
+        for row in requests:
+            record = json.loads(row["value"])
+            with st.expander(f"Dossier {row['id']} — {STATUS_LABELS[record['status']]}"):
+                st.text("Destinataire : " + record["recipient"])
+                st.code(record["url"], language=None)
+                st.text(record["body"])
+                expiry = datetime.fromtimestamp(row["expires_at"], timezone.utc).date().isoformat()
+                st.caption(f"Échéance de conservation : {expiry} (UTC). Inaccessible après échéance ; purge à l’accès ou par maintenance horaire. Copiez le courrier validé si vous devez le conserver au-delà.")
+                for label, field in (("Envoi manuel déclaré", "sent_on"), ("Réception confirmée", "received_on"), ("Réponse reçue", "response_received_on")):
+                    if record.get(field):
+                        st.caption(label + " : " + record[field])
+                digest = request_digest(record)
+                if record["status"] in ("draft", "approved"):
+                    with st.form(f"edit-{row['id']}-{record['revision']}"):
+                        new_recipient = st.text_input("Destinataire", value=record["recipient"], max_chars=200)
+                        new_url = st.text_input("URL concernée", value=record["url"], max_chars=2048)
+                        new_body = st.text_area("Texte à relire et compléter", value=record["body"], max_chars=12000, height=260)
+                        save = st.form_submit_button("Enregistrer et demander une nouvelle validation")
+                    if save:
+                        try:
+                            replace(row, edit_request(record, recipient=new_recipient, url=new_url, body=new_body))
+                        except ValueError:
+                            st.error("Modification invalide.")
+                if record["status"] == "draft":
+                    confirmed = st.checkbox("J'ai vérifié le destinataire, l'URL et le texte affiché. Je valide ce contenu exact.", key=f"review-{digest}")
+                    if st.button("Valider le brouillon affiché", key=f"approve-{row['id']}", disabled=not confirmed):
+                        replace(row, approve_request(record, reviewer_id=principal.user_id, expected_digest=digest, confirmed=confirmed))
+                else:
+                    st.caption("Courrier validé : utilisez le bouton de copie du bloc ci-dessous. Aucun envoi.")
+                    st.code(export_request(record), language=None)
+                if record["status"] == "approved":
+                    with st.form(f"sent-{row['id']}"):
+                        sent_on = st.date_input("Date de l'envoi effectué par vos soins")
+                        attested = st.checkbox("J'atteste avoir envoyé moi-même ce courrier validé hors de l'application.")
+                        sent = st.form_submit_button("Enregistrer ma déclaration d'envoi manuel")
+                    if sent:
+                        try:
+                            replace(row, attest_manual_send(record, confirmed=attested, sent_on=sent_on))
+                        except (ValueError, PermissionError):
+                            st.error("Attestation explicite et date cohérente requises.")
+                if record["status"] == "sent_manual":
+                    due = due_status(record)
+                    st.caption(f"Échéance indicative : {due['due_on']}" + (" (provisoire : réception non confirmée)" if due["provisional"] else " (un mois après réception)"))
+                    if due["reminder"]:
+                        st.warning("Échéance proche ou dépassée. Examinez le dossier ; aucune relance automatique.")
+                    st.caption("Des prolongations ou règles particulières peuvent s'appliquer ; cette date n'est pas un avis juridique.")
+                    with st.form(f"receipt-{row['id']}"):
+                        received = st.date_input("Date de réception confirmée par le destinataire")
+                        receipt = st.form_submit_button("Enregistrer la réception")
+                    if receipt:
+                        try:
+                            replace(row, record_receipt(record, received_on=received))
+                        except ValueError:
+                            st.error("Date de réception incohérente.")
+                    with st.form(f"response-{row['id']}"):
+                        responded = st.date_input("Date de réponse reçue")
+                        response = st.form_submit_button("Enregistrer la réponse")
+                    if response:
+                        try:
+                            replace(row, record_response(record, response_received_on=responded))
+                        except ValueError:
+                            st.error("Date de réponse incohérente.")
+                if record["status"] in ("sent_manual", "response_received"):
+                    if st.button("Clôturer le suivi", key=f"close-{row['id']}"):
+                        replace(row, close_request(record))
+                st.caption("Historique du dossier")
+                st.dataframe(record["history"], hide_index=True)
+                if st.button("Supprimer ce dossier de mon espace", key=f"delete-request-{row['id']}"):
+                    store.delete(row["id"])
+                    audit("request_deleted")
+                    st.rerun()
+
+    with tabs[3]:
+        st.info("Catalogue indicatif. La présence d'un organisme ici ne prouve pas qu'il détient vos données. Un clic ouvre son site externe.")
         for broker in BROKERS:
-            db.execute("INSERT OR IGNORE INTO demo_requests(broker,status) VALUES(?,?)",(broker["name"],"Brouillon"))
-        db.execute("INSERT INTO audit(action) VALUES(?)",("Dossiers fictifs initialisés",))
-        db.commit()
-        st.rerun()
-    demo_rows = db.execute("SELECT broker,status FROM demo_requests ORDER BY id").fetchall()
-    if demo_rows:
-        export_buffer = io.StringIO()
-        export_writer = csv.writer(export_buffer)
-        export_writer.writerow(["Organisme fictif", "Statut de simulation"])
-        export_writer.writerows(demo_rows)
-        st.download_button("Exporter le suivi fictif (CSV)", export_buffer.getvalue(), file_name="suivi-rgpd-simulation.csv", mime="text/csv")
-    for req_id,broker,status in db.execute("SELECT id,broker,status FROM demo_requests ORDER BY id").fetchall():
-        col1,col2=st.columns([2,3])
-        col1.write(broker)
-        choices=["Brouillon","Prêt à examiner","Envoyé (simulation)","Réponse reçue (simulation)","Clos (simulation)"]
-        next_status=col2.selectbox("Statut fictif",choices,index=choices.index(status) if status in choices else 0,key=f"req-{req_id}")
-        if next_status!=status:
-            db.execute("UPDATE demo_requests SET status=? WHERE id=?",(next_status,req_id))
-            db.execute("INSERT INTO audit(action) VALUES(?)",(f"Statut fictif dossier {req_id} modifié",))
-            db.commit()
-            st.rerun()
-with tab_audit:
-    st.caption("Le module de stockage chiffré reste désactivé pour les données réelles. Clé serveur présente : " + ("oui" if os.environ.get("PRIVACY_VAULT_KEY") else "non"))
+            st.write(broker["name"] + " — " + broker["region"])
+            st.link_button("Consulter la procédure officielle de " + broker["name"], broker["privacy_url"])
 
-    st.caption("Le journal contient uniquement des événements de simulation, sans identité personnelle.")
-    if st.button("Réinitialiser toutes les données de démonstration", type="secondary"):
-        db.execute("DELETE FROM demo_requests")
-        db.execute("DELETE FROM traces")
-        db.execute("DELETE FROM audit")
-        db.executemany("INSERT INTO traces(site,url,description,statut) VALUES(?,?,?,?)", EXAMPLES)
-        db.commit()
-        st.session_state.pop("preview", None)
-        st.success("Démonstration réinitialisée. Aucun effacement sur Internet n'a été effectué.")
-        st.rerun()
-    st.dataframe(db.execute("SELECT date,action FROM audit ORDER BY id DESC LIMIT 50").fetchall(),use_container_width=True)
-st.caption("Aucun robot de suppression, aucune API IA et aucun envoi automatique ne sont activés.")
+    with tabs[4]:
+        st.subheader("Conservation, export et suppression")
+        st.write("Résultats : 7 jours. Dossiers : 90 jours ; événements : 30 jours maximum, sans prolongation lors des modifications. Les données sont chiffrées sur le serveur. Vos copies exportées restent sous votre responsabilité.")
+        st.caption("L'effacement local ne supprime pas des informations chez Brave ou sur les sites tiers. Aucun document d'identité n'est demandé.")
+        rows = store.list_records()
+        export = [{"kind": r["kind"], "expires_at": r["expires_at"], "data": json.loads(r["value"])} for r in rows]
+        if st.checkbox("Afficher mes données au format JSON pour les copier"):
+            st.code(json.dumps(export, ensure_ascii=False, indent=2), language="json")
+        st.caption("Cet export d'accès aux données peut inclure vos brouillons non validés ; ce n'est pas un courrier prêt à envoyer.")
+        confirm_delete = st.checkbox("Je confirme vouloir supprimer tous les dossiers, résultats et événements de mon espace.")
+        if st.button("Supprimer toutes mes données locales", disabled=not confirm_delete):
+            store.clear()
+            auth = st.session_state.get("_privacy_auth")
+            st.session_state.clear()
+            if auth:
+                st.session_state["_privacy_auth"] = auth
+            st.rerun()
+        events = [json.loads(r["value"]) for r in rows if r["kind"] == "audit"]
+        if events:
+            st.dataframe(events, hide_index=True)
+
+
+if __name__ == "__main__":
+    main()

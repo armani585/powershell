@@ -1,16 +1,15 @@
-"""Moteur de découverte V2 : prévisualisation hors ligne et contrôle explicite.
-
-Aucun appel réseau n'est effectué ici. La recherche réelle doit être implémentée
-derrière un connecteur autorisé et une confirmation explicite.
-"""
+"""Offline search previews. Only the official connector performs API requests."""
 from dataclasses import dataclass
 from urllib.parse import quote_plus
+from search_api import validate_query
 
-ALLOWED_ENGINES = ("google", "bing")
+ALLOWED_ENGINES = ("google", "bing", "brave")
 TEMPLATES = {
     "google": "https://www.google.com/search?q={query}",
     "bing": "https://www.bing.com/search?q={query}",
+    "brave": "https://search.brave.com/search?q={query}",
 }
+
 
 @dataclass(frozen=True)
 class SearchPreview:
@@ -18,19 +17,24 @@ class SearchPreview:
     query: str
     url: str
 
-def prepare_searches(terms: list[str], engines: tuple[str, ...] = ALLOWED_ENGINES) -> list[SearchPreview]:
-    """Prépare des URLs sans les ouvrir. Ne journalise jamais les termes."""
-    if len(terms) > 10:
+
+def prepare_searches(terms: list[str], engines: tuple[str, ...] = ("google", "bing")) -> list[SearchPreview]:
+    """Build links without opening them or logging query terms.
+
+    Clicking a preview still transmits the query to the selected website; these
+    links are never a substitute for consent for the server-side Brave API.
+    """
+    if not isinstance(terms, (list, tuple)) or len(terms) > 10:
         raise ValueError("10 termes maximum par lot")
-    if any(engine not in ALLOWED_ENGINES for engine in engines):
+    if not isinstance(engines, (list, tuple)) or len(engines) > len(ALLOWED_ENGINES) or any(engine not in ALLOWED_ENGINES for engine in engines):
         raise ValueError("Moteur non autorisé")
     output = []
     for raw in terms:
-        term = raw.strip()
-        if not term:
+        if not isinstance(raw, str):
+            raise ValueError("Terme de recherche invalide")
+        if not raw.strip():
             continue
-        if len(term) > 120:
-            raise ValueError("Terme trop long")
-        for engine in engines:
+        term = validate_query(raw).strip()
+        for engine in dict.fromkeys(engines):
             output.append(SearchPreview(engine, term, TEMPLATES[engine].format(query=quote_plus('"' + term + '"'))))
     return output

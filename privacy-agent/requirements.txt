@@ -1,2 +1,3 @@
-streamlit>=1.39,<2
-cryptography>=43,<51
+streamlit==1.65.0
+cryptography==50.0.2
+Authlib==1.8.0

@@ -18,3 +18,15 @@ class DiscoveryTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class AdditionalDiscoveryTests(unittest.TestCase):
+    def test_brave_preview_and_unique_engines(self):
+        result = prepare_searches(["Nom Exemple"], ("brave", "brave"))
+        self.assertEqual(len(result), 1)
+        self.assertTrue(result[0].url.startswith("https://search.brave.com/"))
+
+    def test_control_characters_and_invalid_types(self):
+        for terms in ([None], ["a\x00b"], ["a\nb"], "abc"):
+            with self.subTest(terms=terms), self.assertRaises(ValueError):
+                prepare_searches(terms)
