@@ -1,8 +1,8 @@
 # Connexion Google — préparation privée
 
-Fournisseur choisi par l'utilisateur : Google. La console actuellement accessible
-présente un écran de connexion ; aucun projet ni client OAuth n'a été créé par l'agent.
-La configuration reste fermée tant que le client et l'allowlist manquent.
+Fournisseur choisi par l'utilisateur : Google. Le client Web créé par l'utilisateur
+peut être importé depuis son fichier privé sur le serveur. L'identification initiale
+ne donne aucun accès aux données et n'ajoute jamais automatiquement un compte.
 
 ## Paramètres exacts
 
@@ -22,9 +22,24 @@ obtenus depuis un ID token vérifié dans un parcours administratif privé de co
 Ne pas déposer de jeton dans un décodeur public, dans Git ou dans la conversation.
 Aucune inscription automatique du premier compte connecté n'est autorisée.
 
+## Identifier le premier compte sans lui accorder d'accès
+
+Si la liste d'accès est vide, importer le client avec `--identity-setup` à la place
+de `--subjects-file`. Cette option serveur explicite est réservée à Google et refuse
+une liste d'accès déjà remplie. L'application propose la connexion native Google,
+puis affiche uniquement le `sub` du compte dont Streamlit a vérifié l'identité.
+Elle ne crée aucune base et n'enregistre aucun subject. Aucun jeton n'est affiché.
+
+L'utilisateur transmet cet identifiant à l'administrateur par son canal privé
+habituel. L'administrateur confirme le compte prévu, prépare le fichier de subjects
+et exécute l'import normal ci-dessous. Celui-ci désactive l'identification initiale.
+Un simple compte connecté, même le premier, n'obtient jamais d'accès automatique.
+`--check` reste en échec pendant cette phase : `identity_setup_ready=true` signifie
+seulement que l'identification peut commencer, pas que l'espace privé est autorisé.
+
 ## Provisionnement sur le serveur
 
-Exécuter les commandes depuis `/home/sprite/privacy-releases/5941ebc/privacy-agent`.
+Exécuter les commandes depuis le dossier `privacy-agent` de la release active.
 
 `google_setup.py` prépare des fichiers0600 dans un répertoire0700. Il génère localement
 une clé Fernet et un secret de cookie avec un générateur cryptographiquement sûr,

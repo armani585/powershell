@@ -119,7 +119,7 @@ def initialize(directory, redirect_uri):
     return readiness(directory)
 
 
-def configure(directory, client_file, subjects_file):
+def configure(directory, client_file, subjects_file=None, *, identity_setup=False):
     """Import operator-provided Google Web OAuth client and explicit subject list."""
     directory = _private_directory(directory)
     auth = tomllib.loads(_read_private(directory / "secrets.toml"))["auth"]
@@ -128,8 +128,13 @@ def configure(directory, client_file, subjects_file):
     if not isinstance(downloaded, dict):
         raise ValueError("Document client Google invalide")
     client = downloaded.get("web", {})
-    subjects = json.loads(_read_private(subjects_file))
-    if (not isinstance(subjects, list) or not subjects or
+    if identity_setup:
+        if subjects_file is not None or json.loads(values.get("PRIVACY_ALLOWED_SUBJECTS", "[]")) != []:
+            raise ValueError("Identification initiale réservée à une liste d'accès vide")
+        subjects = []
+    else:
+        subjects = json.loads(_read_private(subjects_file))
+    if (not isinstance(subjects, list) or (not subjects and not identity_setup) or
             any(not isinstance(s, str) or not 1 <= len(s) <= 255 or s != s.strip() or s == "*" or any(ord(c) < 32 for c in s) for s in subjects)):
         raise ValueError("Liste privée de subjects Google explicites requise")
     if (not isinstance(client, dict) or not isinstance(client.get("client_id"), str)
@@ -138,8 +143,9 @@ def configure(directory, client_file, subjects_file):
             or _callback(auth["redirect_uri"]) not in client.get("redirect_uris", [])):
         raise ValueError("Client Web Google ou callback invalide")
     auth.update(client_id=client["client_id"], client_secret=client["client_secret"], server_metadata_url=DISCOVERY)
-    values.update(PRIVACY_OIDC_ISSUER=ISSUER, PRIVACY_ALLOWED_SUBJECTS=json.dumps(sorted(set(subjects))))
-    validate_streamlit_configuration({"auth": auth}, values)
+    values.update(PRIVACY_OIDC_ISSUER=ISSUER, PRIVACY_ALLOWED_SUBJECTS=json.dumps(sorted(set(subjects))),
+                  PRIVACY_IDENTITY_SETUP="1" if identity_setup else "0")
+    validate_streamlit_configuration({"auth": auth}, values, identity_setup=identity_setup)
     # Populate client first; allowlist is the last gate opened. Neither write enables Brave.
     _write_private(directory / "secrets.toml", _toml(auth), replace=True)
     _write_private(directory / "runtime.env", _runtime(values), replace=True)
@@ -151,7 +157,7 @@ def readiness(directory):
     directory = Path(directory)
     result = dict.fromkeys(("encryption_key_valid", "cookie_secret_present",
                             "google_client_present", "subject_allowlist_present",
-                            "oidc_configuration_valid", "external_search_enabled"), False)
+                            "oidc_configuration_valid", "identity_setup_ready", "external_search_enabled"), False)
     try:
         values = _load_runtime(directory / "runtime.env")
         auth = tomllib.loads(_read_private(directory / "secrets.toml"))["auth"]
@@ -165,6 +171,10 @@ def readiness(directory):
         allowed = json.loads(values.get("PRIVACY_ALLOWED_SUBJECTS", "[]"))
         result["subject_allowlist_present"] = isinstance(allowed, list) and bool(allowed)
         result["external_search_enabled"] = values.get("PRIVACY_ENABLE_EXTERNAL_SEARCH") == "1"
+        if values.get("PRIVACY_IDENTITY_SETUP") == "1":
+            validate_streamlit_configuration({"auth": auth}, values, identity_setup=True)
+            result["identity_setup_ready"] = True
+            return result
         validate_streamlit_configuration({"auth": auth}, values)
         result["oidc_configuration_valid"] = values["PRIVACY_OIDC_ISSUER"] == ISSUER
     except (OSError, ValueError, TypeError, KeyError, AttributeError, AuthenticationError):
@@ -180,14 +190,16 @@ def main():
     group.add_argument("--check", action="store_true")
     group.add_argument("--client-file")
     parser.add_argument("--subjects-file")
+    parser.add_argument("--identity-setup", action="store_true",
+                        help="Permet seulement d'identifier un compte Google ; aucun accès aux données")
     args = parser.parse_args()
     try:
         if args.initialize:
             result = initialize(args.directory, args.initialize)
         elif args.client_file:
-            if not args.subjects_file:
-                parser.error("--subjects-file requis")
-            result = configure(args.directory, args.client_file, args.subjects_file)
+            if not args.subjects_file and not args.identity_setup:
+                parser.error("--subjects-file ou --identity-setup requis")
+            result = configure(args.directory, args.client_file, args.subjects_file, identity_setup=args.identity_setup)
         else:
             result = readiness(args.directory)
         print(json.dumps(result, sort_keys=True))
