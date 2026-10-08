@@ -8,6 +8,7 @@ import streamlit as st
 from discovery import prepare_searches
 from brokers import BROKERS
 from findings import prepare_findings
+from review import assess_snippet, erasure_draft
 
 DATA_DIR = Path(os.environ.get("PRIVACY_DATA_DIR", "/home/sprite/privacy-data"))
 DATA_DIR.mkdir(parents=True, exist_ok=True, mode=0o700)
@@ -104,6 +105,18 @@ with tab_findings:
         for url in st.session_state["findings_preview"]:
             st.code(url)
         st.caption("Aucun accès au site distant. Une URL valide n'est pas une preuve de présence de données.")
+        sample_url = st.selectbox("Adresse fictive à examiner", st.session_state["findings_preview"])
+        snippet = st.text_area("Extrait fictif à examiner", value="Nom Exemple apparaît dans un annuaire fictif.", max_chars=3000)
+        if st.button("Analyser l'extrait fictif"):
+            try:
+                st.session_state["review_result"] = assess_snippet("Nom Exemple", snippet)
+            except ValueError as exc:
+                st.error(str(exc))
+        if st.session_state.get("review_result"):
+            st.write(st.session_state["review_result"]["status"])
+            st.caption("Une correspondance de mots ne prouve jamais l'identité de la personne.")
+        st.download_button("Télécharger un brouillon RGPD fictif", erasure_draft(sample_url), file_name="demande-rgpd-fictive.txt", mime="text/plain")
+
 with tab_brokers:
     st.info("Catalogue indicatif issu d’Eraser. Aucune demande envoyée ; aucune preuve que ces organismes détiennent tes données.")
     for broker in BROKERS:
