@@ -85,6 +85,7 @@ def render_workspace(store, principal):
         st.subheader("Recherche avec l'API officielle Brave")
         st.info("Le terme sera transmis à Brave Search via son API officielle. Ne saisissez que des données vous concernant ou pour lesquelles vous êtes autorisé. Les résultats restent temporaires jusqu'à leur enregistrement explicite (7 jours).")
         enabled = os.environ.get("PRIVACY_ENABLE_EXTERNAL_SEARCH") == "1" and bool(os.environ.get("BRAVE_SEARCH_API_KEY"))
+        storage_allowed = os.environ.get("PRIVACY_BRAVE_STORAGE_ALLOWED") == "1"
         if not enabled:
             st.warning("Recherche externe désactivée : activation et clé API requises côté serveur.")
         if st.session_state.pop("reset-search-consent", False):
@@ -122,7 +123,10 @@ def render_workspace(store, principal):
                     st.code(item["url"], language=None)
                     st.text(item["description"])
                     st.caption(assess_snippet(query, item["description"])["status"])
-                    if st.button("Conserver ce résultat 7 jours", key=f"save-result-{scope}-{i}"):
+                    if not storage_allowed:
+                        st.caption("Enregistrement indisponible : les droits de conservation du fournisseur ne sont pas confirmés.")
+                    if st.button("Conserver ce résultat 7 jours", key=f"save-result-{scope}-{i}",
+                                 disabled=not storage_allowed) and storage_allowed:
                         existing = {json.loads(r["value"])["url"] for r in findings}
                         if item["url"] not in existing:
                             store.add(json.dumps(item, ensure_ascii=False), ttl_days=7, kind="finding")

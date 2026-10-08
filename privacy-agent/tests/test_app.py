@@ -22,6 +22,7 @@ class AppTests(unittest.TestCase):
         self.folder = tempfile.TemporaryDirectory()
         self.addCleanup(self.folder.cleanup)
         env = patch.dict(os.environ, {"PRIVACY_DATA_DIR": self.folder.name,
+                                      "PRIVACY_BRAVE_STORAGE_ALLOWED": "1",
                                       "PRIVACY_VAULT_KEY": Fernet.generate_key().decode()}, clear=True)
         env.start()
         self.addCleanup(env.stop)
@@ -115,6 +116,32 @@ class AppTests(unittest.TestCase):
             self.element(app.text_input, "Terme exact à rechercher").input("Changed fictitious query").run()
             self.assertTrue(self.element(app.button, "Rechercher avec ce consentement").disabled)
             self.assertFalse(any(item.label == "Conserver ce résultat 7 jours" for item in app.button))
+
+    def test_search_storage_disabled_without_confirmed_provider_rights(self):
+        os.environ.pop("PRIVACY_BRAVE_STORAGE_ALLOWED")
+        os.environ.update(PRIVACY_ENABLE_EXTERNAL_SEARCH="1", BRAVE_SEARCH_API_KEY="synthetic-key")
+        results = [{"title": "Synthetic result", "url": "https://example.org/test",
+                    "description": "Fictitious Example", "identity_confirmed": False}]
+        with patch("search_api.search_public_web", return_value=results):
+            app = self.authenticated()
+            self.element(app.text_input, "Terme exact à rechercher").input("Fictitious Example").run()
+            next(item for item in app.checkbox if item.key == "search-consent").check().run()
+            self.click(app, "Rechercher avec ce consentement")
+            self.assertTrue(self.element(app.button, "Conserver ce résultat 7 jours").disabled)
+            # Even a forged disabled-button event cannot persist the result.
+            import streamlit as st
+            native_button = st.button
+
+            def forged_button(label, *args, **kwargs):
+                if label == "Conserver ce résultat 7 jours":
+                    return True
+                return native_button(label, *args, **kwargs)
+
+            with patch("streamlit.button", side_effect=forged_button):
+                app.run()
+            self.assertEqual(len(app.exception), 0)
+            with SecureStore(self.path, self.principal.user_id) as store:
+                self.assertEqual(store.list_records(kind="finding"), [])
 
     def test_provider_error_does_not_show_query_or_secret(self):
         os.environ.update(PRIVACY_ENABLE_EXTERNAL_SEARCH="1", BRAVE_SEARCH_API_KEY="synthetic-secret")

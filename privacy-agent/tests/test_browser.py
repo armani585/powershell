@@ -130,6 +130,7 @@ class BrowserAcceptanceTests(unittest.TestCase):
                 reservation.bind(("127.0.0.1", 0))
                 port = reservation.getsockname()[1]
             env = dict(os.environ, PYTHONPATH=str(ROOT), PRIVACY_DATA_DIR=str(folder / "data"),
+                       PRIVACY_BRAVE_STORAGE_ALLOWED="1",
                        PRIVACY_VAULT_KEY=Fernet.generate_key().decode(), PRIVACY_ENABLE_EXTERNAL_SEARCH="1",
                        BRAVE_SEARCH_API_KEY="synthetic-only-no-network")
             env.pop("PRIVACY_VAULT_KEYS", None)

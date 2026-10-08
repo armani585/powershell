@@ -55,3 +55,10 @@ Les clés de chiffrement sont fournies par le gestionnaire de secrets serveur, s
 L'exploitant doit compléter la notice d'information, vérifier les contrats et garanties des prestataires, définir les procédures de réponse aux droits et d'incident, et déterminer si une analyse d'impact est nécessaire selon les traitements envisagés. L'accès doit rester privé, avec HTTPS, un fournisseur d'identité configuré et une authentification multifacteur imposée par celui-ci. Une validation technique des parcours, de l'isolation, des refus d'accès, de la purge et de la restauration reste nécessaire dans l'environnement effectivement déployé.
 
 Références : [RGPD, articles 5, 6, 12 à 17, 25, 28, 32 et 35](https://eur-lex.europa.eu/eli/reg/2016/679/oj), [CNIL — droit à l'effacement](https://www.cnil.fr/fr/le-droit-leffacement-supprimer-vos-donnees-en-ligne).
+
+## Droits de conservation du fournisseur de recherche
+
+La conservation des résultats Brave est refusée par défaut. Le paramètre serveur
+`PRIVACY_BRAVE_STORAGE_ALLOWED` ne peut être activé qu’après confirmation que le forfait
+accorde explicitement ces droits. Ce contrôle contractuel s’ajoute aux durées de
+conservation et à l’enregistrement volontaire. Voir [BRAVE_SETUP.md](BRAVE_SETUP.md).
