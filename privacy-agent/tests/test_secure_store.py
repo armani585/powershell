@@ -12,7 +12,8 @@ class SecureStoreTests(unittest.TestCase):
             store = SecureStore(folder + "/secure.db")
             rowid = store.add("Identité fictive")
             self.assertEqual(store.get(rowid), "Identité fictive")
-            raw = sqlite3.connect(folder + "/secure.db").execute("SELECT payload FROM secure_records").fetchone()[0]
+            with sqlite3.connect(folder + "/secure.db") as check_db:
+                raw = check_db.execute("SELECT payload FROM secure_records").fetchone()[0]
             self.assertNotIn(b"Identit", raw)
             store.delete(rowid)
             self.assertIsNone(store.get(rowid))
