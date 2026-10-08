@@ -29,13 +29,15 @@ def connect():
     if not db.execute("SELECT COUNT(*) FROM traces").fetchone()[0]:
         db.executemany("INSERT INTO traces(site,url,description,statut) VALUES(?,?,?,?)", EXAMPLES)
         db.commit()
+    db.execute("CREATE TABLE IF NOT EXISTS demo_requests (id INTEGER PRIMARY KEY, broker TEXT NOT NULL UNIQUE, status TEXT NOT NULL DEFAULT 'Brouillon')")
+    db.commit()
     return db
 
 st.set_page_config(page_title="Privacy Agent Cloud", page_icon="🛡️", layout="wide")
 st.title("🛡️ Privacy Agent Cloud")
 st.warning("MODE SIMULATION — aucune recherche ni transmission automatique. Les traces du tableau de bord sont fictives.")
 db = connect()
-tab_dashboard, tab_search, tab_brokers, tab_audit = st.tabs(["Tableau de bord", "Préparer une recherche", "Courtiers en données", "Journal d'audit"])
+tab_dashboard, tab_search, tab_brokers, tab_tracking, tab_audit = st.tabs(["Tableau de bord", "Préparer une recherche", "Courtiers en données", "Suivi RGPD (démo)", "Journal d'audit"])
 with tab_dashboard:
     rows = db.execute("SELECT id,site,url,description,statut FROM traces ORDER BY id").fetchall()
     a,b,c = st.columns(3)
@@ -94,6 +96,24 @@ with tab_brokers:
         with st.expander(broker["name"] + " — " + broker["region"]):
             st.write(broker["category"])
             st.link_button("Procédure officielle", broker["privacy_url"])
+with tab_tracking:
+    st.info("Suivi fictif uniquement. Aucun courrier n'est envoyé, aucun organisme n'est contacté.")
+    if st.button("Créer les deux dossiers fictifs"):
+        for broker in BROKERS:
+            db.execute("INSERT OR IGNORE INTO demo_requests(broker,status) VALUES(?,?)",(broker["name"],"Brouillon"))
+        db.execute("INSERT INTO audit(action) VALUES(?)",("Dossiers fictifs initialisés",))
+        db.commit()
+        st.rerun()
+    for req_id,broker,status in db.execute("SELECT id,broker,status FROM demo_requests ORDER BY id").fetchall():
+        col1,col2=st.columns([2,3])
+        col1.write(broker)
+        choices=["Brouillon","Prêt à examiner","Envoyé (simulation)","Réponse reçue (simulation)","Clos (simulation)"]
+        next_status=col2.selectbox("Statut fictif",choices,index=choices.index(status) if status in choices else 0,key=f"req-{req_id}")
+        if next_status!=status:
+            db.execute("UPDATE demo_requests SET status=? WHERE id=?",(next_status,req_id))
+            db.execute("INSERT INTO audit(action) VALUES(?)",(f"Statut fictif dossier {req_id} modifié",))
+            db.commit()
+            st.rerun()
 with tab_audit:
     st.dataframe(db.execute("SELECT date,action FROM audit ORDER BY id DESC LIMIT 50").fetchall(),use_container_width=True)
 st.caption("Aucun robot de suppression, aucune API IA et aucun envoi automatique ne sont activés.")
