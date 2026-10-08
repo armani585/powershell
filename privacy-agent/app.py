@@ -104,6 +104,13 @@ with tab_tracking:
         db.execute("INSERT INTO audit(action) VALUES(?)",("Dossiers fictifs initialisés",))
         db.commit()
         st.rerun()
+    demo_rows = db.execute("SELECT broker,status FROM demo_requests ORDER BY id").fetchall()
+    if demo_rows:
+        export_buffer = io.StringIO()
+        export_writer = csv.writer(export_buffer)
+        export_writer.writerow(["Organisme fictif", "Statut de simulation"])
+        export_writer.writerows(demo_rows)
+        st.download_button("Exporter le suivi fictif (CSV)", export_buffer.getvalue(), file_name="suivi-rgpd-simulation.csv", mime="text/csv")
     for req_id,broker,status in db.execute("SELECT id,broker,status FROM demo_requests ORDER BY id").fetchall():
         col1,col2=st.columns([2,3])
         col1.write(broker)
