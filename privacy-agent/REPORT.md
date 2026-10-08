@@ -1,13 +1,35 @@
 # Rapport de validation — Privacy Agent
 
 Date : 8 octobre 2026. Branche : `feature/privacy-agent-cloud-v1`.
-Révision applicative livrée et déployée : `acb7534aa45728bc579b8dc4c496e78d94886a8a`.
+Révision applicative livrée et déployée : `98fafe9bb96bb71b716ceee1fbf10fd1a65c9e48`.
 
 **État : application privée déployée, compte Google de l'utilisateur identifié via
 le parcours réel puis explicitement autorisé. Le mode d'identification initiale
-est désactivé. Le projet n'est pas déclaré entièrement terminé : l'ouverture de
-l'espace après autorisation, le MFA, l'isolation entre comptes Google réels et Brave
-restent à vérifier.**
+est désactivé. Le projet n'est pas déclaré entièrement terminé : le MFA, l'isolation entre comptes Google réels et l'API de recherche
+restent à vérifier. L'utilisateur a confirmé l'ouverture de son espace privé.**
+
+## Préparation de la recherche et choix du fournisseur
+
+L'utilisateur confirme l'accès au tableau de bord. Aucun compte Brave ni clé API
+n'est disponible. Le 8 octobre, vérification des tarifs et de la FAQ officiels :
+les droits de stockage des résultats doivent être explicitement accordés par le
+forfait. La release `98fafe9` bloque donc leur enregistrement par défaut, y compris
+si le navigateur falsifie un événement du bouton. Le paramètre serveur
+`PRIVACY_BRAVE_STORAGE_ALLOWED=1` exige une confirmation contractuelle préalable.
+La clé et la recherche restent désactivées ; aucune recherche réelle exécutée.
+
+117 tests locaux et135 sous-tests passent, dont Chromium ; Bandit ne signale aucun
+problème. Les11 tests AppTest passent aussi sur le serveur avant déploiement.
+Service redémarré, santé HTTP200, Google configuré, stockage Brave désactivé.
+Procédure de configuration sans clé dans la conversation : [BRAVE_SETUP.md](BRAVE_SETUP.md).
+
+L'utilisateur envisage un autre fournisseur. Tavily annonce1000 crédits mensuels
+sans carte bancaire et un arrêt au plafond gratuit ; Google Custom Search JSON API
+est fermé aux nouveaux clients. Aucune migration n'est encore effectuée. Vérifier
+également les conditions de traitement et de conservation du fournisseur retenu.
+Sources consultées : [Brave](https://brave.com/search/api/),
+[Tavily](https://www.tavily.com/pricing),
+[Google](https://developers.google.com/custom-search/v1/overview).
 
 ## Activation du compte après connexion réelle
 
@@ -108,7 +130,7 @@ avec ces nouvelles dépendances n'a pas été reconstruite dans cette interventi
 
 | Contrôle | Résultat / portée |
 |---|---|
-| Suite finale locale sur le commit livré, Python3.12.14 | **116 tests réussis**,135 sous-tests, aucun ignoré avec Chromium activé |
+| Suite finale locale sur le commit livré, Python3.12.14 | **117 tests réussis**,135 sous-tests, aucun ignoré avec Chromium activé |
 | Couverture du code applicatif, tests exclus du calcul | **92%** mesurés, pas une preuve d'absence de défaut |
 | Streamlit AppTest | 10 tests UI : refus sans auth/clé, consentement, stockage volontaire, brouillon/validation/édition, isolation/suppression |
 | Chromium — application réelle non authentifiée | Accès fermé, aucun champ privé/onglet privé ni base créée |
@@ -147,7 +169,7 @@ et [courrier validé dans le harnais de test](evidence/browser-approved-syntheti
 - Sprite existant : `mcp-privacy-agent-cloud`, ID `sprite-f19b4807-7901-42f7-851a-3464c02685fa`.
 - Réglages conservés et relus : `auth=sprite`, `private_access=admins`.
 - Points de restauration : **v4** avant la sécurisation initiale ; **v7** avant le provisionnement Google et la génération des clés.
-- Release séparée : `/home/sprite/privacy-releases/acb7534/privacy-agent`.
+- Release séparée : `/home/sprite/privacy-releases/98fafe9/privacy-agent`.
 - Environnement Python séparé : `/home/sprite/privacy-venv-v2`.
 - Services `privacy-agent` et `privacy-retention` démarrés ; l'application dépend du service de purge horaire.
 - Endpoint interne `/_stcore/health` : HTTP200, `ok`.
@@ -164,7 +186,7 @@ suppression du Sprite, du dépôt ou de sa base historique.
 
 1. **Compte Google autorisé, fin du parcours à confirmer** : le client est installé,
    le retour Google identifié a été constaté sur la capture de l'utilisateur et son
-   seul subject est autorisé. Confirmer maintenant l'ouverture de l'espace privé.
+   seul subject est autorisé. L'utilisateur a confirmé l'ouverture de l'espace privé.
    Le MFA et l'isolation de deux comptes Google réels restent à vérifier ; les tests
    synthétiques correspondants passent. Voir [GOOGLE_SETUP.md](GOOGLE_SETUP.md).
 2. **Clés privées provisionnées** : clé Fernet et secret cookie générés sur le Sprite,

@@ -1,6 +1,6 @@
 # Exploitation du déploiement privé
 
-Le service utilise la release applicative `acb7534`, indépendamment des commits
+Le service utilise la release applicative `98fafe9`, indépendamment des commits
 ultérieurs de documentation. Son venv contient également les dépendances HTTPX
 verrouillées dans `acb7534`, nécessaires au parcours OAuth natif. Ne pas exposer le port ni changer `auth=sprite` /
 `private_access=admins` pour contourner la connexion.
@@ -48,6 +48,9 @@ politique des sauvegardes, et une restauration doit réappliquer les suppression
 
 ## Preuves et périmètre
 
-Voir [REPORT.md](REPORT.md). Le service autorise désormais le seul compte Google identifié par l'utilisateur ; l'ouverture de son espace après activation reste à confirmer.
+Voir [REPORT.md](REPORT.md). Le service autorise désormais le seul compte Google identifié par l'utilisateur ; l'utilisateur a confirmé l'ouverture de son espace après activation.
 Les tests navigateur fonctionnels utilisent un harnais synthétique local ; le navigateur
 externe a vérifié la passerelle privée, sans la franchir ni se connecter.
+
+La recherche et la conservation Brave restent désactivées faute de clé et de droits
+contractuels confirmés. Voir [BRAVE_SETUP.md](BRAVE_SETUP.md).
