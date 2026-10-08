@@ -7,6 +7,7 @@ from pathlib import Path
 import streamlit as st
 from discovery import prepare_searches
 from brokers import BROKERS
+from findings import prepare_findings
 
 DATA_DIR = Path(os.environ.get("PRIVACY_DATA_DIR", "/home/sprite/privacy-data"))
 DATA_DIR.mkdir(parents=True, exist_ok=True, mode=0o700)
@@ -37,7 +38,7 @@ st.set_page_config(page_title="Privacy Agent Cloud", page_icon="🛡️", layout
 st.title("🛡️ Privacy Agent Cloud")
 st.warning("MODE SIMULATION — aucune recherche ni transmission automatique. Les traces du tableau de bord sont fictives.")
 db = connect()
-tab_dashboard, tab_search, tab_brokers, tab_tracking, tab_audit = st.tabs(["Tableau de bord", "Préparer une recherche", "Courtiers en données", "Suivi RGPD (démo)", "Journal d'audit"])
+tab_dashboard, tab_search, tab_findings, tab_brokers, tab_tracking, tab_audit = st.tabs(["Tableau de bord", "Préparer une recherche", "Résultats (démo)", "Courtiers en données", "Suivi RGPD (démo)", "Journal d'audit"])
 with tab_dashboard:
     rows = db.execute("SELECT id,site,url,description,statut FROM traces ORDER BY id").fetchall()
     a,b,c = st.columns(3)
@@ -90,6 +91,19 @@ with tab_search:
         writer.writerow(["Moteur","Terme","URL"])
         writer.writerows(st.session_state["preview"])
         st.download_button("Exporter l'aperçu CSV",output.getvalue(),file_name="apercu-recherches.csv",mime="text/csv")
+with tab_findings:
+    st.info("Essai avec des URL publiques fictives uniquement. Les URL ne sont pas téléchargées ni enregistrées dans la base.")
+    raw_findings = st.text_area("URL HTTPS fictives (une par ligne)", value="https://example.org/annuaire\\nhttps://example.org/profil", key="demo_findings")
+    if st.button("Vérifier les URL de démonstration"):
+        try:
+            st.session_state["findings_preview"] = prepare_findings(raw_findings.splitlines())
+        except ValueError as exc:
+            st.error(str(exc))
+    if st.session_state.get("findings_preview"):
+        st.write("Résultats dédoublonnés et validés :")
+        for url in st.session_state["findings_preview"]:
+            st.code(url)
+        st.caption("Aucun accès au site distant. Une URL valide n'est pas une preuve de présence de données.")
 with tab_brokers:
     st.info("Catalogue indicatif issu d’Eraser. Aucune demande envoyée ; aucune preuve que ces organismes détiennent tes données.")
     for broker in BROKERS:
