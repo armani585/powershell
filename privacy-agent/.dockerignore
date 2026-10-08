@@ -1,0 +1,10 @@
+.git
+.env*
+.streamlit/secrets.toml
+*.db*
+data/
+__pycache__/
+.pytest_cache/
+tests/
+artifacts/
+*.png

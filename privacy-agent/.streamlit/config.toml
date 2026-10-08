@@ -1,0 +1,12 @@
+[browser]
+gatherUsageStats = false
+
+[server]
+enableCORS = true
+enableXsrfProtection = true
+headless = true
+maxUploadSize = 1
+
+[client]
+showErrorDetails = false
+toolbarMode = "minimal"

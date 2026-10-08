@@ -1,0 +1,15 @@
+privacy.db
+*.db
+.env
+__pycache__/
+*.pyc
+
+*.db-*
+.streamlit/secrets.toml
+.env.*
+!.env.example
+data/
+.pytest_cache/
+.coverage
+htmlcov/
+artifacts/
