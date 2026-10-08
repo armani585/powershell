@@ -115,5 +115,15 @@ with tab_tracking:
             db.commit()
             st.rerun()
 with tab_audit:
+    st.caption("Le journal contient uniquement des événements de simulation, sans identité personnelle.")
+    if st.button("Réinitialiser toutes les données de démonstration", type="secondary"):
+        db.execute("DELETE FROM demo_requests")
+        db.execute("DELETE FROM traces")
+        db.execute("DELETE FROM audit")
+        db.executemany("INSERT INTO traces(site,url,description,statut) VALUES(?,?,?,?)", EXAMPLES)
+        db.commit()
+        st.session_state.pop("preview", None)
+        st.success("Démonstration réinitialisée. Aucun effacement sur Internet n'a été effectué.")
+        st.rerun()
     st.dataframe(db.execute("SELECT date,action FROM audit ORDER BY id DESC LIMIT 50").fetchall(),use_container_width=True)
 st.caption("Aucun robot de suppression, aucune API IA et aucun envoi automatique ne sont activés.")
