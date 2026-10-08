@@ -111,6 +111,13 @@ def validate_streamlit_configuration(secrets, environ=None, *, identity_setup=Fa
         raise AuthenticationError("Configuration OIDC Streamlit absente ou incohérente") from exc
 
 
+def _clear_private_state(session, control):
+    """Discard private data without erasing the current authentication button event."""
+    for key in list(session):
+        if key != control:
+            del session[key]
+
+
 def require_user(st):
     """Streamlit gate: must run before reading or displaying private data."""
     try:
@@ -120,7 +127,7 @@ def require_user(st):
         st.error("Accès fermé : configuration OIDC et liste d'accès requises.")
         st.stop()
     if not st.user.is_logged_in:
-        st.session_state.clear()
+        _clear_private_state(st.session_state, "privacy-login")
         st.info("Connectez-vous avec le compte autorisé pour accéder à votre espace privé.")
         if st.button("Se connecter", key="privacy-login"):
             try:
@@ -131,7 +138,7 @@ def require_user(st):
     if identity_setup:
         # Identification is isolated from authorization: never return a principal,
         # write an allowlist, open a database or persist these claims.
-        st.session_state.clear()
+        _clear_private_state(st.session_state, "privacy-setup-logout")
         try:
             issuer, _, lifetime = _configuration(os.environ, allow_empty=True)
             subject = verified_subject(dict(st.user), issuer, lifetime, time.time())
@@ -148,7 +155,7 @@ def require_user(st):
         principal = authenticate(dict(st.user), st.session_state)
     except AuthenticationError as exc:
         previous = st.session_state.get("_privacy_auth")
-        st.session_state.clear()
+        _clear_private_state(st.session_state, "privacy-invalid-logout")
         if previous is not None:
             st.session_state["_privacy_auth"] = previous
         st.error(str(exc))

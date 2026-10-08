@@ -88,6 +88,15 @@ class BrowserAcceptanceTests(unittest.TestCase):
                         evidence.mkdir(parents=True, exist_ok=True)
                         filename = 'browser-google-identification.png' if identity_setup else 'browser-production-access-denied.png'
                         page.screenshot(path=str(evidence / filename), full_page=True)
+                        if identity_setup:
+                            # Exercise native st.login and the real browser redirect,
+                            # stopping before any provider request or real identity.
+                            context.route(f'http://127.0.0.1:{port}/auth/login?*',
+                                          lambda route: route.fulfill(status=200, content_type='text/plain',
+                                                                      body='Synthetic native login redirect reached'))
+                            page.get_by_role('button', name='Se connecter', exact=True).click()
+                            expect(page.get_by_text('Synthetic native login redirect reached', exact=True)).to_be_visible()
+                            self.assertFalse((folder / 'data').exists())
                         browser.close()
                 finally:
                     process.terminate()

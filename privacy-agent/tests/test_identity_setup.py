@@ -65,6 +65,35 @@ class IdentitySetupTests(unittest.TestCase):
         self.assertEqual(len(app.code), 0)
         self.assertEqual([button.label for button in app.button], ['Se connecter'])
 
+    def test_login_click_calls_native_login_and_clears_private_state(self):
+        user = NativeUser()
+        user.is_logged_in = False
+        app = self.app(user)
+        with patch.dict(os.environ, self.env, clear=True), patch('streamlit.user', user), patch('streamlit.login') as login:
+            app.session_state['old_private_data'] = 'discard me'
+            app.button(key='privacy-login').click().run()
+            login.assert_called_once_with()
+            self.assertEqual(len(app.exception), 0)
+            self.assertNotIn('old_private_data', app.session_state)
+            self.assertFalse((self.root / 'data').exists())
+
+    def test_setup_logout_click_calls_native_logout(self):
+        user = NativeUser(self.claims)
+        app = self.app(user)
+        with patch.dict(os.environ, self.env, clear=True), patch('streamlit.user', user), patch('streamlit.logout') as logout:
+            app.button(key='privacy-setup-logout').click().run()
+            logout.assert_called_once_with()
+
+    def test_rejected_account_can_logout_without_losing_deadline(self):
+        self.env.update(PRIVACY_IDENTITY_SETUP='0', PRIVACY_ALLOWED_SUBJECTS='["different-account"]')
+        user = NativeUser(self.claims)
+        app = self.app(user)
+        with patch.dict(os.environ, self.env, clear=True), patch('streamlit.user', user), patch('streamlit.logout') as logout:
+            app.session_state['_privacy_auth'] = {'user_id': 'old', 'expires_at': 1}
+            app.button(key='privacy-invalid-logout').click().run()
+            logout.assert_called_once_with()
+            self.assertEqual(app.session_state['_privacy_auth']['expires_at'], 1)
+
     def test_invalid_native_claims_never_display_identity(self):
         for changes in ({'iss': 'https://wrong.example.org'}, {'exp': 0}, {'iat': 0},
                         {'exp': float('nan')}, {'iat': True}, {'sub': '*'},
