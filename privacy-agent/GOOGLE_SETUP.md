@@ -24,6 +24,8 @@ Aucune inscription automatique du premier compte connecté n'est autorisée.
 
 ## Provisionnement sur le serveur
 
+Exécuter les commandes depuis `/home/sprite/privacy-releases/5941ebc/privacy-agent`.
+
 `google_setup.py` prépare des fichiers0600 dans un répertoire0700. Il génère localement
 une clé Fernet et un secret de cookie avec un générateur cryptographiquement sûr,
 **sans jamais les afficher**. Une deuxième initialisation conserve les clés existantes.

@@ -21,7 +21,7 @@ Streamlit ne charge pas `.env` automatiquement. Docker Compose le charge explici
   ne sont pas pris en charge sans adaptation). Claims vérifiés `iss`, `sub`, `iat`, `exp` requis.
 - `PRIVACY_ALLOWED_SUBJECTS` : tableau JSON des `sub` autorisés ; jamais les adresses email.
 - Secrets OIDC natifs Streamlit : client, secret, callback HTTPS `/oauth2callback`,
-  cookie secret aléatoire fort, `prompt=login`. Autoriser le callback exact chez l'IdP.
+  cookie secret aléatoire fort, `prompt=select_account` pour Google. Autoriser le callback exact chez l'IdP.
 - `PRIVACY_VAULT_KEYS` : tableau JSON de clés Fernet, clé active en tête. Créer les clés
   dans un gestionnaire de secrets et les sauvegarder séparément des bases.
 - `PRIVACY_DATA_DIR` : répertoire persistant privé. Nouvelle base `privacy-secure-v2.db`.

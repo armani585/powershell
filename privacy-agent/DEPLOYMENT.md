@@ -1,12 +1,13 @@
 # Exploitation du déploiement privé
 
-Le service utilise la release applicative `ddd535f`, indépendamment des commits
+Le service utilise la release applicative `5941ebc`, indépendamment des commits
 ultérieurs de documentation. Ne pas exposer le port ni changer `auth=sprite` /
 `private_access=admins` pour contourner la connexion.
 
 ## Configuration à fournir via le gestionnaire de secrets
 
-Le répertoire `/home/sprite/privacy-config` a été créé avec le mode0700, sans secrets.
+Le répertoire `/home/sprite/privacy-config` est en mode0700. La clé Fernet et le secret cookie sont maintenant générés
+sur le serveur ; le client Google et l’allowlist restent vides. Voir [GOOGLE_SETUP.md](GOOGLE_SETUP.md).
 Préparer les fichiers en mode0600 depuis un canal privé administratif :
 
 - `runtime.env` : variables `PRIVACY_OIDC_ISSUER`, `PRIVACY_ALLOWED_SUBJECTS` JSON,
@@ -30,7 +31,7 @@ répond, pas que l'authentification ou Brave sont opérationnels.
 
 ## Retours arrière
 
-Checkpoint antérieur : `v4`. Il restaure tout le Sprite et peut effacer des changements
+Checkpoints antérieurs : `v4` (V1) et `v7` (avant génération des clés Google). Il restaure tout le Sprite et peut effacer des changements
 postérieurs ; privilégier un retour du service seul tant qu'aucune migration de données
 n'a eu lieu. L'installation antérieure `/home/sprite/privacy-repo` et son venv
 `/home/sprite/privacy-venv` ont été préservés. Sa commande précédente était :
@@ -46,6 +47,6 @@ politique des sauvegardes, et une restauration doit réappliquer les suppression
 
 ## Preuves et périmètre
 
-Voir [REPORT.md](REPORT.md). Le service est démarré mais fermé faute de configuration.
+Voir [REPORT.md](REPORT.md). Le service est démarré mais fermé faute de client Google et de subjects autorisés.
 Les tests navigateur fonctionnels utilisent un harnais synthétique local ; le navigateur
 externe a vérifié la passerelle privée, sans la franchir ni se connecter.
