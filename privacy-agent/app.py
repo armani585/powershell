@@ -9,7 +9,6 @@ from discovery import prepare_searches
 from brokers import BROKERS
 from findings import prepare_findings
 from review import assess_snippet, erasure_draft
-from secure_store import SecureStore
 
 DATA_DIR = Path(os.environ.get("PRIVACY_DATA_DIR", "/home/sprite/privacy-data"))
 DATA_DIR.mkdir(parents=True, exist_ok=True, mode=0o700)
