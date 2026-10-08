@@ -1,11 +1,12 @@
 # Rapport de validation — Privacy Agent
 
 Date : 8 octobre 2026. Branche : `feature/privacy-agent-cloud-v1`.
-Révision applicative livrée et déployée : `5941ebce415513350c2ddecaaf280930d2f96ea2`.
+Révision applicative livrée et déployée : `35818d838c8e2fad0f7686a356e1dea53aa56148`.
 
 **État : implémentation et tests synthétiques validés ; déploiement privé effectué,
 clés privées générées et vérifiées avec des données synthétiques ; accès applicatif
-fermé tant que le client Google et les subjects autorisés manquent. Le projet n’est
+fermé tant que le compte autorisé n'a pas été identifié ; client Google installé et
+parcours d'identification initiale activé sans autorisation automatique. Le projet n’est
 pas déclaré prêt pour un usage réel : Google/MFA et Brave restent à vérifier de bout en bout.**
 
 ## Revue initiale
@@ -35,12 +36,37 @@ Correction d'un défaut de consentement : après une recherche échouée, la cas
 maintenant décochée et les anciens résultats retirés. Ajout des parcours UI complets
 envoi manuel fictif → réception → réponse → clôture et modification de requête A→B→A.
 
+## Identification initiale Google livrée
+
+Client présent, clé de chiffrement et cookie conservés, identification initiale prête,
+allowlist toujours vide, recherche Brave toujours désactivée. Le endpoint discovery
+Google est accessible depuis le serveur et annonce `openid`. Ceci ne valide pas le
+secret OAuth : un échange réel après connexion utilisateur reste nécessaire.
+
+Cinq tests supplémentaires couvrent l'identification sans accès, le refus des claims
+invalides/expirés, l'absence de création de base, la purge de l'état précédent et
+l'activation explicite qui désactive le mode initial. Un troisième test Chromium
+vérifie le bouton de connexion natif avec configuration fictive, sans espace privé.
+Le test fonctionnel navigateur attend maintenant chaque rendu complet du harnais,
+au lieu d'un délai fixe qui produisait des échecs intermittents.
+
+Le service redémarré répond HTTP200 ; les deux services tournent, la passerelle reste
+`auth=sprite` / `private_access=admins`. AppTest avec la configuration serveur et un
+utilisateur anonyme simulé montre la connexion, aucune donnée privée et aucune
+exception. AppTest sans ce double ne fournit pas `st.user.is_logged_in` ; ce contrôle
+n'est pas présenté comme une connexion réelle. Aucune base V2 de production créée.
+
+CI de cette release : [run réussi](https://github.com/armani585/powershell/actions/runs/37847716996).
+Capture locale : [identification Google](evidence/browser-google-identification.png).
+Les résultats Docker et audit de dépendances ci-dessous datent de la release précédente ;
+aucune dépendance n'a changé. Bandit et toute la suite de tests ont été réexécutés.
+
 ## Vérifications exécutées
 
 | Contrôle | Résultat / portée |
 |---|---|
-| Suite finale locale sur le commit livré, Python3.12.14 | **106 tests réussis**,122 sous-tests, aucun ignoré avec Chromium activé |
-| Couverture du code applicatif, tests exclus du calcul | **90%** mesurés, pas une preuve d'absence de défaut |
+| Suite finale locale sur le commit livré, Python3.12.14 | **112 tests réussis**,135 sous-tests, aucun ignoré avec Chromium activé |
+| Couverture du code applicatif, tests exclus du calcul | **91%** mesurés, pas une preuve d'absence de défaut |
 | Streamlit AppTest | 10 tests UI : refus sans auth/clé, consentement, stockage volontaire, brouillon/validation/édition, isolation/suppression |
 | Chromium — application réelle non authentifiée | Accès fermé, aucun champ privé/onglet privé ni base créée |
 | Chromium — harnais synthétique séparé | Recherche simulée, enregistrement, dossier, validation humaine, copie, export JSON volontaire et suppression |
@@ -52,7 +78,7 @@ envoi manuel fictif → réception → réponse → clôture et modification de 
 | pip-audit2.10.1 | Aucune vulnérabilité connue signalée pour les41 versions de production verrouillées au moment de l'audit |
 | Image Docker | Construction réussie ; imports et endpoint santé testés sans réseau sortant, UID10001 et filesystem read-only |
 | GitHub Actions | Runs push et PR du commit applicatif réussis ; tests, Bandit et audit dépendances |
-| Cloud Sprites, Python3.13 | **104 tests réussis**,122 sous-tests ;2 tests navigateur ignorés car Chromium absent sur le Sprite |
+| Cloud Sprites, Python3.13 | **109 tests réussis**,135 sous-tests ;3 tests navigateur ignorés car Chromium absent sur le Sprite |
 
 Commandes principales :
 
@@ -78,7 +104,7 @@ et [courrier validé dans le harnais de test](evidence/browser-approved-syntheti
 - Sprite existant : `mcp-privacy-agent-cloud`, ID `sprite-f19b4807-7901-42f7-851a-3464c02685fa`.
 - Réglages conservés et relus : `auth=sprite`, `private_access=admins`.
 - Points de restauration : **v4** avant la sécurisation initiale ; **v7** avant le provisionnement Google et la génération des clés.
-- Release séparée : `/home/sprite/privacy-releases/5941ebc/privacy-agent`.
+- Release séparée : `/home/sprite/privacy-releases/35818d8/privacy-agent`.
 - Environnement Python séparé : `/home/sprite/privacy-venv-v2`.
 - Services `privacy-agent` et `privacy-retention` démarrés ; l'application dépend du service de purge horaire.
 - Endpoint interne `/_stcore/health` : HTTP200, `ok`.
@@ -93,13 +119,15 @@ suppression du Sprite, du dépôt ou de sa base historique.
 
 ## Blocages restant avant utilisation réelle
 
-1. **Client Google et subjects absents** : Google a été choisi par l'utilisateur. La
-   console Google Cloud présente un écran de connexion ; aucune session administrative
-   ni identité GCP utilisable n'est disponible. Fournir le client Web OAuth et les subjects
-   autorisés depuis un canal administratif privé. Le callback exact et la procédure sont
-   dans [GOOGLE_SETUP.md](GOOGLE_SETUP.md). Le scope `openid` et `prompt=select_account`
-   sont préparés. L'OIDC ordinaire ne garantit pas le MFA : sa politique doit être
-   vérifiée côté compte Google ou Workspace. Tester ensuite le vrai parcours et deux comptes.
+1. **Compte Google à identifier et autoriser** : client Web fourni par l'utilisateur,
+   importé depuis le fichier privé du serveur sans affichage. `openid` seulement et
+   `prompt=select_account`. Le mode initial permet la connexion native, affiche le
+   subject du seul compte identifié, puis arrête l'exécution avant toute base de données.
+   Aucun compte n'est ajouté automatiquement. L'utilisateur doit se connecter et
+   transmettre son identifiant au gestionnaire par son canal privé habituel pour
+   compléter l'allowlist. L'échange réel OAuth, le callback, le MFA et l'isolation de
+   deux comptes Google réels ne sont donc pas encore validés. Aucune nouvelle
+   permission Gmail/Drive/contacts n'est nécessaire. Voir [GOOGLE_SETUP.md](GOOGLE_SETUP.md).
 2. **Clés privées provisionnées** : clé Fernet et secret cookie générés sur le Sprite,
    fichiers0600 et répertoire0700, sans affichage ni commit. Chiffrement, déchiffrement,
    isolation et suppression testés avec cette clé dans une base temporaire fictive,

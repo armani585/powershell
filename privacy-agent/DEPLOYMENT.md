@@ -1,13 +1,13 @@
 # Exploitation du déploiement privé
 
-Le service utilise la release applicative `5941ebc`, indépendamment des commits
+Le service utilise la release applicative `35818d8`, indépendamment des commits
 ultérieurs de documentation. Ne pas exposer le port ni changer `auth=sprite` /
 `private_access=admins` pour contourner la connexion.
 
 ## Configuration à fournir via le gestionnaire de secrets
 
 Le répertoire `/home/sprite/privacy-config` est en mode0700. La clé Fernet et le secret cookie sont maintenant générés
-sur le serveur ; le client Google et l’allowlist restent vides. Voir [GOOGLE_SETUP.md](GOOGLE_SETUP.md).
+sur le serveur ; le client Google est installé, l'allowlist reste vide et l'identification initiale est activée. Voir [GOOGLE_SETUP.md](GOOGLE_SETUP.md).
 Préparer les fichiers en mode0600 depuis un canal privé administratif :
 
 - `runtime.env` : variables `PRIVACY_OIDC_ISSUER`, `PRIVACY_ALLOWED_SUBJECTS` JSON,
@@ -47,6 +47,6 @@ politique des sauvegardes, et une restauration doit réappliquer les suppression
 
 ## Preuves et périmètre
 
-Voir [REPORT.md](REPORT.md). Le service est démarré mais fermé faute de client Google et de subjects autorisés.
+Voir [REPORT.md](REPORT.md). Le service propose l'identification Google, mais garde les données fermées tant que le subject prévu n'a pas été autorisé.
 Les tests navigateur fonctionnels utilisent un harnais synthétique local ; le navigateur
 externe a vérifié la passerelle privée, sans la franchir ni se connecter.
