@@ -9,6 +9,7 @@ from discovery import prepare_searches
 from brokers import BROKERS
 from findings import prepare_findings
 from review import assess_snippet, erasure_draft
+from secure_store import SecureStore
 
 DATA_DIR = Path(os.environ.get("PRIVACY_DATA_DIR", "/home/sprite/privacy-data"))
 DATA_DIR.mkdir(parents=True, exist_ok=True, mode=0o700)
@@ -149,6 +150,8 @@ with tab_tracking:
             db.commit()
             st.rerun()
 with tab_audit:
+    st.caption("Le module de stockage chiffré reste désactivé pour les données réelles. Clé serveur présente : " + ("oui" if os.environ.get("PRIVACY_VAULT_KEY") else "non"))
+
     st.caption("Le journal contient uniquement des événements de simulation, sans identité personnelle.")
     if st.button("Réinitialiser toutes les données de démonstration", type="secondary"):
         db.execute("DELETE FROM demo_requests")
