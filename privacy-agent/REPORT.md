@@ -1,13 +1,25 @@
 # Rapport de validation — Privacy Agent
 
 Date : 8 octobre 2026. Branche : `feature/privacy-agent-cloud-v1`.
-Révision applicative livrée et déployée : `29cbd88aad4ba0cceea9f5a0aa77b2200d16aad7`.
+Révision applicative livrée et déployée : `acb7534aa45728bc579b8dc4c496e78d94886a8a`.
 
-**État : implémentation et tests synthétiques validés ; déploiement privé effectué,
-clés privées générées et vérifiées avec des données synthétiques ; accès applicatif
-fermé tant que le compte autorisé n'a pas été identifié ; client Google installé et
-parcours d'identification initiale activé sans autorisation automatique. Le projet n’est
-pas déclaré prêt pour un usage réel : Google/MFA et Brave restent à vérifier de bout en bout.**
+**État : application privée déployée, compte Google de l'utilisateur identifié via
+le parcours réel puis explicitement autorisé. Le mode d'identification initiale
+est désactivé. Le projet n'est pas déclaré entièrement terminé : l'ouverture de
+l'espace après autorisation, le MFA, l'isolation entre comptes Google réels et Brave
+restent à vérifier.**
+
+## Activation du compte après connexion réelle
+
+L'utilisateur a fourni une capture de l'écran « Compte Google identifié » affichant
+son subject après le parcours natif. Ce subject a été ajouté seul à l'allowlist
+privée du serveur, sans être recopié dans Git ni dans ce rapport. L'import normal a
+désactivé `PRIVACY_IDENTITY_SETUP`. Le client OAuth, le secret cookie et la clé de
+chiffrement ont été conservés. Les deux services ont redémarré sur `acb7534`.
+Le contrôle serveur confirme une seule identité autorisée, configuration OIDC valide,
+mode initial désactivé et endpoint santé HTTP200. La recherche Brave reste désactivée.
+La capture confirme le retour Google identifié ; elle ne prouve pas le MFA ni
+l'ouverture du tableau de bord après cette dernière autorisation.
 
 ## Correctif du bouton de connexion — 8 octobre 2026
 
@@ -22,7 +34,7 @@ Un second défaut a été découvert en suivant cette redirection sur le serveur
 `httpx==0.28.1` et `httpcore==1.0.9` aux dépendances verrouillées, installées dans
 le venv cloud après checkpoint privé v9. Le commit `acb7534` contient ces dépendances
 et un test du client OAuth natif Streamlit avec discovery simulée, state, nonce et PKCE.
-Le code en cours d'exécution est `29cbd88` ; ses dépendances sont à jour avec `acb7534`.
+Le premier redémarrage utilisait `29cbd88` ; la release finale active est `acb7534`.
 La release complète `acb7534` est également disponible sur le serveur.
 
 Contrôle réel de l'endpoint natif après installation : HTTP302 vers
@@ -135,7 +147,7 @@ et [courrier validé dans le harnais de test](evidence/browser-approved-syntheti
 - Sprite existant : `mcp-privacy-agent-cloud`, ID `sprite-f19b4807-7901-42f7-851a-3464c02685fa`.
 - Réglages conservés et relus : `auth=sprite`, `private_access=admins`.
 - Points de restauration : **v4** avant la sécurisation initiale ; **v7** avant le provisionnement Google et la génération des clés.
-- Release séparée : `/home/sprite/privacy-releases/29cbd88/privacy-agent`.
+- Release séparée : `/home/sprite/privacy-releases/acb7534/privacy-agent`.
 - Environnement Python séparé : `/home/sprite/privacy-venv-v2`.
 - Services `privacy-agent` et `privacy-retention` démarrés ; l'application dépend du service de purge horaire.
 - Endpoint interne `/_stcore/health` : HTTP200, `ok`.
@@ -150,15 +162,11 @@ suppression du Sprite, du dépôt ou de sa base historique.
 
 ## Blocages restant avant utilisation réelle
 
-1. **Compte Google à identifier et autoriser** : client Web fourni par l'utilisateur,
-   importé depuis le fichier privé du serveur sans affichage. `openid` seulement et
-   `prompt=select_account`. Le mode initial permet la connexion native, affiche le
-   subject du seul compte identifié, puis arrête l'exécution avant toute base de données.
-   Aucun compte n'est ajouté automatiquement. L'utilisateur doit se connecter et
-   transmettre son identifiant au gestionnaire par son canal privé habituel pour
-   compléter l'allowlist. L'échange réel OAuth, le callback, le MFA et l'isolation de
-   deux comptes Google réels ne sont donc pas encore validés. Aucune nouvelle
-   permission Gmail/Drive/contacts n'est nécessaire. Voir [GOOGLE_SETUP.md](GOOGLE_SETUP.md).
+1. **Compte Google autorisé, fin du parcours à confirmer** : le client est installé,
+   le retour Google identifié a été constaté sur la capture de l'utilisateur et son
+   seul subject est autorisé. Confirmer maintenant l'ouverture de l'espace privé.
+   Le MFA et l'isolation de deux comptes Google réels restent à vérifier ; les tests
+   synthétiques correspondants passent. Voir [GOOGLE_SETUP.md](GOOGLE_SETUP.md).
 2. **Clés privées provisionnées** : clé Fernet et secret cookie générés sur le Sprite,
    fichiers0600 et répertoire0700, sans affichage ni commit. Chiffrement, déchiffrement,
    isolation et suppression testés avec cette clé dans une base temporaire fictive,
