@@ -6,6 +6,7 @@ import sqlite3
 from pathlib import Path
 import streamlit as st
 from discovery import prepare_searches
+from brokers import BROKERS
 
 DATA_DIR = Path(os.environ.get("PRIVACY_DATA_DIR", "/home/sprite/privacy-data"))
 DATA_DIR.mkdir(parents=True, exist_ok=True, mode=0o700)
@@ -34,7 +35,7 @@ st.set_page_config(page_title="Privacy Agent Cloud", page_icon="🛡️", layout
 st.title("🛡️ Privacy Agent Cloud")
 st.warning("MODE SIMULATION — aucune recherche ni transmission automatique. Les traces du tableau de bord sont fictives.")
 db = connect()
-tab_dashboard, tab_search, tab_audit = st.tabs(["Tableau de bord", "Préparer une recherche", "Journal d'audit"])
+tab_dashboard, tab_search, tab_brokers, tab_audit = st.tabs(["Tableau de bord", "Préparer une recherche", "Courtiers en données", "Journal d'audit"])
 with tab_dashboard:
     rows = db.execute("SELECT id,site,url,description,statut FROM traces ORDER BY id").fetchall()
     a,b,c = st.columns(3)
@@ -87,6 +88,12 @@ with tab_search:
         writer.writerow(["Moteur","Terme","URL"])
         writer.writerows(st.session_state["preview"])
         st.download_button("Exporter l'aperçu CSV",output.getvalue(),file_name="apercu-recherches.csv",mime="text/csv")
+with tab_brokers:
+    st.info("Catalogue indicatif issu d’Eraser. Aucune demande envoyée ; aucune preuve que ces organismes détiennent tes données.")
+    for broker in BROKERS:
+        with st.expander(broker["name"] + " — " + broker["region"]):
+            st.write(broker["category"])
+            st.link_button("Procédure officielle", broker["privacy_url"])
 with tab_audit:
     st.dataframe(db.execute("SELECT date,action FROM audit ORDER BY id DESC LIMIT 50").fetchall(),use_container_width=True)
 st.caption("Aucun robot de suppression, aucune API IA et aucun envoi automatique ne sont activés.")
