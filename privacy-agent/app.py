@@ -74,7 +74,7 @@ with tab_search:
             except ValueError as exc:
                 st.error(str(exc))
     with right:
-        if st.button("Effacer l'aperçu et les termes"):
+        if st.button("Effacer l'aperçu"):
             st.session_state.pop("preview",None)
             st.rerun()
     if st.session_state.get("preview"):
