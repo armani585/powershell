@@ -1,4 +1,5 @@
 import { zodTextFormat } from "openai/helpers/zod";
+import { createSpriteHold } from './sprite-hold.mjs';
 const failure = (message, status = 503) =>
   Object.assign(new Error(message), { status });
 export function createOllama({
@@ -6,6 +7,8 @@ export function createOllama({
   model = "qwen2.5:3b",
   timeoutMs = 300000,
   fetchImpl = fetch,
+  now = Date.now,
+  activity = createSpriteHold({enabled:process.env.CV_SPRITE_TASKS==='1'}),
 } = {}) {
   const url = new URL(baseUrl);
   if (
@@ -24,28 +27,59 @@ export function createOllama({
       "Choisissez un modèle Ollama installé sur cette machine, sans service cloud.",
     );
   const endpoint = (path) => new URL(path, url).href;
+  // Ollama reloads its runner when these change. Share one profile across
+  // warm-up, import, translation and RH, including long offers.
+  const runnerOptions = { num_ctx: 32768, num_thread: 4, num_batch: 128 };
   let busy = false;
+  let prepared = false, warming = null, retryAt = 0;
+  const loadingMessage = "Préparation du moteur de rédaction… Les boutons IA s’activeront automatiquement. Votre CV reste modifiable.";
+  function prepare() {
+    if (warming || busy || now() < retryAt) return;
+    warming = (async () => {
+      try {
+        await activity.run(async()=>{
+        const response = await fetchImpl(endpoint('/api/generate'), {
+          method: 'POST', headers: {'Content-Type':'application/json'}, redirect: 'error',
+          signal: AbortSignal.timeout(180000),
+          // Empty generation loads the model without sending any CV content.
+          body: JSON.stringify({model, stream:false, keep_alive:-1, options:runnerOptions}),
+        });
+        if (!response.ok || (await response.json()).done !== true) throw Error();
+        });
+        prepared = true; retryAt = 0;
+      } catch {
+        prepared = false; retryAt = now() + 30000;
+      } finally { warming = null; }
+    })();
+  }
   async function status() {
     try {
-      const response = await fetchImpl(endpoint("/api/tags"), {
+      const response = await fetchImpl(endpoint("/api/ps"), {
         signal: AbortSignal.timeout(1500),
         redirect: "error",
       });
       if (!response.ok) throw Error();
       const data = await response.json();
-      const ready =
+      const loaded =
         data.models?.some(
           (item) =>
-            [item.name, item.model].includes(model) ||
-            [item.name, item.model].includes(model + ":latest"),
+            ([item.name, item.model].includes(model) ||
+            [item.name, item.model].includes(model + ":latest")) && item.context_length === runnerOptions.num_ctx,
         ) || false;
-      return {
-        ready,
-        message: ready
-          ? `Ollama est prêt (${model}). Aucun crédit OpenAI utilisé.`
-          : `Le modèle ${model} n’est pas encore installé. L’installation initiale peut prendre plusieurs minutes.`,
-      };
+      if (prepared && loaded) return {ready:true, message:`Ollama est prêt (${model}). Aucun crédit OpenAI utilisé.`};
+      prepared = false;
+      if (!loaded && !warming) {
+        const installed = await fetchImpl(endpoint('/api/tags'), {signal:AbortSignal.timeout(1500),redirect:'error'});
+        if (!installed.ok) throw Error();
+        if (!(await installed.json()).models?.some(item => [item.name,item.model].some(name=>name===model||name===model+':latest')))
+          return {ready:false,message:`Le modèle ${model} n’est pas encore installé. L’installation initiale peut prendre plusieurs minutes.`};
+      }
+      prepare();
+      return {ready:false, message: now()<retryAt
+        ? "Le moteur n’a pas pu se préparer. Nouvelle tentative automatique dans quelques instants. Votre CV est conservé."
+        : loadingMessage};
     } catch {
+      prepared = false;
       return {
         ready: false,
         message:
@@ -54,6 +88,7 @@ export function createOllama({
     }
   }
   async function ask(schema, instructions, content, { textMode = false, requestTimeoutMs = timeoutMs } = {}) {
+    if (warming) throw failure(loadingMessage, 503);
     if (busy)
       throw failure(
         "Une analyse est déjà en cours. Attendez sa fin avant de réessayer.",
@@ -76,11 +111,10 @@ export function createOllama({
       { role: "user", content: content.map((item) => item.text).join("\n\n") },
     ];
     const inputBytes = Buffer.byteLength(JSON.stringify(messages), "utf8");
-    // Keep enough room for every input byte plus the bounded output. Small RH
-    // passages need no 32K KV cache. Never silently truncate the source or offer.
+    // A single context avoids unloading/reloading between import and RH.
+    // The byte bound below leaves room for the bounded output without truncation.
     const outputLimit = textMode ? 2048 : 6000;
-    const contextSize = textMode && inputBytes <= 6144 ? 8192
-      : textMode && inputBytes <= 14336 ? 16384 : 32768;
+    const contextSize = runnerOptions.num_ctx;
     if (inputBytes > 22000)
       throw failure(
         "Ce CV ou cette offre est trop long pour ce modèle. Raccourcissez le document ou l’offre, puis réessayez.",
@@ -88,6 +122,7 @@ export function createOllama({
       );
     busy = true;
     try {
+      return await activity.run(async()=>{
       const response = await fetchImpl(endpoint("/api/chat"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -101,10 +136,9 @@ export function createOllama({
           // CPU runner before its first generated token.
           ...(textMode ? {} : { format }),
           stream: false,
-          keep_alive: "5m",
+          keep_alive: -1,
           // Bound CPU batches and thread contention on the Sprite VM.
-          options: { temperature: 0, num_ctx: contextSize, num_predict: outputLimit,
-            ...(textMode ? { num_thread: 4, num_batch: 128 } : {}) },
+          options: { ...runnerOptions, temperature: 0, num_predict: outputLimit },
         }),
       });
       if (response.status === 404)
@@ -134,6 +168,7 @@ export function createOllama({
           502,
         );
       }
+      });
     } catch (error) {
       if (error.status) throw error;
       if (["TimeoutError", "AbortError"].includes(error.name))

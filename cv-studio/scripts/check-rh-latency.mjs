@@ -1,10 +1,17 @@
 // Real, opt-in inference benchmark. Uses only fictional data and an isolated
 // browser context; never reads or changes the user's browser draft.
 import assert from 'node:assert/strict';
+import {execFileSync} from 'node:child_process';
+import {request} from 'node:http';
 import {chromium} from 'playwright';
 import {sampleResume, defaultDesign} from '../shared/model.mjs';
 import {DRAFT_KEY} from '../src/storage.mjs';
 const base = 'http://127.0.0.1:4317';
+const activeHolds=()=>new Promise((resolve,reject)=>{
+ const req=request({socketPath:'/.sprite/api.sock',hostname:'sprite',path:'/v1/tasks',headers:{Host:'sprite'}},res=>{
+  let text='';res.on('data',c=>text+=c);res.on('end',()=>{try{assert.equal(res.statusCode,200);resolve(JSON.parse(text).tasks.filter(t=>t.name.startsWith('cv-studio-ai-')))}catch(e){reject(e)}});
+ });req.on('error',reject);req.end();
+});
 const source=sampleResume();
 source.name='Camille Exemple';
 source.profile='Je travaille sur la gestion administrative et le suivi des projets.';
@@ -21,23 +28,32 @@ const missions=[
 source.experiences=missions.map((bullets,i)=>({title:`Chargée de mission ${i+1}`,organization:`Atelier fictif ${i+1}`,period:`${2010+i} – ${2011+i}`,location:'Lyon',bullets}));
 const browser=await chromium.launch({headless:true});
 try {
+ let config;const warmStarted=Date.now();
+ do {
+  config=await (await fetch(base+'/api/config')).json();
+  if(config.aiConfigured)break;
+  assert.ok(Date.now()-warmStarted<190000,'Model did not become ready');
+  await new Promise(resolve=>setTimeout(resolve,2000));
+ }while(true);
+ const runnerPid=execFileSync('pgrep',['-x','llama-server']).toString().trim();
+ console.log(JSON.stringify({readySeconds:(Date.now()-warmStarted)/1000}));
  if(!process.argv.includes('--skip-import')) {
   const pdfPage=await browser.newPage();
   await pdfPage.setContent(`<h1>${source.name}</h1><p>${source.email}</p><p>${source.profile}</p>`+source.experiences.map(e=>`<h2>${e.title} — ${e.organization}</h2><p>${e.period}, ${e.location}</p><ul>${e.bullets.map(b=>`<li>${b}</li>`).join('')}</ul>`).join(''));
   const pdf=await pdfPage.pdf({format:'A4'});await pdfPage.close();
-  const config=await (await fetch(base+'/api/config')).json();
   const form=new FormData();form.set('kind','cv');form.set('file',new Blob([pdf],{type:'application/pdf'}),'cv-fictif.pdf');
   const started=Date.now();console.log('Fictional PDF import started');
   const response=await fetch(base+'/api/import',{method:'POST',headers:{'x-cv-token':config.token},body:form,signal:AbortSignal.timeout(310000)});
   const result=await response.json();assert.equal(response.status,200,result.error);
   assert.equal(result.resume.name,source.name);
   assert.deepEqual(result.resume.experiences.map(e=>e.organization),source.experiences.map(e=>e.organization));
+  assert.equal(execFileSync('pgrep',['-x','llama-server']).toString().trim(),runnerPid,'Runner reloaded during import');
   console.log(JSON.stringify({pdfImportSeconds:(Date.now()-started)/1000,importedExperiences:result.resume.experiences.length}));
  }
  const page=await browser.newPage({viewport:{width:1280,height:900}});
  page.setDefaultTimeout(180000);
  await page.addInitScript(({key,resume,design})=>localStorage.setItem(key,JSON.stringify({resume,design})),{key:DRAFT_KEY,resume:source,design:defaultDesign});
- let firstProgress=null,last=-1,start;const errors=[];
+ let firstProgress=null,last=-1,start,sawActivityHold=false;const errors=[];
  page.on('pageerror',e=>errors.push(e.message));
  page.on('response',async response=>{
   if(!response.url().includes('/api/rewrite-jobs/')||response.status()!==200)return;
@@ -45,6 +61,7 @@ try {
    const data=await response.json();
    if(data.status==='failed'){console.error('RH failed:',data.error);await page.close();return;}
    if(data.progress&&data.progress.completed!==last){
+    if((await activeHolds()).length)sawActivityHold=true;
     last=data.progress.completed;assert.equal(data.progress.total,38);
     const seconds=(Date.now()-start)/1000;
     if(last>0&&firstProgress===null)firstProgress=seconds;
@@ -65,7 +82,10 @@ try {
   if(b!==updated)changed++;
   if(/partici/i.test(b))assert.match(updated,/partici|contrib/i);
  }));
+ assert.equal(execFileSync('pgrep',['-x','llama-server']).toString().trim(),runnerPid,'Runner reloaded between import and RH');
  assert.ok(firstProgress!==null);assert.deepEqual(errors,[]);
+ assert.equal(sawActivityHold,true,'No suspension protection during RH');
+ for(const hold of await activeHolds())assert.ok(new Date(hold.expires_at).getTime()-Date.now()<=16000,'Long activity hold leaked after completion');
  assert.ok(changed>0,'No RH reformulation was accepted');
- console.log(JSON.stringify({rhSeconds:seconds,firstProgressSeconds:firstProgress,passages:38,changedMissions:changed,allExperiencesPreserved:true}));
+ console.log(JSON.stringify({rhSeconds:seconds,firstProgressSeconds:firstProgress,passages:38,changedMissions:changed,allExperiencesPreserved:true,sameRunnerPreserved:true,activityHeldAndReleased:true}));
 }finally{await browser.close()}
