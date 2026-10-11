@@ -75,7 +75,7 @@ export function Resume({ resume: r, design: d, id = "resume" }) {
     { className: "cv-heading" },
     h("h1", null, r.name || (r.language === "fr" ? "Votre nom" : "Your name")),
     r.title && h("p", { className: "cv-title" }, r.title),
-    d.template !== "editorial" && contact,
+    contact,
   );
   const main = h(
     "div",
@@ -87,7 +87,6 @@ export function Resume({ resume: r, design: d, id = "resume" }) {
   const aside = h(
     "aside",
     { className: "cv-aside" },
-    d.template === "editorial" && contact,
     list("skills"),
     list("languages"),
     list("interests"),

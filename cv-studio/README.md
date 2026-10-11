@@ -92,3 +92,7 @@ Ce test attend la disponibilité réelle du moteur, importe un PDF fictif puis o
 Les consignes permanentes du propriétaire sont conservées dans [AGENTS.md](AGENTS.md) et les règles de reformulation dans [RH_GUIDE.md](RH_GUIDE.md). Elles permettent de reprendre le même travail sur un CV fourni directement à l’assistant, en conservant toutes les expériences et les faits.
 
 La traduction FR/EN traite chaque titre, profil, mission et élément de liste séparément. Le nombre de missions est conservé ; une traduction qui modifie les chiffres d’un passage ou renvoie le CV intégralement inchangé est refusée. La progression indique le nombre réel de passages traduits.
+
+## Mises en page
+
+Les modèles **Essentiel**, **Moderne** et **Classique** utilisent toute la largeur du document, sans bande ni colonne latérale. Les coordonnées restent dans l’en-tête ; compétences, langues et centres d’intérêt suivent le parcours. Classique sélectionne une police avec empattements, que l’utilisateur peut ensuite modifier. Les anciennes sauvegardes « editorial » correspondent désormais au modèle Moderne, sans changer le contenu du CV.

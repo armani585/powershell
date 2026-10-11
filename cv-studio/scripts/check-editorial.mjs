@@ -64,7 +64,7 @@ try {
  const refusal=await fetch(base+'/api/pdf',{method:'POST',headers:{'x-cv-token':config.token,'Content-Type':'application/json'},body:JSON.stringify({resume:huge,design:overflow.design})});assert.equal(refusal.status,422);record('Overflow is detected, never silently cropped');
  await restore(small);
  await page.getByRole('tab',{name:'Mise en page',exact:true}).click();
- for(const [label,template] of [['Essentiel','essential'],['Éditorial','editorial'],['Classique','executive']]) {
+ for(const [label,template] of [['Essentiel','essential'],['Moderne','editorial'],['Classique','executive']]) {
   await page.getByRole('button',{name:new RegExp(label)}).click();
   for(const font of ['sans','serif']) for(const density of ['comfortable','compact']){
    await page.getByLabel('Police').selectOption(font);await page.getByLabel('Espacement').selectOption(density);

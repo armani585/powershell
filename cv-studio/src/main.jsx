@@ -774,16 +774,16 @@ function App() {
                   </p>
                   <div className="template-options">
                     {[
-                      ["essential", "Essentiel", "Une colonne, droit au but."],
+                      ["essential", "Essentiel", "Sobre, aligné à gauche, sans décoration."],
                       [
                         "editorial",
-                        "Éditorial",
-                        "Les compétences dans une colonne latérale.",
+                        "Moderne",
+                        "Pleine largeur, titres structurés et accent discret.",
                       ],
                       [
                         "executive",
                         "Classique",
-                        "Un en-tête centré et une lecture posée.",
+                        "En-tête centré, typographie classique et lignes fines.",
                       ],
                     ].map(([value, label, description]) => (
                       <button
@@ -795,16 +795,19 @@ function App() {
                         }
                         aria-pressed={design.template === value}
                         onClick={() =>
-                          setDesign({ ...design, template: value })
+                          setDesign({ ...design, template: value, font: value === "executive" ? "serif" : "sans" })
                         }
                       >
                         <span
                           className={"template-mark " + value}
                           aria-hidden="true"
                         >
-                          <i />
-                          <i />
-                          <i />
+                          <i className="mini-name" />
+                          <i className="mini-contact" />
+                          <i className="mini-section" />
+                          <i className="mini-lines" />
+                          <i className="mini-section" />
+                          <i className="mini-lines" />
                         </span>
                         <span>
                           <strong>{label}</strong>
