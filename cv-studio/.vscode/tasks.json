@@ -1,0 +1,27 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "CV Studio : installer et demarrer avec Ollama",
+      "type": "process",
+      "command": "bash",
+      "args": ["-lc", "npx --yes pnpm@10 install --frozen-lockfile && npx --yes pnpm@10 build && npx --yes pnpm@10 exec playwright install --with-deps chromium && bash scripts/setup-ollama.sh && node server.mjs --production"],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": { "AI_PROVIDER": "ollama", "OLLAMA_BASE_URL": "http://127.0.0.1:11434", "OLLAMA_MODEL": "qwen2.5:3b", "PORT": "4317" }
+      },
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated" },
+      "runOptions": { "instanceLimit": 1 }
+    },
+    {
+      "label": "CV Studio : verifier une analyse reelle",
+      "type": "process",
+      "command": "node",
+      "args": ["scripts/check-ollama.mjs"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    }
+  ]
+}

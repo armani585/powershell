@@ -1,0 +1,46 @@
+{
+  "folders": [
+    {
+      "name": "CV Studio",
+      "path": "cv-studio"
+    }
+  ],
+  "settings": {
+    "terminal.integrated.cwd": "${workspaceFolder:CV Studio}",
+    "window.title": "CV Studio — ${activeEditorShort}",
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/dist": true
+    }
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "CV Studio : démarrer",
+        "type": "shell",
+        "command": "pnpm dev",
+        "options": {
+          "cwd": "${workspaceFolder:CV Studio}"
+        },
+        "isBackground": true,
+        "problemMatcher": []
+      },
+      {
+        "label": "CV Studio : vérifier",
+        "type": "shell",
+        "command": "pnpm test && pnpm build",
+        "options": {
+          "cwd": "${workspaceFolder:CV Studio}"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "CV Studio : ouvrir",
+        "type": "shell",
+        "command": "printf \"Ouvrez le port 4317 dans l’onglet Ports.\\n\"",
+        "problemMatcher": []
+      }
+    ]
+  }
+}

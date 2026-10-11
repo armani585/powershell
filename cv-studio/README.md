@@ -1,0 +1,98 @@
+# CV Studio
+
+Application locale de creation de CV avec apercu A4, trois mises en page, import de CV et de modeles, reformulation, condensation, traduction FR/EN et PDF avec texte selectionnable.
+
+## Travailler dans le cloud
+
+Une instance privée avec Ollama est disponible sur [CV Studio](https://mcp-cv-studio-b2qhc.sprites.app), avec connexion Fly.io au compte propriétaire. Voir [SPRITES.md](SPRITES.md) pour cette installation vérifiée et [CLOUD.md](CLOUD.md) pour GitHub Codespaces. L’interface et les fichiers partagés ont été reconstruits pour ce dépôt à partir des fonctions décrites dans les fichiers fournis.
+
+## Demarrage Windows
+
+Double-cliquer sur `Demarrer CV Studio.cmd`. Le serveur ecoute uniquement sur `127.0.0.1`. Garder le terminal ouvert pendant l'utilisation.
+
+Installation standard avec Node.js 22 ou plus recent et pnpm :
+
+```sh
+pnpm install
+pnpm build
+pnpm start
+```
+
+Adresse par defaut : http://127.0.0.1:4317. Definir PORT dans `.env.local` pour changer de port. Microsoft Edge ou Google Chrome sert a produire les PDF ; sinon installer Chromium avec `pnpm exec playwright install chromium`. `CV_BROWSER_PATH` permet de fournir un autre executable Chromium.
+
+## Configuration IA
+
+Deux moteurs sont disponibles. **Ollama** est sélectionné par défaut, en local comme dans Codespaces, même si une ancienne clé OpenAI est présente : le modèle `qwen2.5:3b` (environ 1,9 Go) est téléchargé puis exécuté dans le Codespace. Il analyse automatiquement le texte des PDF, DOCX et TXT, reformule, condense et traduit les CV sans clé ni crédits OpenAI. Prévoir au moins 8 Go de RAM ; les calculs sur CPU peuvent prendre plusieurs minutes. Les ressources et la facturation éventuelle de Codespaces restent applicables. La qualité du modèle doit être vérifiée par relecture ; elle n’est pas garantie équivalente à celle d’OpenAI.
+
+En dehors de Codespaces, installer Ollama depuis https://ollama.com, exécuter `ollama pull qwen2.5:3b` et vérifier que `.env.local` ne force pas `AI_PROVIDER=openai`. Le moteur doit écouter sur `127.0.0.1:11434`. Sous Linux, `bash scripts/setup-ollama.sh` automatise son installation dans le dossier `work/`. Windows nécessite l’installateur Ollama pour Windows.
+
+`AI_PROVIDER=openai` conserve le moteur d’origine. La clé `OPENAI_API_KEY` reste côté serveur ; ne pas partager `.env.local`. `OPENAI_MODEL` vaut `gpt-5-mini` par défaut. Les crédits API OpenAI sont distincts de ChatGPT/Codex. Les appels utilisent `store: false`, ce qui ne supprime pas les règles de rétention du fournisseur.
+
+Le modèle Ollama configuré traite du texte : les scans, images et imports de modèles visuels nécessitent un OCR ou le moteur OpenAI. Les trois mises en page manuelles restent disponibles.
+
+Documentation : https://docs.ollama.com/api/chat et https://docs.ollama.com/capabilities/structured-outputs
+
+## Flux
+
+- Import sans IA (sélectionné si le moteur IA n’est pas prêt) : PDF avec texte sélectionnable, DOCX ou TXT UTF-8, 8 Mo maximum, 20 pages PDF et 60 000 caractères maximum. Extraction sur le serveur CV Studio, sans envoi à OpenAI. Sélectionner les passages pour les répartir dans les champs ou télécharger le texte. Ce mode ne réalise pas une analyse intelligente et ne reconnaît pas le texte des images/scans.
+- Import avec IA : PDF, DOCX, TXT, PNG et JPEG, 8 Mo maximum. Analyse et structuration automatiques avec le moteur choisi, proposition à relire avant application. Ollama accepte les PDF avec texte, DOCX et TXT ; OpenAI accepte aussi les images et nécessite une clé et des crédits API.
+- Import de modele : PDF, PNG ou JPEG. L'IA choisit parmi les trois mises en page et adapte la couleur et la famille de police. Ce n'est pas une reproduction exacte d'un fichier arbitraire. Exporter un modele Word en PDF avant import visuel.
+- L'IA ne doit pas inventer de faits et preserve les coordonnees lors des reformulations. Toujours relire sa proposition ; aucune garantie automatique d'exactitude des informations extraites.
+- Le CV est ajuste a une page avec une taille de texte minimale de 12 px (9 points). Si cela ne suffit pas, le PDF est bloque : raccourcir le texte ou accepter que le contenu nécessite plus d’une page, sans suppression automatique.
+- L'export PDF est independant de l'IA et ne transmet rien a OpenAI.
+- Les brouillons sont dans le localStorage du navigateur. Une sauvegarde JSON permet de les transferer et de les conserver hors du navigateur. Pas de compte ni de synchronisation cloud.
+- L'exemple de Camille Laurent est fictif et identifie comme demonstration dans l'editeur.
+
+## Verification
+
+`pnpm test` verifie les schemas et le rendu sans injection de HTML. `pnpm build` produit la version de production. Les vérifications de navigateur ont aussi couvert l’édition, les sauvegardes, les trois modèles, le PDF et les erreurs. Les réponses IA ont été simulées pour vérifier le parcours sans appel payant.
+
+L'application est concue pour un utilisateur en local. Un deploiement public necessiterait authentification, stockage protege et quotas par utilisateur.
+
+## Ancien message de quota OpenAI après une mise à jour
+
+Publier du code sur GitHub ne met pas à jour un serveur déjà lancé. Récupérer la branche `cv-studio-cloud` dans le dossier utilisé, installer les dépendances, arrêter puis redémarrer CV Studio. Le moteur par défaut est Ollama ; une valeur explicite `AI_PROVIDER=openai` dans l’environnement ou `.env.local` reste prioritaire et doit être changée en `ollama` pour utiliser le modèle local. Installer et démarrer Ollama reste nécessaire pour l’analyse. L’onglet Assistant IA indique le moteur et sa disponibilité. Une adresse `127.0.0.1` peut desservir une autre copie que celle du Codespace.
+
+## Optimisation RH, traduction et une page
+
+Les trois boutons sont visibles au-dessus de l’éditeur : **Optimiser la rédaction RH**, **Tenir sur une page**, **Traduire en anglais** (ou en français pour un CV anglais). Appliquer d’abord le CV importé. Une offre ou un poste facultatif permet de cibler la rédaction RH. Une proposition doit être relue et appliquée avant de remplacer le brouillon.
+
+La réécriture utilise des identifiants d’entrée : toute suppression, création, duplication ou permutation d’expérience ou de formation est refusée. Le serveur reprend les entreprises, périodes, lieux et coordonnées du CV original. Hors traduction, il conserve aussi les intitulés, compétences, langues et centres d’intérêt. Les chiffres nouvellement introduits sont refusés. Ces contrôles structurels ne prouvent pas la fidélité de chaque phrase : vérifier les missions reformulées, les qualifications et les niveaux traduits avant application.
+
+L’ajustement A4 mesure le rendu Chromium réel et compare les trois modèles compacts si nécessaire. Si aucune option ne suffit, le texte est raccourci par des règles éditoriales et les missions proches sont regroupées au sein du même poste, sans appel IA. Le serveur mesure ensuite à nouveau, avec une police minimale de 12 px (9 pt). Un CV encore trop long est signalé et son export reste bloqué ; aucune expérience n’est supprimée pour le faire tenir. Les CV très longs peuvent rester incompatibles avec une page lisible.
+
+## Connexion pendant les calculs IA
+
+La rédaction RH, la traduction et la condensation lancent désormais un calcul en arrière-plan. Le navigateur récupère son état par des requêtes courtes et réessaie automatiquement après une coupure temporaire. Un identifiant de demande empêche de lancer deux calculs si l’accusé de réception s’est perdu. Garder la page ouverte pendant l’opération ; le brouillon n’est remplacé qu’après application de la proposition.
+
+Les résultats temporaires restent uniquement dans la mémoire du serveur, avec un nettoyage après environ dix minutes suivant la fin du calcul (douze résultats maximum, une demande en cours). Leur lecture exige le jeton de session. Ils disparaissent lors d’un redémarrage du serveur ; une erreur explicite invite alors à relancer l’action. Les messages de connexion sont séparés des erreurs de traitement et disparaissent après reconnexion.
+
+## Disponibilité du moteur et rapidité de l’optimisation RH
+
+Sur Sprites, un processus en cours ne suffit pas à empêcher la mise en veille de la machine. Le lanceur active `CV_SPRITE_TASKS=1` : CV Studio utilise alors l’API locale de tâches de Sprites pendant la préparation et chaque calcul IA. À la fin, même en cas d’erreur, sa durée restante est ramenée à quinze secondes pour laisser la réponse parvenir au navigateur ; il expire ensuite sans renouvellement. En cas d’arrêt brutal du processus, il expire au bout de sept minutes au maximum. Il n’y a pas de boucle qui maintienne indéfiniment le serveur éveillé. Hors Sprites, ce mécanisme est désactivé. Référence : https://docs.sprites.dev/keeping-sprites-running/
+
+Ollama est préparé automatiquement à l’ouverture du site, sans envoyer de CV. L’installation du modèle ne suffit plus à le déclarer prêt : CV Studio vérifie aussi son chargement en mémoire. Pendant la préparation, un message explique l’attente et les boutons IA s’activent ensuite automatiquement. L’édition et l’export PDF restent disponibles. Une préparation échouée déclenche une nouvelle tentative après trente secondes.
+
+L’import, la traduction et la rédaction RH partagent le même profil de calcul (contexte de 32 768 tokens, quatre threads CPU, lots de 128 tokens). Cela évite de décharger puis recharger le modèle entre deux fonctions, cause constatée d’un délai RH entièrement consommé avant le début de la rédaction. Le modèle reste en mémoire jusqu’à l’arrêt du moteur ou de l’environnement ; aucun nouveau service externe n’est utilisé. Les limites de taille des documents restent inchangées et le contenu n’est pas tronqué pour accélérer le calcul.
+
+La rédaction RH traite séparément chaque passage. Avec Ollama, le modèle renvoie la phrase réécrite sans décodage contraint JSON ; l’application valide sa longueur, contrôle les chiffres et le vocabulaire, puis reconstruit les données. Les entreprises, dates et expériences sont conservées. Après reformulation, des missions qui partagent exactement une action ou un objet peuvent être regroupées au sein du même poste, sans en perdre les informations. Voir [RH_GUIDE.md](RH_GUIDE.md) pour les règles et sources RH. Les contrôles ne prouvent pas à eux seuls la fidélité sémantique : la relecture de la proposition reste nécessaire avant application.
+
+Les phrases identiques pour un même poste peuvent partager une reformulation. Les passages validés sont réutilisés en mémoire pendant environ dix minutes (256 maximum), avec une clé tenant compte du poste, de la langue, de l’offre et du texte. Chaque appel RH est limité à 45 secondes, dans une limite totale de cinq minutes. Un échec laisse le brouillon intact et les passages déjà validés restent réutilisables pendant la durée du cache.
+
+Les journaux contiennent uniquement les tailles et durées de calcul, jamais le texte du CV. Pour vérifier le parcours complet sur le serveur actif :
+
+```sh
+PLAYWRIGHT_BROWSERS_PATH="$PWD/work/browsers" node scripts/check-rh-latency.mjs
+```
+
+Ce test attend la disponibilité réelle du moteur, importe un PDF fictif puis optimise 38 passages dans un navigateur isolé. Il vérifie la conservation du processus du modèle entre les étapes, la progression, des reformulations effectives et la conservation des expériences, dates, missions et participations. Il ne lit pas le brouillon de l’utilisateur. L’option `--skip-import` ne teste que la rédaction et ne suffit pas à valider l’enchaînement après import.
+
+## Préférences pour les prochains CV
+
+Les consignes permanentes du propriétaire sont conservées dans [AGENTS.md](AGENTS.md) et les règles de reformulation dans [RH_GUIDE.md](RH_GUIDE.md). Elles permettent de reprendre le même travail sur un CV fourni directement à l’assistant, en conservant toutes les expériences et les faits.
+
+La traduction FR/EN traite chaque titre, profil, mission et élément de liste séparément. Le nombre de missions est conservé ; une traduction qui modifie les chiffres d’un passage ou renvoie le CV intégralement inchangé est refusée. La progression indique le nombre réel de passages traduits.
+
+## Mises en page
+
+Les modèles **Essentiel**, **Moderne** et **Classique** utilisent toute la largeur du document, sans bande ni colonne latérale. Les coordonnées restent dans l’en-tête ; compétences, langues et centres d’intérêt suivent le parcours. Classique sélectionne une police avec empattements, que l’utilisateur peut ensuite modifier. Les anciennes sauvegardes « editorial » correspondent désormais au modèle Moderne, sans changer le contenu du CV.
