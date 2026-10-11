@@ -1,7 +1,7 @@
 .cv-page {
   box-sizing: border-box;
-  width: 794px;
-  height: 1123px;
+  width: 210mm;
+  height: 297mm;
   background: #fff;
   color: #202a26;
   padding: 52px;
@@ -145,19 +145,25 @@
   font-family: Georgia, "Times New Roman", serif;
 }
 .cv-compact {
-  padding: 38px;
-  line-height: 1.35;
+  padding: 30px;
+  line-height: 1.25;
 }
-.cv-compact .cv-heading {
-  padding-bottom: 18px;
-  margin-bottom: 20px;
-}
-.cv-compact .cv-section {
-  margin-bottom: 16px;
-}
-.cv-compact .cv-entry {
-  margin-bottom: 12px;
-}
+.cv-compact h1 { font-size: 2.2em; }
+.cv-compact .cv-title { margin-top: 5px !important; }
+.cv-compact .cv-contact { margin-top: 8px; gap: 2px 14px; }
+.cv-compact .cv-heading { padding-bottom: 10px; margin-bottom: 12px; }
+.cv-compact .cv-section { margin-bottom: 10px; }
+.cv-compact .cv-section h2 { margin-bottom: 5px; }
+.cv-compact .cv-entry { margin-bottom: 7px; }
+.cv-compact .cv-organization { margin: 2px 0 3px !important; }
+.cv-compact li { margin-bottom: 1px; }
+.cv-compact .cv-layout { gap: 20px; }
+.cv-compact .cv-aside { padding-left: 16px; width: 165px; }
+.cv-compact.cv-essential .cv-aside,
+.cv-compact.cv-executive .cv-aside { width: auto; padding: 0; gap: 14px; }
+.cv-compact.cv-essential .cv-list,
+.cv-compact.cv-executive .cv-list { display: flex; flex-wrap: wrap; gap: 0 12px; }
+.cv-entry:last-child, .cv-section:last-child { margin-bottom: 0; }
 @page {
   size: A4;
   margin: 0;

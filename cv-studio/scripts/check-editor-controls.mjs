@@ -1,0 +1,32 @@
+import assert from 'node:assert/strict';
+import {chromium} from 'playwright';
+import {DRAFT_KEY} from '../src/storage.mjs';
+const browser=await chromium.launch({headless:true});
+try {
+ const page=await browser.newPage();await page.goto(process.env.QA_BASE||'http://127.0.0.1:4318');
+ page.on('dialog',d=>d.accept());
+ await page.getByRole('button',{name:'Charger un exemple fictif',exact:true}).click();
+ await page.getByLabel('Nom et prénom').fill('Camille Test');
+ await page.getByLabel('E-mail',{exact:true}).fill('camille.test@example.com');
+ await page.getByLabel('Langue du CV').selectOption('en');assert.equal(await page.locator('.cv-section h2').first().innerText(),'PROFILE');
+ await page.getByLabel('Langue du CV').selectOption('fr');
+ const experiences=page.locator('.editor-section').filter({has:page.getByRole('heading',{name:'Expériences',exact:true})});
+ await experiences.getByRole('button',{name:'Ajouter',exact:true}).click();
+ const newEntry=page.getByRole('group',{name:'Expérience 3',exact:true});
+ await newEntry.getByLabel('Poste',{exact:true}).fill('Assistante fictive');await newEntry.getByLabel('Entreprise',{exact:true}).fill('Entreprise de test');
+ assert.match(await page.locator('.cv-main').innerText(),/Assistante fictive/);
+ await newEntry.getByRole('button',{name:'Supprimer cette expérience'}).click();assert.equal(await newEntry.count(),0);
+ const education=page.locator('.editor-section').filter({has:page.getByRole('heading',{name:'Formation',exact:true})});
+ await education.getByRole('button',{name:'Ajouter',exact:true}).click();await page.getByRole('group',{name:'Formation 2',exact:true}).getByRole('button',{name:'Supprimer cette formation'}).click();
+ await page.getByLabel('Compétences — une par ligne').fill('Gestion administrative\nExcel');
+ await page.getByLabel('Méthode d’import').selectOption('local');
+ await page.locator('input[type=file]').nth(1).setInputFiles({name:'fictional.txt',mimeType:'text/plain',buffer:Buffer.from('Camille Exemple')});
+ const dialog=page.getByRole('dialog');await dialog.waitFor();
+ await dialog.getByLabel('Texte extrait — sélectionnez un passage').evaluate(e=>{e.focus();e.setSelectionRange(0,e.value.length);e.dispatchEvent(new Event('select',{bubbles:true}));e.dispatchEvent(new Event('mouseup',{bubbles:true}));});
+ await dialog.getByRole('button',{name:'Appliquer la sélection'}).click();await dialog.getByRole('button',{name:'Terminer',exact:true}).click();assert.equal(await page.getByLabel('Nom et prénom').inputValue(),'Camille Exemple');assert.equal(await page.getByLabel('E-mail',{exact:true}).inputValue(),'camille.test@example.com');
+ const before=await page.evaluate(key=>localStorage.getItem(key),DRAFT_KEY);
+ await page.locator('input[type=file]').first().setInputFiles({name:'bad.json',mimeType:'application/json',buffer:Buffer.from('{bad')});
+ await page.getByRole('status').filter({hasText:'pas une sauvegarde CV Studio valide'}).waitFor();assert.equal(await page.evaluate(key=>localStorage.getItem(key),DRAFT_KEY),before);
+ await page.getByRole('button',{name:'Repartir de zéro',exact:true}).click();assert.equal(await page.getByLabel('Nom et prénom').inputValue(),'');
+ console.log('PASS: manual editing, language headings, add/remove experience and education, skills, applying imported text to one field, corrupt backup protection, reset');
+}finally{await browser.close()}

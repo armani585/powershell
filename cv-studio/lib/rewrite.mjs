@@ -70,6 +70,8 @@ export function mergeRewrite(source, raw, action) {
   for (const key of ['experiences', 'education']) {
     if (result[key].length !== source[key].length || result[key].some((e, i) => e.id !== i))
       reject('La proposition a supprimé, ajouté ou déplacé une expérience ou une formation. Elle a été refusée.');
+    if(translation && result[key].some((entry,i)=>entry.bullets.length!==source[key][i].bullets.length))
+      reject('La traduction a supprimé ou ajouté une mission. Elle a été refusée.');
     resume[key] = source[key].map((entry, i) => ({ ...entry,
       title: translation ? result[key][i].title : entry.title,
       bullets: result[key][i].bullets }));

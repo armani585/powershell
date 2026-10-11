@@ -75,17 +75,17 @@ try {
  const seconds=(Date.now()-start)/1000;
  await page.getByRole('dialog').getByRole('button',{name:'Appliquer la proposition'}).click();
  const saved=await page.evaluate(key=>JSON.parse(localStorage.getItem(key)),DRAFT_KEY);
- assert.deepEqual(saved.resume.experiences.map(e=>[e.title,e.organization,e.period,e.location,e.bullets.length]),source.experiences.map(e=>[e.title,e.organization,e.period,e.location,e.bullets.length]));
+ assert.deepEqual(saved.resume.experiences.map(e=>[e.title,e.organization,e.period,e.location]),source.experiences.map(e=>[e.title,e.organization,e.period,e.location]));
  let changed=0;
- source.experiences.forEach((e,i)=>e.bullets.forEach((b,j)=>{
-  const updated=saved.resume.experiences[i].bullets[j];
-  if(b!==updated)changed++;
-  if(/partici/i.test(b))assert.match(updated,/partici|contrib/i);
- }));
+ source.experiences.forEach((e,i)=>{
+  const updated=saved.resume.experiences[i].bullets.join(' ');
+  if(e.bullets.join(' ')!==updated)changed++;
+  if(e.bullets.some(b=>/partici/i.test(b)))assert.match(updated,/partici|contrib/i);
+ });
  assert.equal(execFileSync('pgrep',['-x','llama-server']).toString().trim(),runnerPid,'Runner reloaded between import and RH');
  assert.ok(firstProgress!==null);assert.deepEqual(errors,[]);
  assert.equal(sawActivityHold,true,'No suspension protection during RH');
  for(const hold of await activeHolds())assert.ok(new Date(hold.expires_at).getTime()-Date.now()<=16000,'Long activity hold leaked after completion');
  assert.ok(changed>0,'No RH reformulation was accepted');
- console.log(JSON.stringify({rhSeconds:seconds,firstProgressSeconds:firstProgress,passages:38,changedMissions:changed,allExperiencesPreserved:true,sameRunnerPreserved:true,activityHeldAndReleased:true}));
+ console.log(JSON.stringify({rhSeconds:seconds,firstProgressSeconds:firstProgress,passages:38,changedExperiences:changed,allExperiencesPreserved:true,sameRunnerPreserved:true,activityHeldAndReleased:true}));
 }finally{await browser.close()}

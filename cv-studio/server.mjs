@@ -1,7 +1,9 @@
 import express from "express";
+import { createTranslations } from './lib/translate-passages.mjs';
+import { compactResume } from './lib/rh-style.mjs';
 import { createRhPassages } from "./lib/rh-passages.mjs";
 import { createRewriteJobs } from "./lib/rewrite-jobs.mjs";
-import { rewriteSchema, rewriteInput, mergeRewrite, expandRh } from "./lib/rewrite.mjs";
+import { mergeRewrite, expandRh } from "./lib/rewrite.mjs";
 import { aiErrorMessage } from "./lib/ai-error.mjs";
 import { extractDocument } from "./lib/extract-document.mjs";
 import { createOllama } from "./lib/ollama.mjs";
@@ -149,33 +151,27 @@ const rewriteBodySchema = z.object({
       job: z.string().max(10000).default(""),
     });
 const rhPassages = createRhPassages({ ask });
+const translatePassages = createTranslations({ask});
 async function rewriteResume(body, progress = () => {}) {
+  if (body.action === "condense") {
+    const {resume,notes}=compactResume(body.resume);
+    return {resume,notes};
+  }
   if (body.action === "improve") {
     allowAi();
     const started = Date.now();
     try {
       const {answer,reused,kept} = await rhPassages.optimize(body, progress);
-      const result = mergeRewrite(body.resume, expandRh(body.resume, answer), "improve");
+      const rewritten = mergeRewrite(body.resume, expandRh(body.resume, answer), "improve");
+      const compacted=compactResume(rewritten.resume);
+      const result={resume:compacted.resume,notes:[...rewritten.notes,...compacted.notes]};
       if (kept) result.notes.push(`${kept} reformulation(s) écartée(s) par précaution : le texte original est conservé.`);
       if (reused) result.notes.push(`${reused} passage(s) inchangé(s) réutilisé(s), sans nouveau calcul.`);
       return result;
     } finally { console.info("RH calculation finished in", Date.now() - started, "ms"); }
   }
-  const tasks = {
-    condense:
-      "Condense ce CV pour une seule page A4, idéalement 300 à 420 mots. Profil de 35 mots maximum. 1 à 2 puces courtes par expérience. Conserve toutes les entreprises, fonctions, périodes, formations et compétences : raccourcis d’abord la prose et supprime les répétitions. Signale les détails écartés dans notes. Conserve la langue actuelle.",
-    translate: `Traduis intégralement le CV en ${body.resume.language === "fr" ? "anglais professionnel naturel (language=en)" : "français professionnel (language=fr)"}. Traduis aussi les périodes, lieux courants et intitulés de rubriques implicites. Ne change pas les noms propres, coordonnées, faits ni niveaux. N'invente aucune équivalence de diplôme. La traduction conserve chaque expérience, formation et compétence.`,
-  };
-  const translationGuide = body.action === "translate"
-    ? (body.resume.language === "fr"
-      ? "\nOUTPUT LANGUAGE: ENGLISH. You are a professional French-to-English CV translator. Translate title, profile, every job/degree title, every bullet, every skill, every language label and every interest into English. Do not copy French sentences. For example: Cheffe de projet digital → Digital Project Manager; Coordonner les équipes → Coordinate teams; Gestion de projet → Project management; Français : langue maternelle → French: native. Keep ids unchanged. The entire output prose must be English; only notes remain French."
-      : "\nLANGUE DE SORTIE : FRANÇAIS. Traduis chaque titre, description, compétence, langue et centre d’intérêt en français. Ne recopie pas les phrases anglaises. Seuls les noms propres restent inchangés.")
-    : "";
-  const answer = await ask(rewriteSchema, tasks[body.action] + translationGuide + "\nRetourne chaque expérience et formation avec son id original, exactement une fois et dans le même ordre. Ne fusionne ni ne supprime aucune entrée. Les titres et listes de compétences sont traduits seulement pour la traduction ; les descriptions de missions (bullets) et le profil sont à reformuler pour improve et condense. Les identités, entreprises, lieux, périodes et coordonnées seront conservés par le serveur.", [
-    { type: "input_text", text: JSON.stringify({ cv: rewriteInput(body.resume), offre: body.job }) },
-  ]);
-  const result = mergeRewrite(body.resume, answer, body.action);
-  return result;
+  allowAi();
+  return translatePassages(body.resume,progress);
 }
 app.post("/api/rewrite", async (req, res) => res.json(await rewriteResume(rewriteBodySchema.parse(req.body))));
 const rewriteJobs = createRewriteJobs({ execute: rewriteResume });
@@ -321,14 +317,15 @@ app.post("/api/fit", async (req, res) => {
   try {
     await page.route("**/*", route => route.abort());
     await page.emulateMedia({ media: "print" });
-    const candidates = [design, { ...design, density: "compact" }, { ...design, density: "compact", template: "essential" }];
+    const candidates = [design, ...[design.template, "essential", "editorial", "executive"].filter((v,i,a)=>a.indexOf(v)===i).map(template=>({...design,template,density:"compact"}))];
     let result;
     for (const candidate of candidates) {
       await page.setContent(`<!doctype html><html><head><style>body{margin:0}${cvCss}</style></head><body>${renderToStaticMarkup(React.createElement(Resume, { resume, design: candidate, id: "fit-resume" }))}</body></html>`);
       await page.evaluate(() => document.fonts.ready);
       const fit = await page.evaluate(fitPage, await page.locator("#fit-resume").elementHandle());
-      result = { design: candidate, ...fit };
-      if (fit.fits) break;
+      const measured={design:candidate,...fit};
+      if(!result || (fit.fits && !result.fits) || (fit.fits && result.fits && fit.fontSize>result.fontSize) || (!fit.fits && !result.fits && fit.overflowPx<result.overflowPx)) result=measured;
+      if(fit.fits && candidate===design) break;
     }
     res.json(result);
   } finally { await page.close(); }

@@ -38,7 +38,7 @@ Documentation : https://docs.ollama.com/api/chat et https://docs.ollama.com/capa
 - Import avec IA : PDF, DOCX, TXT, PNG et JPEG, 8 Mo maximum. Analyse et structuration automatiques avec le moteur choisi, proposition à relire avant application. Ollama accepte les PDF avec texte, DOCX et TXT ; OpenAI accepte aussi les images et nécessite une clé et des crédits API.
 - Import de modele : PDF, PNG ou JPEG. L'IA choisit parmi les trois mises en page et adapte la couleur et la famille de police. Ce n'est pas une reproduction exacte d'un fichier arbitraire. Exporter un modele Word en PDF avant import visuel.
 - L'IA ne doit pas inventer de faits et preserve les coordonnees lors des reformulations. Toujours relire sa proposition ; aucune garantie automatique d'exactitude des informations extraites.
-- Le CV est ajuste a une page avec une taille de texte minimale de 11,5 px (environ 8,6 points). Si cela ne suffit pas, le PDF est bloque : condenser ou retirer du contenu, sans troncature silencieuse.
+- Le CV est ajuste a une page avec une taille de texte minimale de 12 px (9 points). Si cela ne suffit pas, le PDF est bloque : raccourcir le texte ou accepter que le contenu nécessite plus d’une page, sans suppression automatique.
 - L'export PDF est independant de l'IA et ne transmet rien a OpenAI.
 - Les brouillons sont dans le localStorage du navigateur. Une sauvegarde JSON permet de les transferer et de les conserver hors du navigateur. Pas de compte ni de synchronisation cloud.
 - L'exemple de Camille Laurent est fictif et identifie comme demonstration dans l'editeur.
@@ -59,7 +59,7 @@ Les trois boutons sont visibles au-dessus de l’éditeur : **Optimiser la réda
 
 La réécriture utilise des identifiants d’entrée : toute suppression, création, duplication ou permutation d’expérience ou de formation est refusée. Le serveur reprend les entreprises, périodes, lieux et coordonnées du CV original. Hors traduction, il conserve aussi les intitulés, compétences, langues et centres d’intérêt. Les chiffres nouvellement introduits sont refusés. Ces contrôles structurels ne prouvent pas la fidélité de chaque phrase : vérifier les missions reformulées, les qualifications et les niveaux traduits avant application.
 
-L’ajustement A4 mesure le rendu Chromium réel : mise en page actuelle, espacement compact, puis modèle Essentiel compact si nécessaire. Si aucune option ne suffit, le moteur propose une condensation de la prose en conservant chaque entrée, puis le serveur mesure à nouveau. Un CV encore trop long est signalé et son export reste bloqué ; aucune expérience n’est supprimée pour le faire tenir. Les CV très longs peuvent rester incompatibles avec une page lisible.
+L’ajustement A4 mesure le rendu Chromium réel et compare les trois modèles compacts si nécessaire. Si aucune option ne suffit, le texte est raccourci par des règles éditoriales et les missions proches sont regroupées au sein du même poste, sans appel IA. Le serveur mesure ensuite à nouveau, avec une police minimale de 12 px (9 pt). Un CV encore trop long est signalé et son export reste bloqué ; aucune expérience n’est supprimée pour le faire tenir. Les CV très longs peuvent rester incompatibles avec une page lisible.
 
 ## Connexion pendant les calculs IA
 
@@ -75,7 +75,7 @@ Ollama est préparé automatiquement à l’ouverture du site, sans envoyer de C
 
 L’import, la traduction et la rédaction RH partagent le même profil de calcul (contexte de 32 768 tokens, quatre threads CPU, lots de 128 tokens). Cela évite de décharger puis recharger le modèle entre deux fonctions, cause constatée d’un délai RH entièrement consommé avant le début de la rédaction. Le modèle reste en mémoire jusqu’à l’arrêt du moteur ou de l’environnement ; aucun nouveau service externe n’est utilisé. Les limites de taille des documents restent inchangées et le contenu n’est pas tronqué pour accélérer le calcul.
 
-La rédaction RH traite séparément chaque passage. Avec Ollama, le modèle renvoie la phrase réécrite sans décodage contraint JSON ; l’application valide sa longueur, contrôle les chiffres et le vocabulaire, puis reconstruit les données. Les entreprises, dates, expériences et emplacements des missions sont conservés. Les contrôles ne prouvent pas à eux seuls la fidélité sémantique : la relecture de la proposition reste nécessaire avant application.
+La rédaction RH traite séparément chaque passage. Avec Ollama, le modèle renvoie la phrase réécrite sans décodage contraint JSON ; l’application valide sa longueur, contrôle les chiffres et le vocabulaire, puis reconstruit les données. Les entreprises, dates et expériences sont conservées. Après reformulation, des missions qui partagent exactement une action ou un objet peuvent être regroupées au sein du même poste, sans en perdre les informations. Voir [RH_GUIDE.md](RH_GUIDE.md) pour les règles et sources RH. Les contrôles ne prouvent pas à eux seuls la fidélité sémantique : la relecture de la proposition reste nécessaire avant application.
 
 Les phrases identiques pour un même poste peuvent partager une reformulation. Les passages validés sont réutilisés en mémoire pendant environ dix minutes (256 maximum), avec une clé tenant compte du poste, de la langue, de l’offre et du texte. Chaque appel RH est limité à 45 secondes, dans une limite totale de cinq minutes. Un échec laisse le brouillon intact et les passages déjà validés restent réutilisables pendant la durée du cache.
 
@@ -86,3 +86,9 @@ PLAYWRIGHT_BROWSERS_PATH="$PWD/work/browsers" node scripts/check-rh-latency.mjs
 ```
 
 Ce test attend la disponibilité réelle du moteur, importe un PDF fictif puis optimise 38 passages dans un navigateur isolé. Il vérifie la conservation du processus du modèle entre les étapes, la progression, des reformulations effectives et la conservation des expériences, dates, missions et participations. Il ne lit pas le brouillon de l’utilisateur. L’option `--skip-import` ne teste que la rédaction et ne suffit pas à valider l’enchaînement après import.
+
+## Préférences pour les prochains CV
+
+Les consignes permanentes du propriétaire sont conservées dans [AGENTS.md](AGENTS.md) et les règles de reformulation dans [RH_GUIDE.md](RH_GUIDE.md). Elles permettent de reprendre le même travail sur un CV fourni directement à l’assistant, en conservant toutes les expériences et les faits.
+
+La traduction FR/EN traite chaque titre, profil, mission et élément de liste séparément. Le nombre de missions est conservé ; une traduction qui modifie les chiffres d’un passage ou renvoie le CV intégralement inchangé est refusée. La progression indique le nombre réel de passages traduits.

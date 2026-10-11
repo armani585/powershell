@@ -192,7 +192,7 @@ function Proposal({ proposal, onApply, onClose }) {
         {proposal.originalResume.experiences.map((entry, i) => <section key={i}><strong>{entry.title} · {entry.organization} · {entry.period}</strong><ul>{entry.bullets.map((b, j) => <li key={j}>{b}</li>)}</ul></section>)}
       </details>}
       {proposal.pageFit && <p className={proposal.pageFit.fits ? "notice" : "notice error"}>
-        {proposal.pageFit.fits ? "Vérifié : le CV tient sur une page A4, sans retirer d’expérience." : "Le CV dépasse encore une page : aucune expérience n’a été retirée. L’export reste bloqué pour éviter une coupure."}
+        {proposal.pageFit.fits ? "Vérifié : le CV tient sur une page A4, sans retirer d’expérience." : "Le contenu dépasse encore une page à une taille lisible. Toutes les expériences sont conservées. La proposition raccourcit le texte, mais une page ne peut pas être garantie sans retirer d’informations."}
       </p>}
       <ul className="notes">
         {proposal.notes.map((note, i) => (
@@ -408,13 +408,12 @@ function App() {
     let measured = await measure(original.resume, original.design);
     let next = { resume: original.resume, notes: ["Toutes les expériences, formations et informations sont conservées. Seule la mise en page a été ajustée."] };
     if (!measured.fits) {
-      if (!config?.aiConfigured) throw Error("La mise en page compacte ne suffit pas. L’assistant doit être disponible pour proposer une rédaction plus courte ; votre CV est conservé.");
-      setBusy("Raccourcissement du texte, en conservant chaque expérience");
+      setBusy("Raccourcissement et regroupement des missions, en conservant chaque expérience");
       const result = await runRewriteJob({ body: { resume: original.resume, action: "condense", job }, token: config.token,
         onProgress: message => setBusy("Ajustement sur une page · " + message) });
       next = resultSchema.parse(result);
       measured = await measure(next.resume, measured.design);
-      next.notes.unshift("Chaque expérience et formation est conservée. Relisez les descriptions raccourcies avant application.");
+      next.notes.unshift("Chaque expérience et formation est conservée. Les missions proches sont regroupées uniquement au sein du même poste. Relisez la proposition avant application.");
     }
     setProposal({ ...next, design: designSchema.parse(measured.design), pageFit: measured, title: "Proposition sur une page", originalResume: original.resume });
   });
@@ -962,7 +961,7 @@ function App() {
                   </div>
                   <p className="helper">
                     {localAI
-                      ? "Ces actions utilisent Ollama sur le serveur CV Studio, sans envoi à OpenAI ni crédits API. Elles utilisent les ressources du serveur et peuvent prendre plusieurs minutes. Relisez les propositions du modèle."
+                      ? "La rédaction RH et la traduction utilisent Ollama sur le serveur, sans envoi à OpenAI ni crédits API. Le réglage sur une page utilise des règles de mise en page et de concision, sans calcul IA. Relisez chaque proposition."
                       : "Ces actions envoient le CV et l’offre à OpenAI. Les quotas et la facturation de votre projet s’appliquent."}
                   </p>
                 </>
@@ -992,7 +991,7 @@ function App() {
             )}
             <Preview resume={resume} design={design} onFit={setFit} />
             <p className="preview-note">
-              Le texte s’ajuste jusqu’à 11,5 px. L’export est bloqué si le
+              Le texte s’ajuste jusqu’à 12 px (9 pt). L’export est bloqué si le
               contenu dépasse encore une page.
             </p>
           </section>

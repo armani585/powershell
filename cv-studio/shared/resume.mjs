@@ -106,21 +106,22 @@ export function Resume({ resume: r, design: d, id = "resume" }) {
 }
 // Self-contained so Playwright can serialize this function for PDF fitting.
 export function fitPage(element) {
-  if (!element) return { fits: false, fontSize: 11.5 };
+  if (!element) return { fits: false, fontSize: 12, overflowPx: 0 };
   const content = element.querySelector(".cv-layout");
-  element.style.setProperty("--cv-font-size", "14px");
-  let size = 14;
-  const fits = () =>
-    element.scrollHeight <= element.clientHeight + 1 &&
-    element.scrollWidth <= element.clientWidth + 1 &&
-    (!content ||
-      content.getBoundingClientRect().bottom <=
-        element.getBoundingClientRect().bottom -
-          parseFloat(getComputedStyle(element).paddingBottom) *
-          (element.getBoundingClientRect().height / element.offsetHeight));
-  while (!fits() && size > 11.5) {
-    size = Math.max(11.5, size - 0.25);
-    element.style.setProperty("--cv-font-size", size + "px");
+  const overflow = () => {
+    const rect=element.getBoundingClientRect();
+    const scale=rect.height/element.offsetHeight || 1;
+    const bottom=rect.bottom-parseFloat(getComputedStyle(element).paddingBottom)*scale;
+    return Math.max(0,element.scrollHeight-element.clientHeight,
+      element.scrollWidth-element.clientWidth,
+      content ? (content.getBoundingClientRect().bottom-bottom)/scale : 0);
+  };
+  let size=14;
+  element.style.setProperty("--cv-font-size",size+"px");
+  while(overflow()>1 && size>12) {
+    size=Math.max(12,size-0.25);
+    element.style.setProperty("--cv-font-size",size+"px");
   }
-  return { fits: fits(), fontSize: size };
+  const overflowPx=Math.ceil(overflow());
+  return {fits:overflowPx<=1,fontSize:size,overflowPx};
 }
